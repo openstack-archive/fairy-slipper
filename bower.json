@@ -1,0 +1,31 @@
+{
+  "name": "fairy-slipper",
+  "version": "0.0.0",
+  "homepage": "https://github.com/russell/fairy-slipper",
+  "authors": [
+    "Russell Sim <russell.sim@gmail.com>"
+  ],
+  "description": "OpenStack API browser",
+  "license": "Apache2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.0",
+    "angular-route": "~1.4.0",
+    "angular-loader": "~1.4.0",
+    "angular-mocks": "~1.4.0",
+    "angular-bootstrap": "~0.13.0",
+    "bootstrap": "~3.3.5",
+    "angular-swagger-ui": "~0.1.6",
+    "angular-resource": "~1.4.3",
+    "angular-snap": "~1.8.3",
+    "angular-marked": "~0.0.21",
+    "angular-animate": "~1.4.3",
+    "angular-highlightjs": "~0.4.1"
+  }
+}

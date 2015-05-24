@@ -1,0 +1,20 @@
+.snap-content {
+    background: #fff;
+}
+
+@media (min-width: 768px) {
+  .snap-open{
+      // I use 180 for my snap drawer width,
+      // change this to your config
+      right:180px !important;
+  }
+}
+
+.sidebar-nav > li > a {
+    padding: 5px 15px;
+
+}
+
+dd {
+    margin-left: 10px;
+}
