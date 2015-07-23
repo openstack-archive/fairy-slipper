@@ -78,6 +78,10 @@ class ServicesController(object):
         self.services_info = json.load(open(filepath))
         self.url_map = {}
         for key, info in self.services_info.items():
+            # Add the path into each element, this is to make
+            # consumption by the JS client easier.
+            info['url'] = key
+
             current_map = self.url_map
             previous_map = None
             for part in [k for k in key.split('/') if k]:
@@ -90,7 +94,7 @@ class ServicesController(object):
 
     @expose('json')
     def index(self):
-        return self.services_info
+        return self.services_info.values()
 
     @expose('json')
     def _lookup(self, *components):

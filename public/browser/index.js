@@ -26,18 +26,16 @@ angular.module('fairySlipper.index', [
   }])
 
   .controller('MenuCtrl', ['$scope', 'APIs', function($scope, APIs) {
-    APIs.get().$promise.then(function (data) {
+    APIs.query().$promise.then(function (data) {
       $scope.services = {};
-      angular.forEach(data, function (value, key) {
-        if (key != '$promise' && key != '$resolved') {
-          var service = value['service'];
-          if (!$scope.services[service]) {
-            $scope.services[service] = {
-              apis: [],
-              title: value['title']};
-          }
-          value.url = key;
-          $scope.services[service]['apis'].push(value);
-        }});
+      angular.forEach(data, function (value) {
+        var service = value['service'];
+        if (!$scope.services[service]) {
+          $scope.services[service] = {
+            apis: [],
+            title: value['title']};
+        }
+        $scope.services[service]['apis'].push(value);
+        });
     });
   }]);
