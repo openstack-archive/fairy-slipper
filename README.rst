@@ -5,9 +5,9 @@ fairy-slipper
 A project to make OpenStack API's self documententing.
 
 * Free software: Apache license
-* Documentation: http://docs.openstack.org/developer/fairy-slipper
-* Source: http://git.openstack.org/cgit/stackforge/fairy-slipper
-* Bugs: http://bugs.launchpad.net/fairy-slipper
+* Documentation: :(
+* Source: https://github.com/russell/fairy-slipper/
+* Bugs: https://github.com/russell/fairy-slipper/issues
 
 Features
 --------
@@ -18,14 +18,15 @@ Features
 Directory Structure (Future)
 ----------------------------
 
+Current documentation layout::
 
-api-doc/ -- the root of the documentation
-api-doc/index.json  -- the index file that lists all the files that are included in the API doc.
-api-doc/<service>/<version>.rst
-api-doc/<service>/<version>/<request_schema>.json
-api-doc/<service>/<version>/<response_schema>_<status_code>.json
-api-doc/<service>/<version>/examples/<request>_req.json
-api-doc/<service>/<version>/examples/<response>_resp_<status_code>.json
+   api-doc/ -- the root of the documentation
+   api-doc/index.json  -- the index file that lists all the files that are included in the API doc.
+   api-doc/<service>/<version>.rst
+   api-doc/<service>/<version>/<request_schema>.json
+   api-doc/<service>/<version>/<response_schema>_<status_code>.json
+   api-doc/<service>/<version>/examples/<request>_req.json
+   api-doc/<service>/<version>/examples/<response>_resp_<status_code>.json
 
 
 Other Swagger UIs
