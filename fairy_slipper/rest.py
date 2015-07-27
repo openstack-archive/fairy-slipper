@@ -553,6 +553,11 @@ class HTTPDelete(Resource):
     method = 'delete'
 
 
+class HTTPCopy(Resource):
+
+    method = 'copy'
+
+
 directives.register_directive('http:get', HTTPGet)
 directives.register_directive('http:post', HTTPPost)
 directives.register_directive('http:put', HTTPPut)
@@ -560,3 +565,4 @@ directives.register_directive('http:patch', HTTPPatch)
 directives.register_directive('http:options', HTTPOptions)
 directives.register_directive('http:head', HTTPHead)
 directives.register_directive('http:delete', HTTPDelete)
+directives.register_directive('http:copy', HTTPCopy)
