@@ -20,7 +20,6 @@
 import logging
 
 from docutils import writers, nodes
-from docutils.writers import html4css1
 from docutils.parsers.rst import directives
 from docutils.parsers.rst import Directive
 
@@ -72,7 +71,10 @@ def search_node_parents(node, node_name):
 class JSONTranslator(nodes.GenericNodeVisitor):
     def __init__(self, document):
         nodes.NodeVisitor.__init__(self, document)
-        self.output = {}
+        self.output = {
+            'tags': [],
+            'paths': {}
+        }
         self.node_stack = []
         self.node_stack.append(self.output)
         self.current_node_name = None
@@ -88,15 +90,19 @@ class JSONTranslator(nodes.GenericNodeVisitor):
             if tag_name in node.keys():
                 return node
 
+    def visit_document(self, node):
+        # Disable both the document visit and depart
+        pass
+
+    def depart_document(self, node):
+        pass
+
     def default_visit(self, node):
         """Default node visit method."""
         self.current_node_name = node.__class__.__name__
         if hasattr(node, 'children') and node.children:
             new_node = {}
-            try:
-                self.node_stack[-1][self.current_node_name] = new_node
-            except:
-                import pdb; pdb.set_trace()  # FIXME
+            self.node_stack[-1][self.current_node_name] = new_node
             self.node_stack.append(new_node)
 
     def default_departure(self, node):
@@ -170,6 +176,8 @@ class JSONTranslator(nodes.GenericNodeVisitor):
 
     def depart_resource(self, node):
         self.node_stack[-1]['description'] = self.text
+        # XXX This is a massive hack, this is here because the visit
+        # resource url functions don't pop the stack.
         self.node_stack.pop()
         self.node_stack.pop()
 
@@ -311,6 +319,35 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         self.node_stack[-1]['type'] = node.astext()
 
     def depart_field_type(self, node):
+        pass
+
+    def visit_swagger_tag(self, node):
+        self.text = ''
+        self.node_stack.append(self.node_stack[-1]['tags'])
+        new_node = {'name': '',
+                    'description': '',}
+        self.node_stack[-1].append(new_node)
+        self.node_stack.append(new_node)
+
+    def depart_swagger_tag(self, node):
+        self.node_stack[-1]['description'] = self.text
+        self.node_stack.pop()
+        self.node_stack.pop()
+
+    def visit_swagger_tag_name(self, node):
+        name = node.astext()
+        node.clear()
+        self.node_stack[-1]['name'] = name
+
+    def depart_swagger_tag_name(self, node):
+        pass
+
+    def visit_swagger_tag_summary(self, node):
+        name = node.astext()
+        node.clear()
+        self.node_stack[-1]['summary'] = name
+
+    def depart_swagger_tag_summary(self, node):
         pass
 
 
@@ -566,3 +603,47 @@ directives.register_directive('http:options', HTTPOptions)
 directives.register_directive('http:head', HTTPHead)
 directives.register_directive('http:delete', HTTPDelete)
 directives.register_directive('http:copy', HTTPCopy)
+
+
+class swagger_tag(nodes.Inline, nodes.TextElement):
+    pass
+
+
+class swagger_tag_name(nodes.Inline, nodes.TextElement):
+    pass
+
+
+class swagger_tag_summary(nodes.Inline, nodes.TextElement):
+    pass
+
+
+class SwaggerTag(Directive):
+
+    method = None
+
+    required_arguments = 0
+    optional_arguments = 0
+    has_content = True
+    final_argument_whitespace = True
+
+    option_spec = {
+        'synopsis': lambda x: x,
+        'summary': lambda x: x,
+    }
+
+    def run(self):
+        node = swagger_tag()
+        self.state.nested_parse(self.content, self.content_offset, node)
+
+        # This is the first line of the definition.
+        name = node[0].astext()
+        node[0].replace_self(swagger_tag_name(name, name))
+
+        # Summary
+        summary = self.options.get('summary', '')
+        node.insert(1, swagger_tag_summary(summary, summary))
+
+        return [node]
+
+
+directives.register_directive('swagger:tag', SwaggerTag)

@@ -51,12 +51,20 @@ class DocController(object):
 
     @expose('json')
     def index(self):
-        json = docutils.core.publish_file(
-            open(self.api_rst),
-            writer=JSONWriter())
+        if path.exists(self.tags_rst) and path.exists(self.api_rst):
+            rst = open(self.api_rst).read() + \
+                "\n\n" + open(self.tags_rst).read()
+        elif path.exists(self.api_rst):
+            rst = open(self.api_rst).read()
+        else:
+            logger.warning("Can't find ReST documents to render.")
+            return {}
+
+        json = docutils.core.publish_string(rst, writer=JSONWriter())
 
         return {'info': self.service_info,
-                'paths': json['document']['paths']}
+                'paths': json['paths'],
+                'tags': json['tags']}
 
     @expose('json')
     def _lookup(self, *components):
