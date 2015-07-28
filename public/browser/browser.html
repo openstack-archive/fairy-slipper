@@ -6,56 +6,66 @@
 
 <div ng-repeat="(path, operations) in swagger.paths">
   <h2>{{ path }}</h2>
-  <div class="row" ng-repeat="operation in operations">
-    <div class="col-md-12">
-      <h3>
-        <swagger-method method="operation.method"></swagger-method>
-        {{ operation.summary }}
-      </h3>
-    </div>
-    <div ng-controller="ParametersCtrl" class="col-md-6">
-      <tabset>
-        <tab heading="Description">
-          <div marked="operation.description"></div>
-        </tab>
-        <tab heading="Details">
-          <div ng-if="parameters.header">
-          <h4>Headers</h4>
-          <dl>
-            <dt ng-repeat-start="parameter in parameters.header">{{parameter.name}}
-            </dt>
-            <dd ng-repeat-end>{{parameter.description}}</dd>
-          </dl>
-          </div>
-          <div ng-if="parameters.query">
-          <h4>URL Parameters</h4>
-          <dl>
-            <dt ng-repeat-start="parameter in parameters.query">{{parameter.name}}
-            </dt>
-            <dd ng-repeat-end>{{parameter.description}}</dd>
-          </dl>
-          </div>
-        </tab>
-      </tabset>
-    </div>
-    <div class="col-md-6">
-      <h4>Responses</h4>
-      <accordion close-others="true">
-        <accordion-group ng-repeat="(status_code, response) in operation.responses"
-                         is-disabled="!response.examples['application/json']"
-                         is-open="status.open"> 
-          <accordion-heading>
-            {{ status_code }}: {{ response.description }}
-            <i ng-if="response.examples['application/json']"
-               class="pull-right glyphicon"
-               ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-          </accordion-heading>
-          <swagger-example swagger="swagger"
-                           src="response.examples"
-                           mimetype="'application/json'"
-                           trigger-load="status.open">
-          </swagger-example>
-        </accordion>
-    </div>
-  </div>
+
+  <accordion>
+    <accordion-group ng-repeat="operation in operations">
+      <accordion-heading>
+        <h3>
+          <swagger-method method="operation.method"></swagger-method>
+          {{ operation.title }}
+          <small>{{ operation.summary }}</small>
+        </h3>
+        <small></small>
+      </accordion-heading>
+      <div class="row">
+        <div class="col-md-12">
+        </div>
+        <div ng-controller="ParametersCtrl" class="col-md-6">
+          <tabset>
+            <tab heading="Description">
+              <div marked="operation.description"></div>
+            </tab>
+            <tab heading="Details">
+              <div ng-if="parameters.header">
+                <h4>Headers</h4>
+                <dl>
+                  <dt ng-repeat-start="parameter in parameters.header">{{parameter.name}}
+                  </dt>
+                  <dd ng-repeat-end>{{parameter.description}}</dd>
+                </dl>
+              </div>
+              <div ng-if="parameters.query">
+                <h4>URL Parameters</h4>
+                <dl>
+                  <dt ng-repeat-start="parameter in parameters.query">{{parameter.name}}
+                  </dt>
+                  <dd ng-repeat-end>{{parameter.description}}</dd>
+                </dl>
+              </div>
+            </tab>
+          </tabset>
+        </div>
+        <div class="col-md-6">
+          <h4>Responses</h4>
+          <accordion close-others="true">
+            <accordion-group ng-repeat="(status_code, response) in operation.responses"
+                             is-disabled="!response.examples['application/json']"
+                             is-open="status.open">
+              <accordion-heading>
+                {{ status_code }}: {{ response.description }}
+                <i ng-if="response.examples['application/json']"
+                   class="pull-right glyphicon"
+                   ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+              </accordion-heading>
+              <swagger-example swagger="swagger"
+                               src="response.examples"
+                               mimetype="'application/json'"
+                               trigger-load="status.open">
+              </swagger-example>
+            </accordion-group>
+          </accordion>
+        </div>
+      </div>
+    </accordion-group>
+  </accordion>
 </div>
