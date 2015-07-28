@@ -6,6 +6,7 @@ body, h1, h2, h3, h4, h5, h6 {
 .snap-content {
     background: #fff;
     box-shadow: 0 0 20px #bccfde;
+    margin-left: 30px;
 }
 
 @media (min-width: 768px) {
@@ -43,7 +44,7 @@ a.accordion-toggle:focus, a.accordion-toggle:hover {
 }
 
 .sidebar {
-    margin: 10px;
+    margin: 10px 10px 10px 30px;
 }
 
 .sidebar .nav-title{
@@ -83,12 +84,12 @@ a.accordion-toggle:focus, a.accordion-toggle:hover {
 .dragger {
     background: #496e8a;
     color: #fff;
-    float: left;
     font-size: 24px;
     height: 100%;
-    top: 0px;
+    width: 30px
+    top: 0;
     align-content: center;
-    position: fixed;
+    position: fixed !important;
 }
 
 

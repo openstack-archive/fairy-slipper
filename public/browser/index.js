@@ -11,7 +11,12 @@ angular.module('fairySlipper.index', [
       templateUrl: 'browser/index.html',
       controller: 'IndexCtrl'
     });
-    snapRemoteProvider.globalOptions.disable = 'right';
+    snapRemoteProvider.globalOptions = {
+      disable: 'right',
+      maxPosition: 235,
+      minPosition: -235
+    };
+
   }])
 
   .controller('IndexCtrl', ['$scope', '$http', function($scope, $http) {

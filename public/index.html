@@ -33,6 +33,9 @@
   </head>
   <body ng-controller="MenuCtrl" >
     <div snap-drawer>
+      <div class="dragger" ng-mouseover="snapRemote.open('left')">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </div>
       <div class="sidebar">
         <div class="btn-group">
           <label class="btn btn-primary" ng-model="filterByModel" btn-radio="'by-tag'">Tag</label>
@@ -55,9 +58,6 @@
       </div>
     </div>
     <div snap-content>
-      <div class="dragger" ng-mouseover="snapRemote.open('left')">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-      </div>
       <div class="container">
         <!--[if lt IE 7]>
         <div class="alert alert-info browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
