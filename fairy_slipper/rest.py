@@ -352,9 +352,9 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         pass
 
     def visit_swagger_tag_summary(self, node):
-        name = node.astext()
+        summary = node.astext()
         node.clear()
-        self.node_stack[-1]['summary'] = name
+        self.node_stack[-1]['summary'] = summary
 
     def depart_swagger_tag_summary(self, node):
         pass
@@ -655,7 +655,7 @@ class SwaggerTag(Directive):
         node[0].replace_self(swagger_tag_name(name, name))
 
         # Summary
-        summary = self.options.get('synposis', '')
+        summary = self.options.get('synopsis', '')
         node.insert(1, swagger_tag_summary(summary, summary))
 
         return [node]
