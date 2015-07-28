@@ -206,6 +206,15 @@ class JSONTranslator(nodes.GenericNodeVisitor):
     def depart_resource_summary(self, node):
         pass
 
+    def visit_resource_title(self, node):
+        title = node.astext()
+        # Should probably be x-title
+        self.node_stack[-1]['title'] = title
+        node.clear()
+
+    def depart_resource_title(self, node):
+        pass
+
     def visit_resource_method(self, node):
         method = node.astext()
         self.node_stack[-1]['method'] = method
@@ -388,6 +397,10 @@ class resource_url(nodes.Admonition, nodes.TextElement):
     pass
 
 
+class resource_title(nodes.Admonition, nodes.TextElement):
+    pass
+
+
 class resource_summary(nodes.Admonition, nodes.TextElement):
     pass
 
@@ -519,6 +532,7 @@ class Resource(Directive):
     ]
 
     option_spec = {
+        'title': lambda x: x,
         'synopsis': lambda x: x,
     }
 
@@ -545,6 +559,8 @@ class Resource(Directive):
         # Summary
         summary = self.options.get('synopsis', '')
         node.insert(1, resource_summary(summary, summary))
+        title = self.options.get('title', '')
+        node.insert(1, resource_title(title, title))
 
         # Generate field lists
         for child in node:

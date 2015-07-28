@@ -108,6 +108,7 @@ class SubParser(object):
         self.attr_stack = []
         self.parent = parent
         self.result = None
+        self.kwargs = {}
 
     def startElement(self, name, _attrs):
         attrs = dict(_attrs)
@@ -119,7 +120,7 @@ class SubParser(object):
         self.tag_stack.pop()
         self.attr_stack.pop()
         if not self.tag_stack:
-            self.parent.detach_subparser(self.result)
+            self.parent.detach_subparser(self.result, **self.kwargs)
 
     def search_stack_for(self, tag_name):
         for tag, attrs in zip(reversed(self.tag_stack),
@@ -177,6 +178,7 @@ class ParaParser(SubParser, TableMixin):
         self.nesting = 0
         self.fill_width = 67
         self.wrapper = textwrap.TextWrapper(width=self.fill_width)
+        self.shortdesc = False
 
     @property
     def content(self):
@@ -244,6 +246,8 @@ class ParaParser(SubParser, TableMixin):
             self.wrapper = textwrap.TextWrapper(width=self.fill_width)
 
     def visit_para(self, attrs):
+        if attrs.get('role') == 'shortdesc':
+            self.shortdesc = True
         self.content_stack.append([''])
         if self.search_stack_for('itemizedlist') is not None:
             return
@@ -265,6 +269,11 @@ class ParaParser(SubParser, TableMixin):
                 width=self.fill_width,
                 initial_indent=' ' * self.nesting + '  ',
                 subsequent_indent=' ' * self.nesting + '  ',)
+        if self.shortdesc is True:
+            self.kwargs['shortdesc'] = self.result.strip()
+            # Reset state variables
+            self.content_stack = [[]]
+            self.shortdesc = False
 
     def visit_code(self, attrs):
         if not self.content[-1].endswith(' '):
@@ -326,9 +335,9 @@ class WADLHandler(xml.sax.ContentHandler):
         self.content = None
         self.parser = None
 
-    def detach_subparser(self, result):
+    def detach_subparser(self, result, **kwargs):
         self.parser = None
-        self.result_fn(result)
+        self.result_fn(result, **kwargs)
         self.result_fn = None
 
     def attach_subparser(self, parser, result_fn):
@@ -341,14 +350,16 @@ class WADLHandler(xml.sax.ContentHandler):
                 method['consumes'] = list(method['consumes'])
                 method['produces'] = list(method['produces'])
 
-    def parameter_description(self, content):
+    def parameter_description(self, content, **kwargs):
         name = self.search_stack_for('param')['name']
         self.url_params[name] = content.strip()
 
-    def api_summary(self, content):
+    def api_summary(self, content, **kwargs):
+        if kwargs.get('shortdesc'):
+            self.current_api['summary'] = kwargs['shortdesc']
         self.current_api['description'] = content.strip()
 
-    def request_parameter_description(self, content):
+    def request_parameter_description(self, content, **kwargs):
         param = self.search_stack_for('param')
         style = STYLE_MAP[param['style']]
         name = param['name']
@@ -360,7 +371,7 @@ class WADLHandler(xml.sax.ContentHandler):
         else:
             self.current_api['parameters'][-1]['description'] = content.strip()
 
-    def response_schema_description(self, content):
+    def response_schema_description(self, content, **kwargs):
         status_code = self.search_stack_for('response')['status']
         if ' ' in status_code:
             status_codes = status_code.split(' ')
@@ -396,7 +407,7 @@ class WADLHandler(xml.sax.ContentHandler):
                 self.attach_subparser(ParaParser(self),
                                       self.parameter_description)
             if self.on_top_tag_stack('method'):
-                self.current_api['summary'] = attrs.get('title')
+                self.current_api['title'] = attrs.get('title')
                 self.attach_subparser(ParaParser(self), self.api_summary)
 
             if self.on_top_tag_stack('request', 'representation',

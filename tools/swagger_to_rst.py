@@ -20,6 +20,7 @@ TMPL_API = """
 {%- for request in requests -%}
 
 .. http:{{request.method}}:: {{path}}
+   :title: {{request.title}}
    :synopsis: {{request.summary}}
 {% for line in request.description.split('\n') %}
    {{line}}
