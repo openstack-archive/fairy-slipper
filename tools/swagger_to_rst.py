@@ -68,7 +68,7 @@ TMPL_TAG = """
 {%- for tag in swagger.tags -%}
 
 .. swagger:tag:: {{tag.name}}
-   :summary: {{tag.description}}
+   :synopsis: {{tag.description}}
 {% for line in tag.summary.split('\n') %}
    {{line}}
 {%- endfor %}

@@ -644,7 +644,6 @@ class SwaggerTag(Directive):
 
     option_spec = {
         'synopsis': lambda x: x,
-        'summary': lambda x: x,
     }
 
     def run(self):
@@ -656,7 +655,7 @@ class SwaggerTag(Directive):
         node[0].replace_self(swagger_tag_name(name, name))
 
         # Summary
-        summary = self.options.get('summary', '')
+        summary = self.options.get('synposis', '')
         node.insert(1, swagger_tag_summary(summary, summary))
 
         return [node]
