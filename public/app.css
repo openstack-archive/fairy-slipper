@@ -1,5 +1,11 @@
+body, h1, h2, h3, h4, h5, h6 {
+    font-family: "Open Sans",Helvetica,Arial,sans-serif;
+    font-weight: 400;
+}
+
 .snap-content {
     background: #fff;
+    box-shadow: 0 0 20px #bccfde;
 }
 
 @media (min-width: 768px) {
@@ -17,4 +23,77 @@
 
 dd {
     margin-left: 10px;
+}
+
+
+.accordion-toggle h3 {
+    margin-top: 10px;
+}
+
+a.accordion-toggle:focus, a.accordion-toggle:hover {
+    text-decoration: none;
+}
+
+.content {
+    margin: 10px;
+}
+
+.snap-draw {
+    background: #edf2f7 none repeat scroll 0 0;
+}
+
+.sidebar {
+    margin: 10px;
+}
+
+.sidebar .nav-title{
+    text-transform: uppercase;
+    margin: 5px;
+    display: block;
+    font-weight: bold;
+}
+
+.sidebar .btn-group {
+    width: 100%;
+}
+
+.sidebar .btn-group .btn{
+    width: 50%;
+}
+
+.sidebar .li {
+    border-bottom: 1px solid #c8d8e5;
+    color: #2a4e68;
+}
+
+.sidebar a {
+    color: #2a4e68;
+}
+
+.sidebar .selected, .sidebar .selected a{
+    background: #496e8a;
+    color: #fff;
+}
+
+.sidebar .li:hover {
+    background: #bccfde;
+    color: #2a4e68;
+}
+
+.dragger {
+    background: #496e8a;
+    color: #fff;
+    float: left;
+    font-size: 24px;
+    height: 100%;
+    top: 0px;
+    align-content: center;
+    position: fixed;
+}
+
+
+.dragger .glyphicon {
+    float: left;
+    margin: 0 auto;
+    top: 50%;
 }

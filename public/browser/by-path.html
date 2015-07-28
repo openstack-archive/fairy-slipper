@@ -4,9 +4,8 @@
   </h1>
 </div>
 
-<div ng-repeat="(path, operations) in swagger.paths">
-  <h2>{{ path }}</h2>
-
+<div ng-repeat="operations in paths | orderBy: '$key'">
+  <h2>{{ operations.$key }}</h2>
   <accordion>
     <accordion-group ng-repeat="operation in operations">
       <accordion-heading>
@@ -23,7 +22,7 @@
         <div ng-controller="ParametersCtrl" class="col-md-6">
           <tabset>
             <tab heading="Description">
-              <div marked="operation.description"></div>
+              <div class="content" marked="operation.description"></div>
             </tab>
             <tab heading="Details">
               <div ng-if="parameters.header">

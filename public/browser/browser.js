@@ -6,14 +6,20 @@ angular.module('fairySlipper.browser', [
   'ngAnimate',
   'hc.marked',
   'ui.bootstrap',
-  'angular.filter',
   'hljs',
   'swaggerUi'
 ])
   .config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/:service/:version/', {
-      templateUrl: 'browser/browser.html',
-      controller: 'BrowserCtrl'
+    $routeProvider.when('/by-path/:service/:version/', {
+      templateUrl: 'browser/by-path.html',
+      controller: 'ByPathCtrl'
+    });
+  }])
+
+  .config(['$routeProvider', function($routeProvider) {
+    $routeProvider.when('/by-tag/:service/:version/', {
+      templateUrl: 'browser/by-tag.html',
+      controller: 'ByTagCtrl'
     });
   }])
 
@@ -53,16 +59,19 @@ angular.module('fairySlipper.browser', [
       },
       link: link,
       templateUrl: 'browser/swagger-example.html'
-      };
+    };
   }])
 
   .directive('swaggerMethod', ['$http', function($http) {
     function link(scope, element, attrs) {
       var classes = {
         get: 'label-success',
+        options: 'label-success',
+        head: 'label-success',
         post: 'label-primary',
-        put: 'label-info',
+        put: 'label-warning',
         patch: 'label-warning',
+        copy: 'label-warning',
         delete: 'label-danger'
       };
 
@@ -80,7 +89,7 @@ angular.module('fairySlipper.browser', [
       },
       link: link,
       templateUrl: 'browser/swagger-method.html'
-      };
+    };
   }])
 
   .controller('ParametersCtrl', ['$scope', function($scope) {
@@ -93,11 +102,37 @@ angular.module('fairySlipper.browser', [
     });
   }])
 
-  .controller('BrowserCtrl', ['$scope', '$http', '$routeParams', 'Service', function($scope, $http, $routeParams, Service) {
+  .controller('ByPathCtrl', ['$scope', '$http', '$routeParams', 'Service', function($scope, $http, $routeParams, Service) {
     Service.get({
       service: $routeParams.service,
       version: $routeParams.version
-      }).$promise.then(function (data) {
-        $scope.swagger = data;
+    }).$promise.then(function (data) {
+      $scope.swagger = data;
+      $scope.paths = Object.keys(data.paths).map(function (key) {
+        var value = data.paths[key];
+        return Object.defineProperty(value, '$key', { enumerable: false, value: key});
       });
+    });
+  }])
+
+  .controller('ByTagCtrl', ['$scope', '$http', '$routeParams', 'Service', function($scope, $http, $routeParams, Service) {
+    Service.get({
+      service: $routeParams.service,
+      version: $routeParams.version
+    }).$promise.then(function (data) {
+      $scope.swagger = data;
+      $scope.operations = {};
+      Object.keys(data.paths).map(function (path) {
+        var operations = data.paths[path];
+        angular.forEach(operations, function (operation) {
+          angular.forEach(operation.tags, function (tag) {
+            operation['path'] = path;
+            if (! $scope.operations[tag]) {
+              $scope.operations[tag] = [];
+            }
+            $scope.operations[tag].push(operation);
+          });
+        });
+      });
+    });
   }]);

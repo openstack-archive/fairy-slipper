@@ -3,8 +3,9 @@
 angular.module('fairySlipper.index', [
   'ngRoute',
   'ngResource',
-  'swaggerUi'
+  'snap'
 ])
+
   .config(['$routeProvider', 'snapRemoteProvider', function($routeProvider, snapRemoteProvider) {
     $routeProvider.when('/', {
       templateUrl: 'browser/index.html',
@@ -25,7 +26,18 @@ angular.module('fairySlipper.index', [
     });
   }])
 
-  .controller('MenuCtrl', ['$scope', 'APIs', function($scope, APIs) {
+  .controller('MenuCtrl', ['$scope', '$location', '$routeParams', 'APIs', 'snapRemote', function($scope, $location, $routeParams, APIs, snapRemote) {
+    if ($location.path().indexOf('/by-path/') == 0) {
+      $scope.filterByModel = 'by-path';
+    } else if ($location.path().indexOf('/by-tag/') == 0) {
+      $scope.filterByModel = 'by-tag';
+    } else {
+      $scope.filterByModel = 'by-path';
+    }
+
+    $scope.snapRemote = snapRemote;
+    $scope.$routeParams = $routeParams;
+
     APIs.query().$promise.then(function (data) {
       $scope.services = {};
       angular.forEach(data, function (value) {
@@ -38,4 +50,5 @@ angular.module('fairySlipper.index', [
         $scope.services[service]['apis'].push(value);
         });
     });
+
   }]);
