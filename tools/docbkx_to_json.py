@@ -250,6 +250,8 @@ SECTIONS = {u'API_Versions': u'api-versions',
 
 VERSION_RE = re.compile('v[0-9\.]+')
 WHITESPACE_RE = re.compile('[\s]+', re.MULTILINE)
+TITLE_RE = re.compile(
+    '(.*) API v([\d.]+) (\S*)[ ]*\((SUPPORTED|CURRENT|DEPRECATED)\)')
 
 
 class TableMixin(object):
@@ -370,9 +372,12 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
 
         if self.on_top_tag_stack('chapter', 'title'):
             title = content.strip()
-            title = title.split('API', 1)[0]
-            title = title + 'API'
-            self.api_parser.title = title
+            match = TITLE_RE.match(title)
+            if match:
+                title, version, ext, state = match.groups()
+            else:
+                raise Exception("Title %s doesn't match RE" % title)
+            self.api_parser.title = ('%s %s' % (title, ext)).strip()
             self.content_stack.pop()
 
         if self.on_top_tag_stack('chapter', 'section'):
