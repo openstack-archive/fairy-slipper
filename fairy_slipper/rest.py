@@ -18,9 +18,14 @@
 """
 
 """
+from __future__ import unicode_literals
+
 import logging
 
 from docutils import writers, nodes
+import docutils.core
+import docutils.utils
+from docutils import frontend
 from docutils.parsers.rst import directives
 from docutils.parsers.rst import Directive
 
@@ -110,6 +115,12 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         """Default node depart method."""
         self.node_stack.pop()
 
+    def visit_system_message(self, node):
+        pass
+
+    def depart_system_message(self, node):
+        pass
+
     def visit_Text(self, node):
         self.text += node.astext()
 
@@ -122,6 +133,12 @@ class JSONTranslator(nodes.GenericNodeVisitor):
 
     def depart_literal(self, node):
         pass
+
+    def visit_literal_block(self, node):
+        self.text += '```\n'
+
+    def depart_literal_block(self, node):
+        self.text += '\n```\n'
 
     def visit_bullet_list(self, node):
         self.bullet_stack.append('*')
@@ -466,7 +483,7 @@ class Resource(Directive):
 
     method = None
 
-    required_arguments = 0
+    required_arguments = 1
     optional_arguments = 0
     has_content = True
     final_argument_whitespace = True
@@ -547,12 +564,16 @@ class Resource(Directive):
         self.state.nested_parse(self.content, self.content_offset, node)
         fields = self.transform_fields()
 
+        # This is the first line of the definition.
+        url = self.arguments[0]
+        node.insert(0, resource_url(url, url))
+
+        if not node.children:
+            return [node]
+
         if node[0].tagname == 'system_message':
             logger.error(node[0].astext())
             node.remove(node[0])
-        # This is the first line of the definition.
-        url = node[0].astext()
-        node[0].replace_self(resource_url(url, url))
 
         # Method
         node.insert(1, resource_method(self.method, self.method))
@@ -663,3 +684,16 @@ class SwaggerTag(Directive):
 
 
 directives.register_directive('swagger:tag', SwaggerTag)
+
+
+class error_writer(object):
+
+    def write(self, line):
+        logger.warning(line.strip())
+
+
+def publish_string(string):
+    settings_overrides = {'warning_stream': error_writer()}
+    return docutils.core.publish_string(
+        string, writer=JSONWriter(),
+        settings_overrides=settings_overrides)

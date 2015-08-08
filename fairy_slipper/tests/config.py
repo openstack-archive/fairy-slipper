@@ -9,6 +9,7 @@ app = {
     'root': 'fairy_slipper.controllers.root.RootController',
     'modules': ['fairy_slipper'],
     'static_root': '%(confdir)s/../../public',
+    'api_doc': '%(confdir)s/../../api_doc',
     'template_path': '%(confdir)s/../templates',
     'debug': True,
     'errors': {

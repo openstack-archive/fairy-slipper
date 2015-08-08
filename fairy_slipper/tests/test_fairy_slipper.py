@@ -27,7 +27,7 @@ Tests for `fairy_slipper` module.
 from fairy_slipper.tests import base
 
 
-class TestFairy_slipper(base.TestCase):
+class TestFairySlipper(base.TestCase):
 
     def test_something(self):
         pass
