@@ -23,11 +23,11 @@ First run the migrate script to initially migrate the content from wadl::
 
 This script will checkout the current version of the documentation.
 
-To run both the API and the frontend server to webservers need to be run::
+To run the webserver use::
 
-  pecan serve config.py
+  ./run_server.sh
 
-Pecan will then listen on http://127.0.0.1:8080
+A Pecan based webserver will then listen on http://127.0.0.1:8080
 
 AngularJS
 ~~~~~~~~~
@@ -36,7 +36,8 @@ To develop the AngularJS component, it's easiest if you use the grunt webserver:
 
   grunt
 
-You will still need to run the pecan webserver, but this will enable auto reloading if you visit the port http://127.0.0.1:9000
+You will still need to run the Fairy-Slipper webserver, but this will
+enable auto reloading if you visit the port http://127.0.0.1:9000
 
 Directory Structure (Future)
 ----------------------------
