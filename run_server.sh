@@ -78,7 +78,7 @@ then
 fi
 
 function run_server {
-  pecan serve config.py
+  ${wrapper} pecan serve config.py
 }
 
 run_server
