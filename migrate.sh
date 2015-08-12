@@ -37,6 +37,7 @@ while [ $# -gt 0 ]; do
         -V|--virtual-env) always_venv=1; never_venv=0;;
         -N|--no-virtual-env) always_venv=0; never_venv=1;;
         -n|--no-site-packages) no_site_packages=1;;
+        -f|--force) force=1;;
         -u|--update) update=1;;
         -d|--debug) debug=1;;
     esac
