@@ -77,8 +77,13 @@ then
   fi
 fi
 
+function install_fairy_slipper {
+  ${wrapper} pip install -e .
+}
+
 function run_server {
   ${wrapper} pecan serve config.py
 }
 
+install_fairy_slipper
 run_server
