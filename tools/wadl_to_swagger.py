@@ -42,6 +42,7 @@ TYPE_MAP = {
     'xsd:anyuri': 'string',
     'csapi:serverforupdate': 'string',
     'capi:uuid': 'string',
+    'xsd:uuid': 'string',
     'string': 'string',
     'imageapi:string': 'string',
     'imageapi:imagestatus': 'string',
