@@ -111,6 +111,33 @@ banana
 ''')]},
                         'tags': []}
 
+    def test_body_ul(self):
+        rst = """
+.. http:get:: /path
+
+   Some normal body text
+
+   - the first item
+   - the second item
+
+"""
+
+        markdown = '''Some normal body text
+
+
+ * the first item
+
+
+ * the second item
+
+'''
+        json = rest.publish_string(rst)
+
+        assert json == {'paths':
+                        {'/path':
+                         [minimal_method_json(description=markdown)]},
+                        'tags': []}
+
     def test_synopsis(self):
         rst = """
 .. http:get:: /path
