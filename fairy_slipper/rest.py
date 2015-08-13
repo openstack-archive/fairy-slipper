@@ -25,7 +25,6 @@ import logging
 from docutils import writers, nodes
 import docutils.core
 import docutils.utils
-from docutils import frontend
 from docutils.parsers.rst import directives
 from docutils.parsers.rst import Directive
 
@@ -351,7 +350,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         self.text = ''
         self.node_stack.append(self.node_stack[-1]['tags'])
         new_node = {'name': '',
-                    'description': '',}
+                    'description': ''}
         self.node_stack[-1].append(new_node)
         self.node_stack.append(new_node)
 
