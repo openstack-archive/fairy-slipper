@@ -204,7 +204,9 @@ class ParaParser(SubParser, TableMixin):
         if not content:
             return
         # Fold up any white space into a single char
-        content = WHITESPACE_RE.sub(' ', content)
+        if not self.on_top_tag_stack('programlisting'):
+            content = WHITESPACE_RE.sub(' ', content)
+
         if content == ' ':
             return
         if content[0] == '\n':
@@ -214,6 +216,8 @@ class ParaParser(SubParser, TableMixin):
                 content = ' ' * self.nesting + content.strip()
             elif self.content[-1].endswith(' '):
                 content = content.strip()
+            elif (self.on_top_tag_stack('programlisting')):
+                content = '\n' + ' ' * self.nesting + content
             elif self.no_space:
                 content = content.strip()
                 self.no_space = False
@@ -297,6 +301,17 @@ class ParaParser(SubParser, TableMixin):
     def depart_emphasis(self):
         self.content.append(self.EMPHASIS[self.current_emphasis])
         self.current_emphasis = None
+
+    def visit_programlisting(self, attrs):
+        if not attrs:
+            self.content.append('::\n')
+        else:
+            self.content.append('.. code-block:: %s\n' % attrs['language'])
+        self.nesting = 3
+
+    def depart_programlisting(self):
+        self.content.append('\n')
+        self.nesting = 0
 
 
 class WADLHandler(xml.sax.ContentHandler):
