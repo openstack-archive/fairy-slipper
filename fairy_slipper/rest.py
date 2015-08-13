@@ -132,6 +132,12 @@ class JSONTranslator(nodes.GenericNodeVisitor):
     def depart_literal(self, node):
         self.text += '`'
 
+    def visit_strong(self, node):
+        self.text += '**'
+
+    def depart_strong(self, node):
+        self.text += '**'
+
     def visit_literal_block(self, node):
         self.text += '```\n'
 

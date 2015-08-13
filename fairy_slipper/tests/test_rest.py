@@ -138,6 +138,32 @@ banana
                          [minimal_method_json(description=markdown)]},
                         'tags': []}
 
+    def test_body_strong(self):
+        rst = """
+.. http:get:: /path
+
+    start text **end**
+
+    **start** end
+
+    start **inline text** end
+
+"""
+
+        markdown='''start text **end**
+
+**start** end
+
+start **inline text** end
+
+'''
+        json = rest.publish_string(rst)
+
+        assert json == {'paths':
+                        {'/path':
+                         [minimal_method_json(description=markdown)]},
+                        'tags': []}
+
     def test_body_inline_literal(self):
         rst = """
 .. http:get:: /path
