@@ -306,6 +306,7 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
         self.content_stack = [[]]
         self.current_emphasis = None
         self.nesting = 0
+        self.no_space = False
         self.fill_width = 67
         self.wrapper = textwrap.TextWrapper(width=self.fill_width)
 
@@ -406,11 +407,11 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
                 content = ' ' * self.nesting + content.strip()
             elif self.content[-1].endswith(' '):
                 content = content.strip()
-            elif (not self.on_top_tag_stack('emphasis')
-                  and not self.on_top_tag_stack('code')):
-                content = ' ' + content.strip()
-            else:
+            elif self.no_space:
                 content = content.strip()
+                self.no_space = False
+            else:
+                content = '' + content.strip()
 
         self.content.append(content)
 
@@ -466,6 +467,7 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
         if not self.content[-1].endswith(' '):
             self.content.append(' ')
         self.content.append('``')
+        self.no_space = True
 
     def depart_code(self):
         self.content.append('``')
@@ -476,6 +478,7 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
         if not self.content[-1].endswith(' '):
             self.content.append(' ')
         self.content.append(self.EMPHASIS[self.current_emphasis])
+        self.no_space = True
 
     def depart_emphasis(self):
         self.content.append(self.EMPHASIS[self.current_emphasis])
