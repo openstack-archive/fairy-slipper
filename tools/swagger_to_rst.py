@@ -19,13 +19,11 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import re
 import os
 import logging
 import json
 import codecs
 import textwrap
-from urlparse import urljoin
 from os import path
 
 from jinja2 import Environment
