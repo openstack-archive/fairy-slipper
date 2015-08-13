@@ -261,6 +261,7 @@ class TableMixin(object):
     def depart_table(self):
         self.content.append('\n\n')
         self.content.append(str(self.__table))
+        self.content.append('\n\n')
 
     def depart_th(self):
         heading = self.content.pop().strip()
