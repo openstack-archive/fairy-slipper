@@ -128,11 +128,10 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         pass
 
     def visit_literal(self, node):
-        literal = '`%s` ' % node.astext()
-        self.text += literal
+        self.text += '`'
 
     def depart_literal(self, node):
-        pass
+        self.text += '`'
 
     def visit_literal_block(self, node):
         self.text += '```\n'

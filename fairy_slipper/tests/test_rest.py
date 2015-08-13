@@ -138,6 +138,32 @@ banana
                          [minimal_method_json(description=markdown)]},
                         'tags': []}
 
+    def test_body_inline_literal(self):
+        rst = """
+.. http:get:: /path
+
+    text ``end inline``
+
+    ``start inline`` ending normal
+
+    start text ``inline inline`` end text
+
+"""
+
+        markdown='''text `end inline`
+
+`start inline` ending normal
+
+start text `inline inline` end text
+
+'''
+        json = rest.publish_string(rst)
+
+        assert json == {'paths':
+                        {'/path':
+                         [minimal_method_json(description=markdown)]},
+                        'tags': []}
+
     def test_synopsis(self):
         rst = """
 .. http:get:: /path
