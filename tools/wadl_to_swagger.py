@@ -72,6 +72,7 @@ TYPE_MAP = {
     'csapi:dict': 'object',
     'imageforcreate': 'string',
     'xsd:ip': 'string',
+    'xsd:base64binary': 'string',
 
     # TODO This array types also set the items
          # "tags": {
