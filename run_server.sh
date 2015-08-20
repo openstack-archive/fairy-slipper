@@ -81,9 +81,14 @@ function install_fairy_slipper {
   ${wrapper} pip install -e .
 }
 
+function install_bower {
+  ${wrapper} npm install
+}
+
 function run_server {
   ${wrapper} pecan serve config.py
 }
 
 install_fairy_slipper
+install_bower
 run_server
