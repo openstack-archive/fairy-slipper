@@ -100,8 +100,10 @@ class ServicesController(object):
 
     def __init__(self):
         filepath = path.join(conf.app.api_doc, 'index.json')
-        self.services_info = json.load(open(filepath))
         self.url_map = {}
+        if not path.exists(filepath):
+            return
+        self.services_info = json.load(open(filepath))
         for key, info in self.services_info.items():
             # Add the path into each element, this is to make
             # consumption by the JS client easier.
