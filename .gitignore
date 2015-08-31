@@ -60,3 +60,4 @@ api-site/
 conversion_files/
 api_doc/
 /public/components/
+/.eggs/
