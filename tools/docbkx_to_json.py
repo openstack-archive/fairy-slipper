@@ -492,7 +492,9 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
 
     def depart_code(self):
         self.content.append('``')
-
+        if not self.content[-1].endswith(' '):
+            self.content.append(' ')
+        
     def visit_emphasis(self, attrs):
         # Bold is the default emphasis
         self.current_emphasis = attrs.get('role', 'bold')

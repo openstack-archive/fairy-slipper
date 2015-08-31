@@ -307,6 +307,8 @@ class ParaParser(SubParser, TableMixin):
 
     def depart_code(self):
         self.content.append('``')
+        if not self.content[-1].endswith(' '):
+            self.content.append(' ')
 
     def visit_emphasis(self, attrs):
         # Bold is the default emphasis
@@ -322,9 +324,9 @@ class ParaParser(SubParser, TableMixin):
 
     def visit_programlisting(self, attrs):
         if not attrs:
-            self.content.append('::\n')
+            self.content.append('::\n\n')
         else:
-            self.content.append('.. code-block:: %s\n' % attrs['language'])
+            self.content.append('.. code-block:: %s\n\n' % attrs['language'])
         self.nesting = 3
 
     def depart_programlisting(self):
