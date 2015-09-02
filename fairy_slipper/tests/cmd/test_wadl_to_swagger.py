@@ -17,8 +17,8 @@
 
 from __future__ import unicode_literals
 
-from unittest import TestCase
 from StringIO import StringIO
+from unittest import TestCase
 import xml.sax
 
 from fairy_slipper.cmd import wadl_to_swagger
@@ -54,9 +54,13 @@ class TestWADLHandler(TestCase):
     </wadl:doc>
     <request>
       <representation mediaType="application/json">
-        <param name="thing-a-imagig" style="plain" type="xsd:string" required="true">
+        <param name="thing-a-imagig" style="plain"
+               type="xsd:string" required="true">
           <wadl:doc>
-            <para>Specify the <code>interfaceAttachment</code> action in the request body.</para>
+            <para>
+               Specify the <code>interfaceAttachment</code>
+               action in the request body.
+            </para>
           </wadl:doc>
         </param>
       </representation>
@@ -83,7 +87,8 @@ class TestWADLHandler(TestCase):
                                   'in': 'body',
                                   'name': 'body',
                                   'required': False,
-                                  'schema': {'$ref': '#/definitions/createThing'}}],
+                                  'schema': {'$ref':
+                                             '#/definitions/createThing'}}],
                              'produces': [],
                              'responses': {'202': {'examples': {},
                                                    'headers': {}}},
