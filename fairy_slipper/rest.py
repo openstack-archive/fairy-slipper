@@ -114,7 +114,8 @@ class JSONTranslator(nodes.GenericNodeVisitor):
 
     def default_departure(self, node):
         """Default node depart method."""
-        self.node_stack.pop()
+        if hasattr(node, 'children') and node.children:
+            self.node_stack.pop()
 
     def visit_system_message(self, node):
         pass
