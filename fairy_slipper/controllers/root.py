@@ -15,20 +15,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import itertools
 import json
 import logging
-import itertools
 from os import path
 
-from pecan import expose, response
+import docutils.core
 from pecan import conf
+from pecan import expose
+from pecan import response
 from webob.exc import status_map
 from webob.static import FileIter
-import docutils.core
 
-from fairy_slipper.rest import JSONWriter
 from fairy_slipper import hooks
-
+from fairy_slipper.rest import JSONWriter
 
 logger = logging.getLogger(__name__)
 

@@ -18,6 +18,7 @@
 from __future__ import unicode_literals
 
 from unittest import TestCase
+
 import docutils.core
 
 from fairy_slipper import rest
@@ -150,7 +151,7 @@ banana
 
 """
 
-        markdown='''start text **end**
+        markdown = '''start text **end**
 
 **start** end
 
@@ -176,7 +177,7 @@ start **inline text** end
 
 """
 
-        markdown='''text `end inline`
+        markdown = '''text `end inline`
 
 `start inline` ending normal
 

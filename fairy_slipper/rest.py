@@ -22,11 +22,13 @@ from __future__ import unicode_literals
 
 import logging
 
-from docutils import writers, nodes
 import docutils.core
-import docutils.utils
-from docutils.parsers.rst import directives
+from docutils import nodes
 from docutils.parsers.rst import Directive
+from docutils.parsers.rst import directives
+import docutils.utils
+from docutils import writers
+import six
 
 logger = logging.getLogger(__name__)
 
@@ -90,7 +92,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         for node in self.node_stack:
             # Skip any list elements, this is a hack, but it' works
             # for now.
-            if isinstance(node, (list, str, unicode)):
+            if isinstance(node, (list, ) + six.string_types):
                 continue
             if tag_name in node.keys():
                 return node
@@ -255,8 +257,8 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         name = node.attributes['names'][0]
         resource = self.node_stack[-1]
         new_response = {'description': ''}
-        # TODO this name matching ignores all the other possible names
-        # that the fields could have.
+        # TODO(arrsim) this name matching ignores all the other
+        # possible names that the fields could have.
         if name == 'statuscode':
             responses = resource['responses']
             status_code = node[0].astext()
@@ -498,7 +500,8 @@ class Resource(Directive):
                    typerolename='obj', typenames=('paramtype', 'type')),
         TypedField('jsonparameter', label='JSON Parameters',
                    names=('jsonparameter', 'jsonparam', 'json'),
-                   typerolename='obj', typenames=('jsonparamtype', 'jsontype')),
+                   typerolename='obj',
+                   typenames=('jsonparamtype', 'jsontype')),
         TypedField('requestjsonobject', label='Request JSON Object',
                    names=('reqjsonobj', 'reqjson', '<jsonobj', '<json'),
                    typerolename='obj', typenames=('reqjsonobj', '<jsonobj')),

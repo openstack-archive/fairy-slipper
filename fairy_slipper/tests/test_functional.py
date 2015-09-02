@@ -16,8 +16,6 @@
 # limitations under the License.
 
 
-from unittest import TestCase
-from webtest import TestApp
 from fairy_slipper.tests import FunctionalTest
 
 

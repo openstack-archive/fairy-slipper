@@ -19,12 +19,12 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import os
-import logging
-import json
 import codecs
-import textwrap
+import json
+import logging
+import os
 from os import path
+import textwrap
 
 from jinja2 import Environment
 
@@ -77,7 +77,7 @@ TMPL_API = """
 
 {% endfor %}
 {%- endfor %}
-"""
+"""  # noqa
 
 TMPL_TAG = """
 {%- for tag in swagger.tags -%}

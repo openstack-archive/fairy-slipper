@@ -19,15 +19,15 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
+from collections import defaultdict
+from copy import copy
 import json
 import logging
 import os
+from os import path
 import re
 import textwrap
 import xml.sax
-from collections import defaultdict
-from copy import copy
-from os import path
 
 import prettytable
 
@@ -74,11 +74,11 @@ TYPE_MAP = {
     'xsd:ip': 'string',
     'xsd:base64binary': 'string',
 
-    # TODO This array types also set the items
-         # "tags": {
-         #    "type": "array",
-         #    "items": {
-         #        "type": "string"
+    # TODO(arrsim) This array types also set the items
+    # "tags": {
+    #    "type": "array",
+    #    "items": {
+    #        "type": "string"
     'xsd:list': 'array',
     'array': 'array',
 }
@@ -414,7 +414,8 @@ class WADLHandler(xml.sax.ContentHandler):
             status_codes = status_code.split(' ')
             if '200' in status_codes:
                 status_code = '200'
-            # TODO need to do something with the other status codes
+            # TODO(arrsim) need to do something with the other status
+            # codes
         param = self.search_stack_for('param')
         style = STYLE_MAP[param['style']]
         name = param['name']
@@ -556,7 +557,8 @@ class WADLHandler(xml.sax.ContentHandler):
                     status_codes = status_code.split(' ')
                     if '200' in status_codes:
                         status_code = '200'
-                    # TODO need to do something with the other status codes
+                    # TODO(arrsim) need to do something with the other
+                    # status codes
             elif self.search_stack_for('request') is not None:
                 type = 'request'
             else:
@@ -633,7 +635,7 @@ class WADLHandler(xml.sax.ContentHandler):
                 status_codes = status_code.split(' ')
                 if '200' in status_codes:
                     status_code = '200'
-                # TODO need to do something with the other status codes
+                # TODO(arrsim) need to do something with the other status codes
             name = attrs['name']
             parameter = create_parameter(
                 name=name,
@@ -660,8 +662,6 @@ class WADLHandler(xml.sax.ContentHandler):
     def endElement(self, name):
         if self.parser:
             return self.parser.endElement(name)
-
-        content = ' '.join(self.content)
 
         if self.current_api and name == 'method':
             # Clean up the parameters of methods that have take no
@@ -701,13 +701,15 @@ def main(source_file, output_dir):
         files.add(filepath.split('#', 1)[0])
 
     output = {
-        u'info': {'version': api_ref['version'],
-                  'title': api_ref['title'],
-                  'service': api_ref['service'],
-                  'license': {
-                      "name": "Apache 2.0",
-                      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-                  }},
+        u'info': {
+            'version': api_ref['version'],
+            'title': api_ref['title'],
+            'service': api_ref['service'],
+            'license': {
+                "name": "Apache 2.0",
+                "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+            }
+        },
         u'paths': defaultdict(list),
         u'schemes': {},
         u'tags': api_ref['tags'],
