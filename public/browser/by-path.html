@@ -5,7 +5,11 @@
 </div>
 
 <div ng-repeat="operations in paths | orderBy: '$key'">
-  <h2>{{ operations.$key }}</h2>
+  <h2>
+    <swagger-path path="operations.$key"
+                  parameters="operations[0].parameters">
+    </swagger-path>
+  </h2>
   <accordion>
     <accordion-group ng-repeat="operation in operations">
       <accordion-heading>

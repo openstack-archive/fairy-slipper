@@ -15,11 +15,16 @@
 
     return {
       annotate: function (context) {
+        var context_map = {};
+        angular.forEach(context, function(value) {
+          context_map[value.name] = value;
+        });
+
         return template.replace(/\{([^\{\}]+)\}|([^\{\}]+)/g, function (_, key, literal) {
           if (key) {
-            var value = context[key];
+            var value = context_map[key];
             if (value !== undefined && value !== null) {
-              return value;
+              return '<abbr title="' + value.description + '">{' + value.name + '}</abbr>';
             } else {
               return '{' + key + '}';
             }

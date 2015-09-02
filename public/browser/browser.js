@@ -92,6 +92,23 @@ angular.module('fairySlipper.browser', [
     };
   }])
 
+  .directive('swaggerPath', ['$http', '$sce', function($http, $sce) {
+    function link(scope, element, attrs) {
+      var path = urldescription.parse(scope.path);
+      scope.annotated_path = $sce.trustAsHtml(path.annotate(scope.parameters));
+    }
+
+    return {
+      restrict: 'E',
+      scope: {
+        path: '=path',
+        parameters: '=parameters'
+      },
+      link: link,
+      template: '<div ng-bind-html="annotated_path"></div>'
+    };
+  }])
+
   .controller('ParametersCtrl', ['$scope', function($scope) {
     $scope.parameters = {};
     angular.forEach($scope.operation.parameters, function (item) {

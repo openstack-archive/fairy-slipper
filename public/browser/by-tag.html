@@ -19,7 +19,11 @@
       </accordion-heading>
       <div class="row">
         <div class="col-md-12">
-          <h4>{{ operation.path }}</h4>
+          <h4>
+            <swagger-path path="operation.path"
+                          parameters="operation.parameters">
+            </swagger-path>
+          </h4>
         </div>
         <div ng-controller="ParametersCtrl" class="col-md-6">
           <tabset>
