@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # Copyright (c) 2015 Russell Sim <russell.sim@gmail.com>
 #
 # All Rights Reserved.
@@ -31,7 +30,7 @@ import xml.sax
 
 import prettytable
 
-log = logging.getLogger(__file__)
+log = logging.getLogger(__name__)
 
 TYPE_MAP = {
     'string': 'string',
@@ -689,7 +688,7 @@ class WADLHandler(xml.sax.ContentHandler):
             self.content.append(content)
 
 
-def main(source_file, output_dir):
+def main1(source_file, output_dir):
     log.info('Reading API description from %s' % source_file)
     api_ref = json.load(open(source_file))
     files = set()
@@ -734,7 +733,7 @@ def main(source_file, output_dir):
         json.dump(output, out_file, indent=2, sort_keys=True)
 
 
-if '__main__' == __name__:
+def main():
     import argparse
 
     parser = argparse.ArgumentParser(
@@ -763,4 +762,4 @@ if '__main__' == __name__:
 
     filename = path.abspath(args.filename)
 
-    main(filename, output_dir=args.output_dir)
+    main1(filename, output_dir=args.output_dir)

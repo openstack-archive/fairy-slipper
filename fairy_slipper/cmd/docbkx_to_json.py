@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # Copyright (c) 2015 Russell Sim <russell.sim@gmail.com>
 #
 # All Rights Reserved.
@@ -29,7 +28,7 @@ import xml.sax
 
 import prettytable
 
-log = logging.getLogger(__file__)
+log = logging.getLogger(__name__)
 
 
 SECTIONS = {'API_Versions': 'api-versions',
@@ -581,7 +580,7 @@ class APIRefContentHandler(xml.sax.ContentHandler):
             self.content.append(content)
 
 
-def main(source_file, output_dir):
+def main1(source_file, output_dir):
     log.info('Parsing %s' % source_file)
     ch = APIRefContentHandler(source_file)
     xml.sax.parse(source_file, ch)
@@ -601,7 +600,7 @@ def main(source_file, output_dir):
         json.dump(output, out_file, indent=2, sort_keys=True)
 
 
-if '__main__' == __name__:
+def main():
     import argparse
 
     parser = argparse.ArgumentParser(
@@ -630,4 +629,4 @@ if '__main__' == __name__:
 
     filename = path.abspath(args.filename)
 
-    main(filename, output_dir=args.output_dir)
+    main1(filename, output_dir=args.output_dir)
