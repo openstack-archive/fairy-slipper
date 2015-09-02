@@ -336,16 +336,15 @@ class WADLHandler(xml.sax.ContentHandler):
     def __init__(self, filename, api_ref):
         self.filename = filename
         self.api_ref = api_ref
-        abs_filename = path.abspath(self.filename)
         self.method_tag_map = {method.split('#', 1)[1]: tag
                                for method, tag
                                in self.api_ref['method_tags'].items()
-                               if method.split('#', 1)[0] == abs_filename}
+                               if method.split('#', 1)[0] == filename}
         self.resource_tag_map = {resource.split('#', 1)[1]: tag
                                  for resource, tag
                                  in self.api_ref['resource_tags'].items()
-                                 if resource.split('#', 1)[0] == abs_filename}
-        self.file_tag = self.api_ref['file_tags'].get(abs_filename, None)
+                                 if resource.split('#', 1)[0] == filename}
+        self.file_tag = self.api_ref['file_tags'].get(filename, None)
         self.actual_tags = set(tag['name'] for tag in self.api_ref['tags'])
 
     def startDocument(self):
@@ -721,7 +720,8 @@ def main1(source_file, output_dir):
     }
     for file in files:
         log.info('Parsing %s' % file)
-        ch = WADLHandler(file, api_ref)
+        abs_filename = path.abspath(file)
+        ch = WADLHandler(abs_filename, api_ref)
         xml.sax.parse(file, ch)
         for urlpath, apis in ch.apis.items():
             output['paths'][urlpath].extend(apis)
