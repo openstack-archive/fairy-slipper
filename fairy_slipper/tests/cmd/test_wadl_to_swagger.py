@@ -17,7 +17,10 @@
 
 from __future__ import unicode_literals
 
-from StringIO import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 from unittest import TestCase
 import xml.sax
 
