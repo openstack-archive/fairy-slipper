@@ -24,6 +24,66 @@ import xml.sax
 from fairy_slipper.cmd import wadl_to_swagger
 
 
+class MockParent(object):
+    result = None
+    rest = None
+
+    def detach_subparser(self, result, **kwargs):
+        self.result = result
+        self.kwargs = kwargs
+
+
+class TestParaParser(TestCase):
+
+    def test_code_block(self):
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
+<wadl:doc>
+  <para>This is an example request:</para>
+  <programlisting>GET /v2.0/routers/{router_id}
+Accept: application/json</programlisting>
+  <para>para2</para>
+</wadl:doc>
+"""
+
+        parent = MockParent()
+        ch = wadl_to_swagger.ParaParser(parent)
+        xml.sax.parse(StringIO(file_content), ch)
+        self.assertEqual(parent.result, """This is an example request:
+
+::
+
+   GET /v2.0/routers/{router_id}
+   Accept: application/json
+para2
+
+""")
+
+    def test_code_block_language(self):
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
+<wadl:doc>
+  <para>This is an example request:</para>
+<programlisting language="json">"OS-OAUTH1": {
+    "access_token_id": "cce0b8be7"
+}</programlisting>
+  <para>para2</para>
+</wadl:doc>
+"""
+
+        parent = MockParent()
+        ch = wadl_to_swagger.ParaParser(parent)
+        xml.sax.parse(StringIO(file_content), ch)
+        self.assertEqual(parent.result, """This is an example request:
+
+.. code-block:: json
+
+   "OS-OAUTH1": {
+       "access_token_id": "cce0b8be7"
+   }
+para2
+
+""")
+
+
 class TestWADLHandler(TestCase):
 
     def test_simple_wadl(self):

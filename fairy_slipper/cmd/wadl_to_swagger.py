@@ -119,7 +119,7 @@ def create_parameter(name, _in, description='',
     }
 
 
-class SubParser(object):
+class SubParser(xml.sax.ContentHandler):
     def __init__(self, parent):
         # general state
         self.tag_stack = []
