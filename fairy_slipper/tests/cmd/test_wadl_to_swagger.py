@@ -48,7 +48,9 @@ Accept: application/json</programlisting>
         parent = MockParent()
         ch = wadl_to_swagger.ParaParser(parent)
         xml.sax.parse(StringIO(file_content), ch)
-        self.assertEqual(parent.result, """This is an example request:
+        self.assertEqual(
+            parent.result,
+            """This is an example request:
 
 ::
 
@@ -72,7 +74,9 @@ para2
         parent = MockParent()
         ch = wadl_to_swagger.ParaParser(parent)
         xml.sax.parse(StringIO(file_content), ch)
-        self.assertEqual(parent.result, """This is an example request:
+        self.assertEqual(
+            parent.result,
+            """This is an example request:
 
 .. code-block:: json
 
@@ -136,34 +140,38 @@ class TestWADLHandler(TestCase):
         ch = wadl_to_swagger.WADLHandler(filename, api_ref)
         xml.sax.parse(StringIO(file_content), ch)
 
-        assert ch.apis == {'v2/':
-                           [{'consumes': [],
-                             'description': '',
-                             'examples': {},
-                             'id': 'createThing',
-                             'method': 'post',
-                             'parameters': [
-                                 {'description': '',
-                                  'in': 'body',
-                                  'name': 'body',
-                                  'required': False,
-                                  'schema': {'$ref':
-                                             '#/definitions/createThing'}}],
-                             'produces': [],
-                             'responses': {'202': {'examples': {},
-                                                   'headers': {}}},
-                             'summary': 'Creates and uses a port interface '
-                             'to attach the port to a server instance.',
-                             'tags': ['things'],
-                             'title': 'Create interface'}]}
+        self.assertEqual(
+            ch.apis,
+            {'v2/':
+             [{'consumes': [],
+               'description': '',
+               'examples': {},
+               'id': 'createThing',
+               'method': 'post',
+               'parameters': [
+                   {'description': '',
+                    'in': 'body',
+                    'name': 'body',
+                    'required': False,
+                    'schema': {'$ref':
+                               '#/definitions/createThing'}}],
+               'produces': [],
+               'responses': {'202': {'examples': {},
+                                     'headers': {}}},
+               'summary': 'Creates and uses a port interface '
+               'to attach the port to a server instance.',
+               'tags': ['things'],
+               'title': 'Create interface'}]})
 
-        assert ch.schemas == {'createThing':
-                              {'properties':
-                               {'thing-a-imagig':
-                                {'description':
-                                 'Specify the ``interfaceAttachment``'
-                                 ' action in the request body.',
-                                 'format': '',
-                                 'required': True,
-                                 'type': 'string'}},
-                               'type': 'object'}}
+        self.assertEqual(
+            ch.schemas,
+            {'createThing':
+             {'properties':
+              {'thing-a-imagig':
+               {'description':
+                'Specify the ``interfaceAttachment``'
+                ' action in the request body.',
+                'format': '',
+                'required': True,
+                'type': 'string'}},
+              'type': 'object'}})
