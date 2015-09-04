@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # Copyright (c) 2015 Russell Sim <russell.sim@gmail.com>
 #
 # All Rights Reserved.
@@ -19,16 +18,16 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import os
-import logging
-import json
 import codecs
-import textwrap
+import json
+import logging
+import os
 from os import path
+import textwrap
 
 from jinja2 import Environment
 
-log = logging.getLogger(__file__)
+log = logging.getLogger(__name__)
 
 TMPL_API = """
 {%- for path, requests in swagger['paths'].items() -%}
@@ -77,7 +76,7 @@ TMPL_API = """
 
 {% endfor %}
 {%- endfor %}
-"""
+"""  # noqa
 
 TMPL_TAG = """
 {%- for tag in swagger.tags -%}
@@ -104,7 +103,7 @@ def format_param(obj, type='query'):
 environment.filters['format_param'] = format_param
 
 
-def main(filename, output_dir):
+def main1(filename, output_dir):
     log.info('Parsing %s' % filename)
     swagger = json.load(open(filename))
     write_rst(swagger, output_dir)
@@ -241,7 +240,7 @@ def write_examples(swagger, output_dir):
                         file.write(example)
 
 
-if '__main__' == __name__:
+def main():
     import argparse
 
     parser = argparse.ArgumentParser(
@@ -270,4 +269,4 @@ if '__main__' == __name__:
 
     filename = path.abspath(args.filename)
 
-    main(filename, output_dir=args.output_dir)
+    main1(filename, output_dir=args.output_dir)

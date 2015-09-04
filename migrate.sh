@@ -80,6 +80,10 @@ then
   fi
 fi
 
+function install_fairy_slipper {
+  ${wrapper} pip install -e .
+}
+
 function install_api_site {
     if [ ! -d api-site ]; then
       git clone https://github.com/openstack/api-site.git
@@ -94,10 +98,11 @@ function migrate_docbkx {
       mkdir api_doc
     fi
 
-    ${wrapper} find api-site/api-ref/src/docbkx/ -name api-ref-\* -type f -exec ./tools/docbkx_to_json.py -o conversion_files -v {} \;
-    ${wrapper} find conversion_files -name api-ref\*json -type f -exec ./tools/wadl_to_swagger.py -o conversion_files -v {} \;
-    ${wrapper} find conversion_files -name \*-swagger.json -type f -exec ./tools/swagger_to_rst.py -o api_doc -v {} \;
+    ${wrapper} find api-site/api-ref/src/docbkx/ -name api-ref-\* -type f -exec fairy-slipper-docbkx-to-json -o conversion_files -v {} \;
+    ${wrapper} find conversion_files -name api-ref\*json -type f -exec fairy-slipper-wadl-to-swagger -o conversion_files -v {} \;
+    ${wrapper} find conversion_files -name \*-swagger.json -type f -exec fairy-slipper-swagger-to-rst -o api_doc -v {} \;
 }
 
+install_fairy_slipper
 install_api_site
 migrate_docbkx

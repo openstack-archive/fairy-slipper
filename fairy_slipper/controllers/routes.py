@@ -17,13 +17,14 @@
 
 import operator
 import textwrap
-from pecan import expose
-from paste.deploy import util as paste_util
-from pecan.hooks import HookController
-import docutils.core
 
-from fairy_slipper.rest import JSONWriter
+import docutils.core
+from pecan import expose
+from pecan.hooks import HookController
+
 from fairy_slipper import hooks
+from fairy_slipper.rest import JSONWriter
+from paste.deploy import util as paste_util
 
 routes = {}
 

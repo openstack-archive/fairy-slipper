@@ -16,6 +16,7 @@
 # limitations under the License.
 
 from pecan import make_app
+
 from fairy_slipper.controllers import routes
 
 

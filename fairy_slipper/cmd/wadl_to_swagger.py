@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # Copyright (c) 2015 Russell Sim <russell.sim@gmail.com>
 #
 # All Rights Reserved.
@@ -19,19 +18,19 @@
 from __future__ import print_function
 from __future__ import unicode_literals
 
+from collections import defaultdict
+from copy import copy
 import json
 import logging
 import os
+from os import path
 import re
 import textwrap
 import xml.sax
-from collections import defaultdict
-from copy import copy
-from os import path
 
 import prettytable
 
-log = logging.getLogger(__file__)
+log = logging.getLogger(__name__)
 
 TYPE_MAP = {
     'string': 'string',
@@ -74,11 +73,11 @@ TYPE_MAP = {
     'xsd:ip': 'string',
     'xsd:base64binary': 'string',
 
-    # TODO This array types also set the items
-         # "tags": {
-         #    "type": "array",
-         #    "items": {
-         #        "type": "string"
+    # TODO(arrsim) This array types also set the items
+    # "tags": {
+    #    "type": "array",
+    #    "items": {
+    #        "type": "string"
     'xsd:list': 'array',
     'array': 'array',
 }
@@ -120,7 +119,7 @@ def create_parameter(name, _in, description='',
     }
 
 
-class SubParser(object):
+class SubParser(xml.sax.ContentHandler):
     def __init__(self, parent):
         # general state
         self.tag_stack = []
@@ -307,6 +306,8 @@ class ParaParser(SubParser, TableMixin):
 
     def depart_code(self):
         self.content.append('``')
+        if not self.content[-1].endswith(' '):
+            self.content.append(' ')
 
     def visit_emphasis(self, attrs):
         # Bold is the default emphasis
@@ -322,9 +323,9 @@ class ParaParser(SubParser, TableMixin):
 
     def visit_programlisting(self, attrs):
         if not attrs:
-            self.content.append('::\n')
+            self.content.append('::\n\n')
         else:
-            self.content.append('.. code-block:: %s\n' % attrs['language'])
+            self.content.append('.. code-block:: %s\n\n' % attrs['language'])
         self.nesting = 3
 
     def depart_programlisting(self):
@@ -337,16 +338,15 @@ class WADLHandler(xml.sax.ContentHandler):
     def __init__(self, filename, api_ref):
         self.filename = filename
         self.api_ref = api_ref
-        abs_filename = path.abspath(self.filename)
         self.method_tag_map = {method.split('#', 1)[1]: tag
                                for method, tag
                                in self.api_ref['method_tags'].items()
-                               if method.split('#', 1)[0] == abs_filename}
+                               if method.split('#', 1)[0] == filename}
         self.resource_tag_map = {resource.split('#', 1)[1]: tag
                                  for resource, tag
                                  in self.api_ref['resource_tags'].items()
-                                 if resource.split('#', 1)[0] == abs_filename}
-        self.file_tag = self.api_ref['file_tags'].get(abs_filename, None)
+                                 if resource.split('#', 1)[0] == filename}
+        self.file_tag = self.api_ref['file_tags'].get(filename, None)
         self.actual_tags = set(tag['name'] for tag in self.api_ref['tags'])
 
     def startDocument(self):
@@ -414,7 +414,8 @@ class WADLHandler(xml.sax.ContentHandler):
             status_codes = status_code.split(' ')
             if '200' in status_codes:
                 status_code = '200'
-            # TODO need to do something with the other status codes
+            # TODO(arrsim) need to do something with the other status
+            # codes
         param = self.search_stack_for('param')
         style = STYLE_MAP[param['style']]
         name = param['name']
@@ -556,7 +557,8 @@ class WADLHandler(xml.sax.ContentHandler):
                     status_codes = status_code.split(' ')
                     if '200' in status_codes:
                         status_code = '200'
-                    # TODO need to do something with the other status codes
+                    # TODO(arrsim) need to do something with the other
+                    # status codes
             elif self.search_stack_for('request') is not None:
                 type = 'request'
             else:
@@ -633,7 +635,7 @@ class WADLHandler(xml.sax.ContentHandler):
                 status_codes = status_code.split(' ')
                 if '200' in status_codes:
                     status_code = '200'
-                # TODO need to do something with the other status codes
+                # TODO(arrsim) need to do something with the other status codes
             name = attrs['name']
             parameter = create_parameter(
                 name=name,
@@ -661,8 +663,6 @@ class WADLHandler(xml.sax.ContentHandler):
         if self.parser:
             return self.parser.endElement(name)
 
-        content = ' '.join(self.content)
-
         if self.current_api and name == 'method':
             # Clean up the parameters of methods that have take no
             # body content.
@@ -689,7 +689,7 @@ class WADLHandler(xml.sax.ContentHandler):
             self.content.append(content)
 
 
-def main(source_file, output_dir):
+def main1(source_file, output_dir):
     log.info('Reading API description from %s' % source_file)
     api_ref = json.load(open(source_file))
     files = set()
@@ -701,13 +701,15 @@ def main(source_file, output_dir):
         files.add(filepath.split('#', 1)[0])
 
     output = {
-        u'info': {'version': api_ref['version'],
-                  'title': api_ref['title'],
-                  'service': api_ref['service'],
-                  'license': {
-                      "name": "Apache 2.0",
-                      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-                  }},
+        u'info': {
+            'version': api_ref['version'],
+            'title': api_ref['title'],
+            'service': api_ref['service'],
+            'license': {
+                "name": "Apache 2.0",
+                "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+            }
+        },
         u'paths': defaultdict(list),
         u'schemes': {},
         u'tags': api_ref['tags'],
@@ -720,7 +722,8 @@ def main(source_file, output_dir):
     }
     for file in files:
         log.info('Parsing %s' % file)
-        ch = WADLHandler(file, api_ref)
+        abs_filename = path.abspath(file)
+        ch = WADLHandler(abs_filename, api_ref)
         xml.sax.parse(file, ch)
         for urlpath, apis in ch.apis.items():
             output['paths'][urlpath].extend(apis)
@@ -732,7 +735,7 @@ def main(source_file, output_dir):
         json.dump(output, out_file, indent=2, sort_keys=True)
 
 
-if '__main__' == __name__:
+def main():
     import argparse
 
     parser = argparse.ArgumentParser(
@@ -761,4 +764,4 @@ if '__main__' == __name__:
 
     filename = path.abspath(args.filename)
 
-    main(filename, output_dir=args.output_dir)
+    main1(filename, output_dir=args.output_dir)

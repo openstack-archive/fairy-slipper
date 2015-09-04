@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # Copyright (c) 2015 Russell Sim <russell.sim@gmail.com>
 #
 # All Rights Reserved.
@@ -22,14 +21,14 @@ from __future__ import unicode_literals
 import json
 import logging
 import os
-import re
-import xml.sax
 from os import path
+import re
 import textwrap
+import xml.sax
 
 import prettytable
 
-log = logging.getLogger(__file__)
+log = logging.getLogger(__name__)
 
 
 SECTIONS = {'API_Versions': 'api-versions',
@@ -363,7 +362,8 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
             filename, resource_id = attrs['href'].split("#")
             dir = path.dirname(self.filename)
             filepath = path.abspath(path.join(dir, filename))
-            self.api_parser.resource_tags[filepath + '#' + resource_id] = self.current_tag['name']
+            tag_name = '%s#%s' % (filepath, resource_id)
+            self.api_parser.resource_tags[tag_name] = self.current_tag['name']
 
         if name == 'wadl:resources':
             if 'href' in attrs:
@@ -376,7 +376,8 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
             dir = path.dirname(self.filename)
             filename = resource['href'].split("#")[0]
             filepath = path.abspath(path.join(dir, filename))
-            self.api_parser.method_tags[filepath + attrs['href']] = self.current_tag['name']
+            method_path = filepath + attrs['href']
+            self.api_parser.method_tags[method_path] = self.current_tag['name']
 
         fn = getattr(self, 'visit_%s' % name, None)
         if fn:
@@ -492,6 +493,8 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
 
     def depart_code(self):
         self.content.append('``')
+        if not self.content[-1].endswith(' '):
+            self.content.append(' ')
 
     def visit_emphasis(self, attrs):
         # Bold is the default emphasis
@@ -579,7 +582,7 @@ class APIRefContentHandler(xml.sax.ContentHandler):
             self.content.append(content)
 
 
-def main(source_file, output_dir):
+def main1(source_file, output_dir):
     log.info('Parsing %s' % source_file)
     ch = APIRefContentHandler(source_file)
     xml.sax.parse(source_file, ch)
@@ -599,7 +602,7 @@ def main(source_file, output_dir):
         json.dump(output, out_file, indent=2, sort_keys=True)
 
 
-if '__main__' == __name__:
+def main():
     import argparse
 
     parser = argparse.ArgumentParser(
@@ -628,4 +631,4 @@ if '__main__' == __name__:
 
     filename = path.abspath(args.filename)
 
-    main(filename, output_dir=args.output_dir)
+    main1(filename, output_dir=args.output_dir)
