@@ -15,9 +15,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""
-
-"""
 from __future__ import unicode_literals
 
 import logging
@@ -84,6 +81,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         self.node_stack.append(self.output)
         self.current_node_name = None
         self.bullet_stack = []
+        self.table_row_stack = []
         self.text = ''
 
     def search_stack_for(self, tag_name):
@@ -109,7 +107,9 @@ class JSONTranslator(nodes.GenericNodeVisitor):
             new_node = {}
             self.node_stack[-1][self.current_node_name] = new_node
             self.node_stack.append(new_node)
-
+            # this can fail with an index error when nodes are not
+            # handled
+            
     def default_departure(self, node):
         """Default node depart method."""
         self.node_stack.pop()
@@ -121,7 +121,8 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         pass
 
     def visit_Text(self, node):
-        self.text += node.astext()
+        if len(self.table_row_stack) is 0:
+            self.text += node.astext()
 
     def depart_Text(self, node):
         pass
@@ -169,11 +170,13 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         self.node_stack.pop()
 
     def visit_paragraph(self, node):
-        pass
-
+        if len(self.table_row_stack) is not 0:
+            self.table_row_stack[-1].append(node.astext())
+            
     def depart_paragraph(self, node):
-        self.text += "\n\n"
-
+        if len(self.table_row_stack) is 0:
+            self.text += "\n\n"
+        
     def visit_line_block(self, node):
         if isinstance(self.node_stack[-1], list):
             return
@@ -190,6 +193,98 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         if isinstance(self.node_stack[-1], list):
             self.node_stack.pop()
 
+    def visit_table(self, node):
+        pass
+
+    def depart_table(self, node):
+        pass
+
+    def visit_tbody(self, node):
+        pass
+
+    def depart_tbody(self, node):
+        i = 0
+        while i < len(self.table_row_stack):
+            j = 0
+            while j < len(self.table_row_stack[i]):
+                self.text += "| "
+                self.text += self.table_row_stack[i][j]
+                self.text += " "
+                j = j+1
+
+            i = i+1
+            self.text += "|\n"
+            
+        self.table_row_stack[:] = [] # clean up
+        self.text += "\n"
+        
+    def visit_tgroup(self, node):
+        pass
+
+    def depart_tgroup(self, node):
+        pass
+
+    def visit_colspec(self, node):
+        pass
+
+    def depart_colspec(self, node):
+        pass
+
+    def visit_row(self, node):
+        # first row is the header text,
+        # second row is the header separator row
+        # which minimally needs three dashes in each column
+        #
+        row_separator = [] 
+        new_node = []
+
+        if len(self.table_row_stack) is 1:
+            num_cols = len(self.table_row_stack[-1])
+            i = 0
+            p = 0
+            while i < num_cols:
+                row_separator.append("---")
+                i = i + 1
+
+            self.table_row_stack.append(row_separator)
+            self.table_row_stack.append(new_node)
+        else:
+            self.table_row_stack.append(new_node)
+
+    def depart_row(self, node):
+        pass
+
+    def visit_entry(self, node):
+        pass
+
+    def depart_entry(self, node):
+        pass
+    
+    # TODO, handle multi-line text in table column
+    def visit_definition(self, node):
+        pass
+
+    def depart_definition(self, node):
+        pass
+
+    def visit_definition_list(self, node):
+        pass
+
+    def depart_definition_list(self, node):
+        pass
+    
+    def visit_definition_list_item(self, node):
+        pass
+    
+    def depart_definition_list_item(self, node):
+        pass
+
+    def visit_term(self, node):
+        pass
+    
+    def depart_term(self, node):
+        pass
+    
     def visit_resource(self, node):
         self.text = ''
         if 'paths' not in self.node_stack[-1]:

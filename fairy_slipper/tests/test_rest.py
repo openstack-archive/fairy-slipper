@@ -214,6 +214,69 @@ start text `inline inline` end text
                         {'/path':
                          [minimal_method_json(title='Path Thing')]},
                         'tags': []}
+        
+        
+    def test_simple_table(self):
+        rst = """
+.. http:get:: /path
+
+   Some text before table
+
+
+   +---------+---------+--------------+----------+
+   | Field 1 | Field 2 | Field 3      | Field 4  |
+   +---------+---------+--------------+----------+
+   | Apply   | Name    | Description  | Required |
+   +---------+---------+--------------+----------+
+
+"""
+
+        markdown = '''Some text before table
+
+
+| Field1 | Field2 | Field3 | Field4 |
+| --- | --- | --- | --- |
+| Apply | Name | Description | Required |
+
+'''
+        
+        json = rest.publish_string(rst)
+        assert json == {'paths':
+                        {'/path':
+                         [minimal_method_json(description=markdown)]},
+                        'tags': []}
+
+
+    def test_table_inline_markup(self):
+        rst = """
+.. http:get:: /path
+
+   Some text before table
+
+
+   +---------+---------+-----------------+----------+
+   | Field 1 | Field 2 | Field 3         | Field 4  |
+   +---------+---------+-----------------+----------+
+   | Apply   | Name    | **Description** | Required |
+   +---------+---------+-----------------+----------+
+
+"""
+
+        markdown = '''Some text before table
+
+
+| Field1 | Field2 | Field3 | Field4 |
+| --- | --- | --- | --- |
+| Apply | Name | **Description** | Required |
+
+'''
+
+        json = rest.publish_string(rst)
+        assert json == {'paths':
+                        {'/path':
+                         [minimal_method_json(description=markdown)]},
+                        'tags': []}
+
 
     def test_method_tags(self):
         rst = """
