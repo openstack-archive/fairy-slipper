@@ -109,8 +109,6 @@ class JSONTranslator(nodes.GenericNodeVisitor):
             new_node = {}
             self.node_stack[-1][self.current_node_name] = new_node
             self.node_stack.append(new_node)
-            # this can fail with an index error when nodes are not
-            # handled
             
     def default_departure(self, node):
         """Default node depart method."""
@@ -218,7 +216,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
             i = i+1
             self.text += "|\n"
             
-        self.table_row_stack[:] = [] # clean up
+        self.table_row_stack[:] = []
         self.text += "\n"
         
     def visit_tgroup(self, node):
@@ -234,25 +232,18 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         pass
 
     def visit_row(self, node):
-        # first row is the header text,
-        # second row is the header separator row
-        # which minimally needs three dashes in each column
-        #
+        # first row = table header text
+        # second row = table header separator row
+
         row_separator = [] 
         new_node = []
 
         if len(self.table_row_stack) is 1:
             num_cols = len(self.table_row_stack[-1])
-            i = 0
-            p = 0
-            while i < num_cols:
-                row_separator.append("---")
-                i = i + 1
-
+            row_separator = ['---']*num_cols
             self.table_row_stack.append(row_separator)
-            self.table_row_stack.append(new_node)
-        else:
-            self.table_row_stack.append(new_node)
+
+        self.table_row_stack.append(new_node)
 
     def depart_row(self, node):
         pass
