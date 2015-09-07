@@ -124,7 +124,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
     def visit_Text(self, node):
         if len(self.table_row_stack) is 0:
             self.text += node.astext()
-     
+
     def depart_Text(self, node):
         pass
 
@@ -201,15 +201,15 @@ class JSONTranslator(nodes.GenericNodeVisitor):
 
     def depart_title(self, node):
         self.node_stack.pop()
-        
+
     def visit_paragraph(self, node):
         if len(self.table_row_stack) > 0:
             self.table_row_stack[-1].append(node.astext())
- 
+
     def depart_paragraph(self, node):
         if len(self.table_row_stack) is 0:
             self.text += "\n\n"
-        
+
     def visit_line_block(self, node):
         if isinstance(self.node_stack[-1], list):
             return
