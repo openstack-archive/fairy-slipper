@@ -191,6 +191,34 @@ start text `inline inline` end text
                          [minimal_method_json(description=markdown)]},
                         'tags': []}
 
+
+    def test_body_inline_emphasis(self):
+        rst = """
+.. http:get:: /path
+
+    text *end inline*
+
+    *start inline* ending normal
+
+    start text *inline inline* end text
+
+"""
+
+        markdown = '''text _end inline_
+
+_start inline_ ending normal
+
+start text _inline inline_ end text
+
+'''
+        json = rest.publish_string(rst)
+        
+        assert json == {'paths':
+                        {'/path':
+                         [minimal_method_json(description=markdown)]},
+                        'tags': []}
+
+
     def test_synopsis(self):
         rst = """
 .. http:get:: /path
@@ -215,9 +243,9 @@ start text `inline inline` end text
                         {'/path':
                          [minimal_method_json(title='Path Thing')]},
                         'tags': []}
-        
-        
-    def test_simple_table(self):
+
+
+    def test_table_simple(self):
         rst = """
 .. http:get:: /path
 
@@ -246,36 +274,97 @@ start text `inline inline` end text
                          [minimal_method_json(description=markdown)]},
                         'tags': []}
 
-    # this test will fail until inline markup is handled
-    # in tables
 
-#    def test_table_inline_markup(self):
-#        rst = """
-#.. http:get:: /path
+    def test_table_inline_strong(self):
+        rst = """
+.. http:get:: /path
 
-#   Some text before table
+   Some text before table
 
-#   +---------+---------+-----------------+----------+
-#   | Field 1 | Field 2 | Field 3         | Field 4  |
-#   +---------+---------+-----------------+----------+
-#   | Apply   | Name    | **Description** | Required |
-#   +---------+---------+-----------------+----------+
 
-#"""
+   +---------+---------------+-----------------+------------------+
+   | Field 1 | Field 2       | Field 3         | Field 4          |
+   +---------+---------------+-----------------+------------------+
+   | Apply   | text in       |                 |                  |
+   |         | **between**   |                 |                  |
+   |         | text          | **text** start  | text **end**     |
+   +---------+---------------+-----------------+------------------+
 
-#        markdown = '''Some text before table
+"""
 
-#| Field 1 | Field 2 | Field 3 | Field 4 |
-#| --- | --- | --- | --- |
-#| Apply | Name | **Description** | Required |
-#
-#'''
+        markdown = '''Some text before table
 
-#        json = rest.publish_string(rst)
-#        assert json == {'paths':
-#                        {'/path':
-#                         [minimal_method_json(description=markdown)]},
-#                        'tags': []}
+| Field 1 | Field 2 | Field 3 | Field 4 |
+| --- | --- | --- | --- |
+| Apply | text in\n**between**\ntext | **text** start | text **end** |
+
+'''
+        
+        json = rest.publish_string(rst)
+        assert json == {'paths':
+                        {'/path':
+                         [minimal_method_json(description=markdown)]},
+                        'tags': []}
+
+    def test_table_inline_emphasis(self):
+        rst = """
+.. http:get:: /path
+
+   Some text before table
+
+
+   +---------+---------------+-----------------+------------------+
+   | Field 1 | Field 2       | Field 3         | Field 4          |
+   +---------+---------------+-----------------+------------------+
+   | Apply   | text in       |                 |                  |
+   |         | _between_     |                 |                  |
+   |         | text          | _text_ start    | text _end_       |
+   +---------+---------------+-----------------+------------------+
+
+"""
+
+        markdown = '''Some text before table
+
+| Field 1 | Field 2 | Field 3 | Field 4 |
+| --- | --- | --- | --- |
+| Apply | text in\n_between_\ntext | _text_ start | text _end_ |
+
+'''
+        json = rest.publish_string(rst)
+        assert json == {'paths':
+                        {'/path':
+                         [minimal_method_json(description=markdown)]},
+                        'tags': []}
+
+
+    def test_table_inline_literal(self):
+        rst = """
+.. http:get:: /path
+
+   Some text before table
+
+
+   +----------------+----------+--------------+----------------+
+   | Field 1        | Field 2  | Field 3      | Field 4        |
+   +----------------+----------+--------------+----------------+
+   | End ``text``   | ``Name`` | Description  | ``start`` text |
+   +----------------+----------+--------------+----------------+
+
+"""
+
+        markdown = '''Some text before table
+
+| Field 1 | Field 2 | Field 3 | Field 4 |
+| --- | --- | --- | --- |
+| End `text` | `Name` | Description | `start` text |
+
+'''
+        
+        json = rest.publish_string(rst)
+        assert json == {'paths':
+                       {'/path':
+                        [minimal_method_json(description=markdown)]},
+                       'tags': []}
 
 
     def test_method_tags(self):
