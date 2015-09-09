@@ -21,6 +21,3 @@ before_script:
   - "[[ \"$TOXENV\" == \"node\" ]] && export DISPLAY=:99.0 || true"
   - "[[ \"$TOXENV\" == \"node\" ]] && sh -e /etc/init.d/xvfb start || true"
   - "[[ \"$TOXENV\" == \"node\" ]] && sleep 3 || true"
-
-after_success:
-  - "[[ \"$TOXENV\" == \"coveralls\" ]] && coveralls || true"
