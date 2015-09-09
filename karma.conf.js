@@ -1,38 +1,46 @@
 module.exports = function(config){
   var configuration = {
 
-    basePath : './',
+    basePath : './public/',
 
     files : [
-      "public/components/angular/angular.js",
-      "public/components/angular-route/angular-route.js",
-      "public/components/angular-resource/angular-resource.js",
-      "public/components/angular-animate/angular-animate.js",
-      "public/components/angular-swagger-ui/dist/scripts/swagger-ui.js",
-      "public/components/angular-bootstrap/ui-bootstrap-tpls.js",
-      "public/components/angular-snap/angular-snap.js",
-      "public/components/snapjs/snap.js",
-      "public/components/angular-marked/angular-marked.js",
-      "public/components/marked/marked.min.js",
-      "public/components/highlightjs/highlight.pack.js",
-      "public/components/angular-highlightjs/angular-highlightjs.js",
-      'public/browser/*.js',
-      'public/browser/**/*.js',
-      'public/app.js'
+      "components/angular/angular.js",
+      "components/angular-mocks/angular-mocks.js",
+      "components/angular-route/angular-route.js",
+      "components/angular-resource/angular-resource.js",
+      "components/angular-animate/angular-animate.js",
+      "components/angular-swagger-ui/dist/scripts/swagger-ui.js",
+      "components/angular-bootstrap/ui-bootstrap-tpls.js",
+      "components/angular-snap/angular-snap.js",
+      "components/snapjs/snap.js",
+      "components/angular-marked/angular-marked.js",
+      "components/marked/marked.min.js",
+      "components/highlightjs/highlight.pack.js",
+      "components/angular-highlightjs/angular-highlightjs.js",
+      "components/dotjem-angular-tree/dotjem-angular-tree.js",
+      'app.js',
+      'browser/*.js',
+      'browser/**/*.js',
+      'browser/*.html'
     ],
 
     autoWatch : true,
+
+    preprocessors: {
+        'browser/*.html': ['ng-html2js']
+    },
 
     frameworks: ['jasmine'],
 
     browsers : ['Chrome'],
 
     plugins : [
-            'karma-chrome-launcher',
-            'karma-firefox-launcher',
-            'karma-jasmine',
-            'karma-junit-reporter'
-            ],
+      'karma-chrome-launcher',
+      'karma-firefox-launcher',
+      'karma-jasmine',
+      'karma-ng-html2js-preprocessor',
+      'karma-junit-reporter'
+    ],
 
     junitReporter : {
       outputFile: 'test_out/unit.xml',

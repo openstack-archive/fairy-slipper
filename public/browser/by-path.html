@@ -45,6 +45,10 @@
                   <dd ng-repeat-end>{{parameter.description}}</dd>
                 </dl>
               </div>
+              <div ng-if="parameters.body">
+                <h4>Request Schema</h4>
+                <swagger-schema swagger="swagger" parameters="parameters.body"></swagger-schema>
+              </div>
             </tab>
           </tabset>
         </div>

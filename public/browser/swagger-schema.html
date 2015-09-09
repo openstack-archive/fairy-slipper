@@ -1,0 +1,7 @@
+<ul dx-start-with="schema as prior">
+  {{ prior.nodes }}
+  <li ng-repeat="(name, node) in prior.properties">
+    {{ name }} ({{ node.type }}) <span marked="node.description"></span>
+    <ul ng-if="node.properties" dx-connect="node.properties"/>
+  </li>
+</ul>
