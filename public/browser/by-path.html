@@ -13,12 +13,18 @@
   <accordion>
     <accordion-group ng-repeat="operation in operations">
       <accordion-heading>
-        <h3>
-          <swagger-method method="operation.method"></swagger-method>
-          {{ operation.title }}
-          <small>{{ operation.summary }}</small>
-        </h3>
-        <small></small>
+        <div class="operation-header">
+          <div class="operation-method">
+            <swagger-method method="operation.method"></swagger-method>
+          </div>
+          <div class="operation-title">
+            <h3>
+              {{ operation.title }}
+              <br/>
+              <small>{{ operation.summary }}</small>
+            </h3>
+          </div>
+        </div>
       </accordion-heading>
       <div class="row">
         <div class="col-md-12">
