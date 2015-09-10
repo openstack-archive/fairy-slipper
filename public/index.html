@@ -34,7 +34,7 @@
   </head>
   <body ng-controller="MenuCtrl" >
     <div snap-drawer>
-      <div class="dragger" ng-mouseover="snapRemote.open('left')">
+      <div class="dragger" ng-mouseenter="showSidebar()" ng-mouseleave="hideSidebar()">
         <span class="glyphicon glyphicon-chevron-right"></span>
       </div>
       <div class="sidebar">
