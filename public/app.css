@@ -35,6 +35,33 @@ a.accordion-toggle:focus, a.accordion-toggle:hover {
     text-decoration: none;
 }
 
+.operation-header {
+    margin-top: 10px;
+}
+
+.operation-header h3{
+    margin-top: 0;
+}
+
+.operation-header small{
+    font-size: 65%;
+}
+
+.operation-method {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.operation-title {
+    display: inline-block;
+}
+
+.swagger-method {
+    vertical-align: top;
+    top: 10px;
+    position: relative;
+}
+
 .content {
     margin: 10px;
 }

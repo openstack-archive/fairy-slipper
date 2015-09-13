@@ -31,7 +31,7 @@ angular.module('fairySlipper.index', [
     });
   }])
 
-  .controller('MenuCtrl', ['$scope', '$location', '$routeParams', 'APIs', 'snapRemote', function($scope, $location, $routeParams, APIs, snapRemote) {
+  .controller('MenuCtrl', ['$scope', '$location', '$routeParams', '$timeout', 'APIs', 'snapRemote', function($scope, $location, $routeParams, $timeout, APIs, snapRemote) {
     if ($location.path().indexOf('/by-path/') == 0) {
       $scope.filterByModel = 'by-path';
     } else if ($location.path().indexOf('/by-tag/') == 0) {
@@ -39,6 +39,17 @@ angular.module('fairySlipper.index', [
     } else {
       $scope.filterByModel = 'by-path';
     }
+
+    // only show sidebar after hovering for 2 seconds
+    var timer;
+    $scope.showSidebar = function () {
+      timer = $timeout(function () {
+        snapRemote.open('left');
+      }, 500);
+    };
+    $scope.hideSidebar = function () {
+      $timeout.cancel(timer);
+    };
 
     $scope.snapRemote = snapRemote;
     $scope.$routeParams = $routeParams;

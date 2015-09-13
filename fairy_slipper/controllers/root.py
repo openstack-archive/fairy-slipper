@@ -40,15 +40,15 @@ class JSONFileController(object):
     def __init__(self, filepath):
         self.filepath = filepath
 
-    @expose(content_type='text/plain')
+    @expose('json')
     def _default(self):
         if path.exists(self.filepath + '.json'):
             self.filepath = self.filepath + '.json'
         if not path.exists(self.filepath):
             response.status = 404
-            return
-        f = open(self.filepath, 'rb')
-        response.app_iter = FileIter(f)
+            return response
+        response.app_iter = FileIter(open(self.filepath, 'rb'))
+        return response
 
 
 class DocController(object):
@@ -61,6 +61,7 @@ class DocController(object):
         self.api_rst = base_filepath + '.rst'
         self.tags_rst = base_filepath + '-tags.rst'
         self.examples_dir = path.join(base_filepath, 'examples') + path.sep
+        self.schema_dir = base_filepath + path.sep
         if not path.exists(self.api_rst):
             logger.warning("Can't find ReST API doc at %s", self.api_rst)
         if not path.exists(self.tags_rst):
@@ -88,12 +89,14 @@ class DocController(object):
         if len(components) != 2 and len(components) != 3:
             return
 
-        if components[0] != 'examples':
-            return
-
-        example = components[1]
-        filepath = path.join(self.examples_dir, example)
-        return JSONFileController(filepath), ['']
+        if components[0] == 'examples':
+            example = components[1]
+            filepath = path.join(self.examples_dir, example)
+            return JSONFileController(filepath), ['']
+        else:
+            filename = components[0]
+            filepath = path.join(self.schema_dir, filename)
+            return JSONFileController(filepath), []
 
 
 class ServicesController(object):

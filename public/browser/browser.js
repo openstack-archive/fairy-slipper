@@ -7,7 +7,8 @@ angular.module('fairySlipper.browser', [
   'hc.marked',
   'ui.bootstrap',
   'hljs',
-  'swaggerUi'
+  'swaggerUi',
+  'dotjem.angular.tree'
 ])
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/by-path/:service/:version/', {
@@ -106,6 +107,27 @@ angular.module('fairySlipper.browser', [
       },
       link: link,
       template: '<div ng-bind-html="annotated_path"></div>'
+    };
+  }])
+
+  .directive('swaggerSchema', ['$http', function($http) {
+    function link(scope, element, attrs) {
+      if (scope.parameters && scope.parameters[0].schema.$ref) {
+        $http.get('/doc/' + scope.swagger.info.service + '/' +
+                  scope.parameters[0].schema.$ref + '/')
+          .success(function(data){
+            scope.schema = data;
+          });
+      }
+    }
+    return {
+      restrict: 'E',
+      scope: {
+        swagger: '=swagger',
+        parameters: '=parameters'
+      },
+      link: link,
+      templateUrl: 'browser/swagger-schema.html'
     };
   }])
 

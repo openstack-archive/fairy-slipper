@@ -21,7 +21,7 @@ try:
     from StringIO import StringIO
 except ImportError:
     from io import StringIO
-from unittest import TestCase
+import unittest
 import xml.sax
 
 from fairy_slipper.cmd import wadl_to_swagger
@@ -36,7 +36,7 @@ class MockParent(object):
         self.kwargs = kwargs
 
 
-class TestParaParser(TestCase):
+class TestParaParser(unittest.TestCase):
 
     def test_code_block(self):
         file_content = """<?xml version="1.0" encoding="UTF-8"?>
@@ -91,6 +91,27 @@ para2
 para2
 
 """)
+
+    @unittest.expectedFailure
+    def test_link(self):
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
+<wadl:doc>
+  <para>
+    To create a keypair, make a <link
+    xlink:href="http://developer.openstack.org/#createKeypair">
+    create keypair</link> request.
+  </para>
+</wadl:doc>
+"""
+
+        parent = MockParent()
+        ch = wadl_to_swagger.ParaParser(parent)
+        xml.sax.parse(StringIO(file_content), ch)
+        self.assertEqual(
+            parent.result,
+            "To create a keypair, make a "
+            "`create keypair <http://developer.openstack.org/#createKeypair>`_"
+            " request.\n\n")
 
 
     def test_para_inline_code(self):
@@ -149,7 +170,8 @@ para5
 
 """)
 
-class TestWADLHandler(TestCase):
+
+class TestWADLHandler(unittest.TestCase):
 
     def test_simple_wadl(self):
         filename = "api-v1.wadl"
