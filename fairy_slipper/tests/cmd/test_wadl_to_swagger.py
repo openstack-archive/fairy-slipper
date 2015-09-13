@@ -59,6 +59,7 @@ Accept: application/json</programlisting>
 
    GET /v2.0/routers/{router_id}
    Accept: application/json
+
 para2
 
 """)
@@ -86,10 +87,67 @@ para2
    "OS-OAUTH1": {
        "access_token_id": "cce0b8be7"
    }
+
 para2
 
 """)
 
+
+    def test_para_inline_code(self):
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
+<wadl:doc>
+  <para>Code sample: <code>admin</code></para>
+  <para><code>bget task</code>the program now!</para>
+  <para>Code sample: <code>admin</code>more code on its way!</para>
+  <para>Code sample:<code>admin</code>.</para>
+  <para>para5</para>
+</wadl:doc>
+"""
+
+        parent = MockParent()
+        ch = wadl_to_swagger.ParaParser(parent)
+        xml.sax.parse(StringIO(file_content), ch)
+        self.assertEqual(
+            parent.result,
+            """Code sample: ``admin``
+
+``bget task`` the program now!
+
+Code sample: ``admin`` more code on its way!
+
+Code sample: ``admin`` .
+
+para5
+
+""")
+
+    def test_para_emphasis(self):
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
+<wadl:doc>
+  <para>Some text with <emphasis>bold words at the end of the sentence</emphasis>.</para>
+  <para><emphasis>Bold text is cool</emphasis></para>
+  <para>Multi word text is <emphasis>brilliant</emphasis>and then some.</para>
+  <para>Lovely <emphasis>bold</emphasis></para>
+  <para>para5</para>
+</wadl:doc>
+"""
+
+        parent = MockParent()
+        ch = wadl_to_swagger.ParaParser(parent)
+        xml.sax.parse(StringIO(file_content), ch)
+        self.assertEqual(
+            parent.result,
+            """Some text with **bold words at the end of the sentence** .
+
+**Bold text is cool**
+
+Multi word text is **brilliant** and then some.
+
+Lovely **bold**
+
+para5
+
+""")
 
 class TestWADLHandler(TestCase):
 

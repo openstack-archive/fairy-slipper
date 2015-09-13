@@ -198,6 +198,7 @@ class ParaParser(SubParser, TableMixin):
         self.fill_width = 67
         self.wrapper = textwrap.TextWrapper(width=self.fill_width)
         self.shortdesc = False
+        self.inline_markup_stack = []
 
     @property
     def content(self):
@@ -237,11 +238,13 @@ class ParaParser(SubParser, TableMixin):
                 content = '\n' + ' ' * self.nesting + content
             elif self.no_space:
                 content = content.strip()
-                self.no_space = False
             else:
                 content = ' ' + content.strip()
 
-        self.content.append(content)
+        if self.no_space is True:
+            self.inline_markup_stack.append(content)
+        else:
+            self.content.append(content)
 
     def visit_listitem(self, attrs):
         self.nesting = len([tag for tag in self.tag_stack
@@ -299,26 +302,32 @@ class ParaParser(SubParser, TableMixin):
             self.shortdesc = False
 
     def visit_code(self, attrs):
-        if not self.content[-1].endswith(' '):
-            self.content.append(' ')
-        self.content.append('``')
+        self.inline_markup_stack.append(' ``')
         self.no_space = True
 
     def depart_code(self):
-        self.content.append('``')
-        if not self.content[-1].endswith(' '):
-            self.content.append(' ')
+        content = self.inline_markup_stack[0]
+        content += ' '.join(self.inline_markup_stack[1:None])
+        content += '``'
+        self.content.append(content)
+
+        self.inline_markup_stack[:] = []
+        self.no_space = False
 
     def visit_emphasis(self, attrs):
         # Bold is the default emphasis
         self.current_emphasis = attrs.get('role', 'bold')
-        if not self.content[-1].endswith(' '):
-            self.content.append(' ')
-        self.content.append(self.EMPHASIS[self.current_emphasis])
+        self.inline_markup_stack.append(' ' + self.EMPHASIS[self.current_emphasis])
         self.no_space = True
 
     def depart_emphasis(self):
-        self.content.append(self.EMPHASIS[self.current_emphasis])
+        content = self.inline_markup_stack[0]
+        content += ' '.join(self.inline_markup_stack[1:None])
+        content += self.EMPHASIS[self.current_emphasis]
+        self.content.append(content)
+
+        self.inline_markup_stack[:] = []
+        self.no_space = False
         self.current_emphasis = None
 
     def visit_programlisting(self, attrs):
@@ -329,9 +338,8 @@ class ParaParser(SubParser, TableMixin):
         self.nesting = 3
 
     def depart_programlisting(self):
-        self.content.append('\n')
-        self.nesting = 0
-
+        self.nesting = 0  # no indent for blank lines
+        self.content.append('\n\n')
 
 class WADLHandler(xml.sax.ContentHandler):
 
