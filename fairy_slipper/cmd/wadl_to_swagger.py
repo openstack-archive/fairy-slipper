@@ -153,17 +153,21 @@ class SubParser(xml.sax.ContentHandler):
 class TableMixin(object):
     def visit_table(self, attrs):
         self.__table = prettytable.PrettyTable(hrules=prettytable.ALL)
+        self.__table.header = False
 
     def depart_table(self):
         self.content.append('\n\n')
         self.content.append(str(self.__table))
         self.content.append('\n\n')
 
+    def visit_th(self):
+        self.__table.header = True
+
     def depart_th(self):
         heading = self.content.pop().strip()
         self.__table.field_names.append(heading)
         self.__table.align[heading] = 'l'
-        self.__table.valign[heading] = 'l'
+        self.__table.valign[heading] = 't'
         self.__table.max_width[heading] = 80
 
     def visit_tr(self, attrs):
