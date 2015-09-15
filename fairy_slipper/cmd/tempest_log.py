@@ -23,7 +23,10 @@ import json
 import logging
 from os import path
 import re
-import urlparse
+try:
+    import urlparse
+except ImportError:
+    import urllib.parse as urlparse
 
 log = logging.getLogger(__name__)
 
