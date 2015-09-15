@@ -29,6 +29,7 @@ import textwrap
 import xml.sax
 
 import prettytable
+from jinja2 import Environment
 
 log = logging.getLogger(__name__)
 
@@ -105,6 +106,23 @@ MIME_MAP = {
 
 VERSION_RE = re.compile('v[0-9\.]+')
 WHITESPACE_RE = re.compile('[\s]+', re.MULTILINE)
+URL_TEMPLATE_RE = re.compile('{[^{}]+}')
+
+environment = Environment()
+HTTP_REQUEST = """{{ method }} {{ url }} HTTP/1.1
+{% for key, value in headers.items() -%}
+{{ key }}: {{ value }}
+{% endfor %}
+"""
+HTTP_REQUEST_TMPL = environment.from_string(HTTP_REQUEST)
+
+HTTP_RESPONSE = """HTTP/1.1 {{ status_code }}
+{% for key, value in headers.items() -%}
+{{ key }}: {{ value }}
+{% endfor %}
+{{ body }}
+"""
+HTTP_RESPONSE_TMPL = environment.from_string(HTTP_RESPONSE)
 
 
 def create_parameter(name, _in, description='',
@@ -708,6 +726,15 @@ def main1(source_file, output_dir):
     for filepath in api_ref['file_tags'].keys():
         files.add(filepath.split('#', 1)[0])
 
+    # Load supplementary examples file
+    examples_file = path.join(path.dirname(source_file),
+                              api_ref['service'] + '-examples.json')
+    if path.exists(examples_file):
+        log.info('Reading examples from %s' % examples_file)
+        examples = json.load(open(examples_file))
+    else:
+        examples = []
+
     output = {
         u'info': {
             'version': api_ref['version'],
@@ -736,6 +763,43 @@ def main1(source_file, output_dir):
         for urlpath, apis in ch.apis.items():
             output['paths'][urlpath].extend(apis)
         output['definitions'].update(ch.schemas)
+
+    for ex_request, ex_response in examples:
+        for urlpath in output['paths']:
+            url_matcher = "^" + URL_TEMPLATE_RE.sub('[^/]+', urlpath) + "$"
+            if re.match(url_matcher, ex_request['url']):
+                if len(output['paths'][urlpath]) > 1:
+                    # Skip any of the multi-payload endpoints.  They
+                    # are madness.
+                    break
+
+                # Override any requests
+                try:
+                    operation = output['paths'][urlpath][0]
+                except:
+                    log.warning("Couldn't find any operations for %s", urlpath)
+                    break
+                request = HTTP_REQUEST_TMPL.render(
+                    headers=ex_request['headers'],
+                    method=ex_request['method'],
+                    url=ex_request['url'])
+                operation['examples'] = {'text/plain': request}
+
+                # Override any responses
+                status_code = ex_response['status_code']
+                response = HTTP_RESPONSE_TMPL.render(
+                    status_code=status_code,
+                    headers=ex_response['headers'],
+                    body=ex_response['body'] or '')
+                if status_code in operation['responses']:
+                    operation['responses'][status_code]['examples'] = \
+                        {'text/plain': response}
+                else:
+                    operation['responses'][status_code] = \
+                        {'examples': {'text/plain': response}}
+        else:
+            log.warning("Couldn't find matching URL for %s" % urlpath)
+
     os.chdir(output_dir)
     pathname = '%s-%s-swagger.json' % (api_ref['service'],
                                        api_ref['version'])

@@ -35,10 +35,6 @@ a.accordion-toggle:focus, a.accordion-toggle:hover {
     text-decoration: none;
 }
 
-.operation-header {
-    margin-top: 10px;
-}
-
 .operation-header h3{
     margin-top: 0;
 }
@@ -58,7 +54,7 @@ a.accordion-toggle:focus, a.accordion-toggle:hover {
 
 .swagger-method {
     vertical-align: top;
-    top: 10px;
+    top: 0.5em;
     position: relative;
 }
 
