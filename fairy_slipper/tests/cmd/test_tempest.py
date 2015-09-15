@@ -92,7 +92,7 @@ class TestLogParser(unittest.TestCase):
               'body': None,
               'method': 'GET',
               'service': 'compute'},
-             {'body': '{\n  "flavor": {\n    "OS-FLV-DISABLED:disabled": false, \n    "OS-FLV-EXT-DATA:ephemeral": 0, \n    "disk": 1, \n    "id": "1", \n    "links": [\n      {\n        "href": "http://192.168.122.201:8774/v2.1/6b45254f6f7c44a1b65ddb8218932226/flavors/1", \n        "rel": "self"\n      }, \n      {\n        "href": "http://192.168.122.201:8774/6b45254f6f7c44a1b65ddb8218932226/flavors/1", \n        "rel": "bookmark"\n      }\n    ], \n    "name": "m1.tiny", \n    "os-flavor-access:is_public": true, \n    "ram": 512, \n    "rxtx_factor": 1.0, \n    "swap": "", \n    "vcpus": 1\n  }\n}',  # noqa
+             {'body': '{\n  "flavor": {\n    "OS-FLV-DISABLED:disabled": false,\n    "OS-FLV-EXT-DATA:ephemeral": 0,\n    "disk": 1,\n    "id": "1",\n    "links": [\n      {\n        "href": "http://192.168.122.201:8774/v2.1/6b45254f6f7c44a1b65ddb8218932226/flavors/1",\n        "rel": "self"\n      },\n      {\n        "href": "http://192.168.122.201:8774/6b45254f6f7c44a1b65ddb8218932226/flavors/1",\n        "rel": "bookmark"\n      }\n    ],\n    "name": "m1.tiny",\n    "os-flavor-access:is_public": true,\n    "ram": 512,\n    "rxtx_factor": 1.0,\n    "swap": "",\n    "vcpus": 1\n  }\n}',  # noqa
               'status_code': '200',
               'headers': {'status': '200', 'content-length': '430',
                           'content-location': 'http://192.168.122.201:8774/v2.1/6b45254f6f7c44a1b65ddb8218932226/flavors/1',  # noqa

@@ -85,7 +85,9 @@ def parse_logfile(log_file):
                 else:
                     try:
                         body = json.loads(value)
-                        body = json.dumps(body, indent=2, sort_keys=True)
+                        body = json.dumps(body, indent=2,
+                                          sort_keys=True,
+                                          separators=(',', ': '))
                     except ValueError:
                         body = value
                         log.info("Failed to parse %r", value)
