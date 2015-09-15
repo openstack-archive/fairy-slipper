@@ -41,9 +41,12 @@ class JSONFileController(object):
         self.filepath = filepath
 
     @expose('json')
+    @expose(content_type='text/plain')
     def _default(self):
         if path.exists(self.filepath + '.json'):
             self.filepath = self.filepath + '.json'
+        if path.exists(self.filepath + '.txt'):
+            self.filepath = self.filepath + '.txt'
         if not path.exists(self.filepath):
             response.status = 404
             return response
@@ -84,7 +87,7 @@ class DocController(object):
                 'paths': json['paths'],
                 'tags': json['tags']}
 
-    @expose('json')
+    @expose()
     def _lookup(self, *components):
         if len(components) != 2 and len(components) != 3:
             return
@@ -92,9 +95,10 @@ class DocController(object):
         if components[0] == 'examples':
             example = components[1]
             filepath = path.join(self.examples_dir, example)
-            return JSONFileController(filepath), ['']
+            return JSONFileController(filepath), []
         else:
             filename = components[0]
+            print(filename)
             filepath = path.join(self.schema_dir, filename)
             return JSONFileController(filepath), []
 

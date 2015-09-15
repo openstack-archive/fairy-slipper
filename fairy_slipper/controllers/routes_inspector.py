@@ -17,16 +17,18 @@
 
 import operator
 import textwrap
+import logging
 
 import docutils.core
 from pecan import expose
 from pecan.hooks import HookController
+import routes
 
 from fairy_slipper import hooks
 from fairy_slipper.rest import JSONWriter
 from paste.deploy import util as paste_util
 
-routes = {}
+LOG = logging.getLogger(__name__)
 
 
 class VersionAPIController(object):
@@ -36,8 +38,9 @@ class VersionAPIController(object):
 
     @expose()
     def _lookup(self, id_, *remainder):
+        LOG.error(id_)
         if id_ in self.versions:
-            return DocSpecController(self.versions[id_]), remainder
+            return DocSpecController(id_, self.versions[id_]), remainder
 
     @expose(generic=True, template='json')
     def index(self):
@@ -48,8 +51,12 @@ class DocSpecController(HookController):
 
     __hooks__ = [hooks.CORSHook()]
 
-    def __init__(self, router):
-        self.api = paste_util.lookup_object(router)()
+    def __init__(self, version, router):
+        # TODO(RS) this had to be hardcoded, to match the murano
+        # factory method.  Perhaps there is a better way to get it to
+        # work using the factory?
+        self.version = version
+        self.api = paste_util.lookup_object(router)(routes.Mapper())
         super(DocSpecController, self).__init__()
 
     @expose(generic=True, template='json')
@@ -75,7 +82,7 @@ class DocSpecController(HookController):
                 routes[key] = {'routepath': [],
                                'req': []}
 
-            routes[key]['routepath'] = '/v1' + route.routepath
+            routes[key]['routepath'] = '/' + self.version + route.routepath
             routes[key]['req'] = route.reqs
             routes[key]['action'] = action
             routes[key]['conditions'] = route.conditions
@@ -84,7 +91,7 @@ class DocSpecController(HookController):
                 json = docutils.core.publish_parts(
                     textwrap.dedent(doc),
                     writer=JSONWriter())
-                routes[key].update(json['whole']['document'])
+                routes[key].update(json)
             routes[key]['classpath'] = '.'.join(
                 [controller.__class__.__module__,
                  controller.__class__.__name__]

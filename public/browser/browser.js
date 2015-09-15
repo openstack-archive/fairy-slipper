@@ -34,7 +34,18 @@ angular.module('fairySlipper.browser', [
 
   .directive('swaggerExample', ['$http', function($http) {
     function link(scope, element, attrs) {
-      scope.$watch('triggerLoad', function(newValue, oldValue) {
+      scope.language = 'json';
+
+      var mimes = [];
+      angular.forEach(scope.source, function(value, key) {
+        this.push(key);
+      }, mimes);
+
+      if (!scope.mimetype) {
+        scope.mimetype = mimes[0];
+      }
+
+      var load = function(newValue, oldValue) {
         if (newValue && scope.source  && ! scope.example) {
           $http.get('/doc/' + scope.swagger.info.service + '/' +
                     scope.source[scope.mimetype].$ref +
@@ -47,7 +58,12 @@ angular.module('fairySlipper.browser', [
                         scope.example = data;
                       }
                     });
-        }});
+        }};
+
+      scope.$watch('triggerLoad', load);
+      if (scope.triggerLoad) {
+        load();
+      }
     }
 
     return {
@@ -142,6 +158,7 @@ angular.module('fairySlipper.browser', [
   }])
 
   .controller('ByPathCtrl', ['$scope', '$http', '$routeParams', 'Service', function($scope, $http, $routeParams, Service) {
+    $scope.isEmpty = isEmpty;
     Service.get({
       service: $routeParams.service,
       version: $routeParams.version
@@ -155,6 +172,7 @@ angular.module('fairySlipper.browser', [
   }])
 
   .controller('ByTagCtrl', ['$scope', '$http', '$routeParams', 'Service', function($scope, $http, $routeParams, Service) {
+    $scope.isEmpty = isEmpty;
     Service.get({
       service: $routeParams.service,
       version: $routeParams.version

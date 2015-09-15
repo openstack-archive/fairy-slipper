@@ -5,24 +5,23 @@
 </div>
 
 <div ng-repeat="operations in paths | orderBy: '$key'">
-  <h2>
+  <h3>
     <swagger-path path="operations.$key"
                   parameters="operations[0].parameters">
     </swagger-path>
-  </h2>
+  </h3>
   <accordion>
-    <accordion-group ng-repeat="operation in operations">
+    <accordion-group ng-repeat="operation in operations"
+                     is-open="operation_open">
       <accordion-heading>
         <div class="operation-header">
           <div class="operation-method">
             <swagger-method method="operation.method"></swagger-method>
           </div>
           <div class="operation-title">
-            <h3>
-              {{ operation.title }}
-              <br/>
-              <small>{{ operation.summary }}</small>
-            </h3>
+            {{ operation.title }}
+            <br/>
+            <small>{{ operation.summary }}</small>
           </div>
         </div>
       </accordion-heading>
@@ -36,7 +35,7 @@
             </tab>
             <tab heading="Details">
               <div ng-if="parameters.header">
-                <h4>Headers</h4>
+                <h5>Headers</h5>
                 <dl>
                   <dt ng-repeat-start="parameter in parameters.header">{{parameter.name}}
                   </dt>
@@ -44,7 +43,7 @@
                 </dl>
               </div>
               <div ng-if="parameters.query">
-                <h4>URL Parameters</h4>
+                <h5>URL Parameters</h5>
                 <dl>
                   <dt ng-repeat-start="parameter in parameters.query">{{parameter.name}}
                   </dt>
@@ -52,27 +51,35 @@
                 </dl>
               </div>
               <div ng-if="parameters.body">
-                <h4>Request Schema</h4>
+                <h5>Request Schema</h5>
                 <swagger-schema swagger="swagger" parameters="parameters.body"></swagger-schema>
               </div>
             </tab>
           </tabset>
         </div>
         <div class="col-md-6">
+          <h4>Request</h4>
+          <swagger-example ng-if="!isEmpty(operation.examples)"
+                           swagger="swagger"
+                           src="operation.examples"
+                           trigger-load="operation_open">
+          </swagger-example>
+          <div ng-if="isEmpty(response.examples)">
+            No request recorded.
+          </div>
           <h4>Responses</h4>
           <accordion close-others="true">
             <accordion-group ng-repeat="(status_code, response) in operation.responses"
-                             is-disabled="!response.examples['application/json']"
+                             is-disabled="isEmpty(response.examples)"
                              is-open="status.open">
               <accordion-heading>
                 {{ status_code }}: {{ response.description }}
-                <i ng-if="response.examples['application/json']"
+                <i ng-if="!isEmpty(response.examples)"
                    class="pull-right glyphicon"
                    ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
               </accordion-heading>
               <swagger-example swagger="swagger"
                                src="response.examples"
-                               mimetype="'application/json'"
                                trigger-load="status.open">
               </swagger-example>
             </accordion-group>
