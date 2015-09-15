@@ -17,12 +17,12 @@
 
 from pecan import make_app
 
-from fairy_slipper.controllers import routes
+from fairy_slipper.controllers import routes_inspector
 
 
 def setup_app(local_conf):
     return make_app(
-        routes.VersionAPIController(local_conf),
+        routes_inspector.VersionAPIController(local_conf),
     )
 
 
