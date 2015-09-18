@@ -83,8 +83,10 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         self.node_stack.append(self.output)
         self.current_node_name = None
         self.bullet_stack = []
-        self.table_row_stack = []
+        self.table_stack = []
         self.text = ''
+        self.col_num = 0
+        self.first_row = 0
 
     def search_stack_for(self, tag_name):
         for node in self.node_stack:
@@ -122,54 +124,52 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         pass
 
     def visit_Text(self, node):
-        if len(self.table_row_stack) is 0:
+        if self.first_row is 0:
             self.text += node.astext()
 
     def depart_Text(self, node):
         pass
 
     def visit_emphasis(self, node):
-        if len(self.table_row_stack) > 0:
-            inlinetxt = self.table_row_stack[-1].pop()
-            para  = []
+        if self.first_row > 0:
+            inlinetxt = self.table_stack.pop()
             para = inlinetxt.partition(node.astext())
             new_para = ''
             new_para += para[0] + '_' + para[1] + '_' + para[2]
-            self.table_row_stack[-1].append(new_para)
+            self.table_stack.append(new_para)
         else:
             self.text += '_'
-            
+
     def depart_emphasis(self, node):
-        self.text += '_'
+        if self.first_row is 0:
+            self.text += '_'
 
     def visit_literal(self, node):
-        if len(self.table_row_stack) > 0:
-            inlinetxt = self.table_row_stack[-1].pop()
-            para  = []
+        if self.first_row > 0:
+            inlinetxt = self.table_stack.pop()
             para = inlinetxt.partition(node.astext())
             new_para = ''
             new_para += para[0] + '`' + para[1] + '`' + para[2]
-            self.table_row_stack[-1].append(new_para)
+            self.table_stack.append(new_para)
         else:
             self.text += '`'
 
     def depart_literal(self, node):
-        if len(self.table_row_stack) is 0:
+        if self.first_row is 0:
             self.text += '`'
-            
+
     def visit_strong(self, node):
-       if len(self.table_row_stack) > 0:
-           inlinetxt = self.table_row_stack[-1].pop()
-           para  = []
-           para = inlinetxt.partition(node.astext())
-           new_para = ''
-           new_para += para[0] + '**' + para[1] + '**' + para[2]
-           self.table_row_stack[-1].append(new_para)
-       else:
-           self.text += '**'
+        if self.first_row > 0:
+            inlinetxt = self.table_stack.pop()
+            para = inlinetxt.partition(node.astext())
+            new_para = ''
+            new_para += para[0] + '**' + para[1] + '**' + para[2]
+            self.table_stack.append(new_para)
+        else:
+            self.text += '**'
 
     def depart_strong(self, node):
-        if len(self.table_row_stack) is 0:
+        if self.first_row is 0:
             self.text += '**'
 
     def visit_literal_block(self, node):
@@ -203,12 +203,23 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         self.node_stack.pop()
 
     def visit_paragraph(self, node):
-        if len(self.table_row_stack) > 0:
-            self.table_row_stack[-1].append(node.astext())
+        if self.first_row > 0:
+            self.table_stack.append(node.astext())
 
     def depart_paragraph(self, node):
-        if len(self.table_row_stack) is 0:
+        if self.first_row is 0:
             self.text += "\n\n"
+        else:
+            if self.first_row > 0:
+                para = self.table_stack.pop()
+                para = para.strip('\n')
+                plist = para.split('\n')
+
+                #multi-line text in single column
+                if len(plist) > 0:
+                    self.text += """<br>""".join(plist)
+                else:
+                    self.text += para
 
     def visit_line_block(self, node):
         if isinstance(self.node_stack[-1], list):
@@ -227,29 +238,24 @@ class JSONTranslator(nodes.GenericNodeVisitor):
             self.node_stack.pop()
 
     def visit_table(self, node):
-        pass
+        self.col_num = 0
 
     def depart_table(self, node):
-        pass
+        self.text += "\n"
 
     def visit_tbody(self, node):
         pass
 
     def depart_tbody(self, node):
-        i = 0
-        while i < len(self.table_row_stack):
-            j = 0
-            while j < len(self.table_row_stack[i]):
-                self.text += "| "
-                self.text += self.table_row_stack[i][j]
-                self.text += " "
-                j += 1
-
-            i += 1
-            self.text += "|\n"
-            
-        self.table_row_stack[:] = []
         self.text += "\n"
+        self.first_row = 0
+        self.col_num = 0
+
+    def visit_thead(self, node):
+        pass
+
+    def depart_thead(self, node):
+        pass
 
     def visit_tgroup(self, node):
         pass
@@ -264,28 +270,28 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         pass
 
     def visit_row(self, node):
-        # first row = table header text
-        # second row = table header separator row
+        if self.first_row is 1 and self.col_num > 0:
+            row_separator = [] 
+            row_separator = [' --- ']*self.col_num
+            self.text += "|"
+            sep_row = "|".join(row_separator)
+            self.text += sep_row
+            self.text += "|"
+            self.text += "\n"
 
-        row_separator = [] 
-        new_node = []
-
-        if len(self.table_row_stack) is 1:
-            num_cols = len(self.table_row_stack[-1])
-            row_separator = ['---']*num_cols
-            self.table_row_stack.append(row_separator)
-        self.table_row_stack.append(new_node)
+        self.text += "|"
+        self.first_row += 1
 
     def depart_row(self, node):
-        pass
+        self.text += "\n"
 
     def visit_entry(self, node):
-        pass
+        self.text += " "
 
     def depart_entry(self, node):
-        pass
-    
-    # TODO, handle lists in table text
+        self.text += " |"
+        self.col_num += 1
+
     def visit_definition(self, node):
         pass
 
@@ -297,19 +303,25 @@ class JSONTranslator(nodes.GenericNodeVisitor):
 
     def depart_definition_list(self, node):
         pass
-    
+
     def visit_definition_list_item(self, node):
         pass
-    
+
     def depart_definition_list_item(self, node):
         pass
 
     def visit_term(self, node):
-        pass
-    
+        self.text += "    "
+        if self.first_row is 0:
+            self.text += node.astext()
+        else:
+            self.table_stack.append(node.astext())
+
     def depart_term(self, node):
-        pass
-    
+        if self.first_row > 0:
+            self.text += self.table_stack.pop()
+        self.text += """<br>"""
+
     def visit_resource(self, node):
         self.text = ''
         if 'paths' not in self.node_stack[-1]:

@@ -178,7 +178,14 @@ class TableMixin(object):
         self.content.append(str(self.__table))
         self.content.append('\n\n')
 
-    def visit_th(self):
+    #TODO, make table captions bold
+    def visit_caption(self, attrs):
+        pass
+
+    def depart_caption(self):
+        pass
+
+    def visit_th(self, attrs):
         self.__table.header = True
 
     def depart_th(self):
@@ -322,6 +329,22 @@ class ParaParser(SubParser, TableMixin):
             # Reset state variables
             self.content_stack = [[]]
             self.shortdesc = False
+
+    def visit_title(self, attrs):
+        self.current_emphasis = attrs.get('role', 'bold')
+        self.inline_markup_stack.append(self.EMPHASIS[self.current_emphasis])
+        self.no_space = True
+
+    def depart_title(self):
+        content = self.inline_markup_stack[0]
+        content += ' '.join(self.inline_markup_stack[1:None])
+        content += self.EMPHASIS[self.current_emphasis]
+        self.content.append(content)
+        self.content.append('\n\n')
+
+        self.inline_markup_stack[:] = []
+        self.no_space = False
+        self.current_emphasis = None
 
     def visit_code(self, attrs):
         self.inline_markup_stack.append(' ``')

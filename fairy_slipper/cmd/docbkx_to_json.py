@@ -280,7 +280,7 @@ class TableMixin(object):
         self.content.append(str(self.__table))
         self.content.append('\n\n')
 
-    def visit_th(self):
+    def visit_th(self, attrs):
         self.__table.header = True
 
     def depart_th(self):

@@ -17,7 +17,7 @@
 
 from __future__ import unicode_literals
 
-from unittest import TestCase
+import unittest
 
 import docutils.core
 
@@ -45,7 +45,7 @@ def minimal_method_json(consumes=[],
                 title=title)
 
 
-class TestReSTMethod(TestCase):
+class TestReSTMethod(unittest.TestCase):
 
     def test_no_path(self):
         rst = """
@@ -266,6 +266,7 @@ start text _inline inline_ end text
 | --- | --- | --- | --- |
 | Apply | Name | Description | Required |
 
+
 '''
         
         json = rest.publish_string(rst)
@@ -296,7 +297,8 @@ start text _inline inline_ end text
 
 | Field 1 | Field 2 | Field 3 | Field 4 |
 | --- | --- | --- | --- |
-| Apply | text in\n**between**\ntext | **text** start | text **end** |
+| Apply | text in<br>**between**<br>text | **text** start | text **end** |
+
 
 '''
         
@@ -317,8 +319,8 @@ start text _inline inline_ end text
    | Field 1 | Field 2       | Field 3         | Field 4          |
    +---------+---------------+-----------------+------------------+
    | Apply   | text in       |                 |                  |
-   |         | _between_     |                 |                  |
-   |         | text          | _text_ start    | text _end_       |
+   |         | *between*     |                 |                  |
+   |         | text          | *text* start    | text *end*       |
    +---------+---------------+-----------------+------------------+
 
 """
@@ -327,7 +329,8 @@ start text _inline inline_ end text
 
 | Field 1 | Field 2 | Field 3 | Field 4 |
 | --- | --- | --- | --- |
-| Apply | text in\n_between_\ntext | _text_ start | text _end_ |
+| Apply | text in<br>_between_<br>text | _text_ start | text _end_ |
+
 
 '''
         json = rest.publish_string(rst)
@@ -335,6 +338,40 @@ start text _inline inline_ end text
                         {'/path':
                          [minimal_method_json(description=markdown)]},
                         'tags': []}
+
+    def test_table_multiline_col_entry(self):
+
+        rst = """
+.. http:get:: /path
+
+   Image status
+   
+   +----------------+---------------------------------------------------------------------+
+   | Status         | Description                                                         |
+   +----------------+---------------------------------------------------------------------+
+   | queued         | The Image service reserved an image ID for the image in the         |
+   |                | registry but has not uploaded any image data.                       |
+   +----------------+---------------------------------------------------------------------+
+   | saving         | The Image service is currently uploading the raw data for the       |
+   |                | image.                                                              |
+   +----------------+---------------------------------------------------------------------+
+
+"""
+        markdown = '''Image status
+
+| Status | Description |
+| --- | --- |
+| queued | The Image service reserved an image ID for the image in the<br>registry but has not uploaded any image data. |
+| saving | The Image service is currently uploading the raw data for the<br>image. |
+
+
+'''
+
+        json = rest.publish_string(rst)
+        assert json == {'paths':
+                       {'/path':
+                        [minimal_method_json(description=markdown)]},
+                       'tags': []}
 
 
     def test_table_inline_literal(self):
@@ -357,6 +394,7 @@ start text _inline inline_ end text
 | Field 1 | Field 2 | Field 3 | Field 4 |
 | --- | --- | --- | --- |
 | End `text` | `Name` | Description | `start` text |
+
 
 '''
         
@@ -468,7 +506,7 @@ start text _inline inline_ end text
                         'tags': []}
 
 
-class TestReSTTag(TestCase):
+class TestReSTTag(unittest.TestCase):
 
     def test_synopsis(self):
         rst = """
