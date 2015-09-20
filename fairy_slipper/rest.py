@@ -111,7 +111,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
             new_node = {}
             self.node_stack[-1][self.current_node_name] = new_node
             self.node_stack.append(new_node)
-            
+
     def default_departure(self, node):
         """Default node depart method."""
         if hasattr(node, 'children') and node.children:
@@ -215,7 +215,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
                 para = para.strip('\n')
                 plist = para.split('\n')
 
-                #multi-line text in single column
+                # multi-line text in single column
                 if len(plist) > 0:
                     self.text += """<br>""".join(plist)
                 else:
@@ -271,8 +271,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
 
     def visit_row(self, node):
         if self.first_row is 1 and self.col_num > 0:
-            row_separator = [] 
-            row_separator = [' --- ']*self.col_num
+            row_separator = [' --- '] * self.col_num
             self.text += "|"
             sep_row = "|".join(row_separator)
             self.text += sep_row

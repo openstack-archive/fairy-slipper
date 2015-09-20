@@ -28,8 +28,8 @@ import re
 import textwrap
 import xml.sax
 
-import prettytable
 from jinja2 import Environment
+import prettytable
 
 log = logging.getLogger(__name__)
 
@@ -178,7 +178,7 @@ class TableMixin(object):
         self.content.append(str(self.__table))
         self.content.append('\n\n')
 
-    #TODO, make table captions bold
+    # TODO(Karen), make table captions bold
     def visit_caption(self, attrs):
         pass
 
@@ -362,7 +362,8 @@ class ParaParser(SubParser, TableMixin):
     def visit_emphasis(self, attrs):
         # Bold is the default emphasis
         self.current_emphasis = attrs.get('role', 'bold')
-        self.inline_markup_stack.append(' ' + self.EMPHASIS[self.current_emphasis])
+        self.inline_markup_stack.append(
+            ' ' + self.EMPHASIS[self.current_emphasis])
         self.no_space = True
 
     def depart_emphasis(self):
@@ -385,6 +386,7 @@ class ParaParser(SubParser, TableMixin):
     def depart_programlisting(self):
         self.nesting = 0  # no indent for blank lines
         self.content.append('\n\n')
+
 
 class WADLHandler(xml.sax.ContentHandler):
 
@@ -803,7 +805,7 @@ def main1(source_file, output_dir):
                 # Override any requests
                 try:
                     operation = output['paths'][urlpath][0]
-                except:
+                except (KeyError, IndexError):
                     log.warning("Couldn't find any operations for %s", urlpath)
                     break
                 request = HTTP_REQUEST_TMPL.render(

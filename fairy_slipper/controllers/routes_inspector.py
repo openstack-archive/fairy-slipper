@@ -15,9 +15,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import logging
 import operator
 import textwrap
-import logging
 
 import docutils.core
 from pecan import expose

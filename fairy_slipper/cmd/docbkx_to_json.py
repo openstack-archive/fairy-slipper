@@ -316,7 +316,7 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
     def __init__(self, filename, api_parser):
         self.filename = filename
         self.api_parser = api_parser
-        
+
     def startDocument(self):
         super(APIChapterContentHandler, self).startDocument()
         self.tags = {}
@@ -529,8 +529,9 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
         self.nesting = 3
 
     def depart_programlisting(self):
-        self.nesting = 0 # no indent for blank lines
-        self.content.append('\n\n') 
+        self.nesting = 0  # no indent for blank lines
+        self.content.append('\n\n')
+
 
 class APIRefContentHandler(xml.sax.ContentHandler):
 

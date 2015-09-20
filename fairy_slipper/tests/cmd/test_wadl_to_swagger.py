@@ -113,7 +113,6 @@ para2
             "`create keypair <http://developer.openstack.org/#createKeypair>`_"
             " request.\n\n")
 
-
     def test_para_inline_code(self):
         file_content = """<?xml version="1.0" encoding="UTF-8"?>
 <wadl:doc>
@@ -151,7 +150,7 @@ para5
   <para>Lovely <emphasis>bold</emphasis></para>
   <para>para5</para>
 </wadl:doc>
-"""
+"""  # noqa
 
         parent = MockParent()
         ch = wadl_to_swagger.ParaParser(parent)

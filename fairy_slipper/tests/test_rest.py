@@ -191,7 +191,6 @@ start text `inline inline` end text
                          [minimal_method_json(description=markdown)]},
                         'tags': []}
 
-
     def test_body_inline_emphasis(self):
         rst = """
 .. http:get:: /path
@@ -212,12 +211,11 @@ start text _inline inline_ end text
 
 '''
         json = rest.publish_string(rst)
-        
+
         assert json == {'paths':
                         {'/path':
                          [minimal_method_json(description=markdown)]},
                         'tags': []}
-
 
     def test_synopsis(self):
         rst = """
@@ -244,7 +242,6 @@ start text _inline inline_ end text
                          [minimal_method_json(title='Path Thing')]},
                         'tags': []}
 
-
     def test_table_simple(self):
         rst = """
 .. http:get:: /path
@@ -268,13 +265,12 @@ start text _inline inline_ end text
 
 
 '''
-        
+
         json = rest.publish_string(rst)
         assert json == {'paths':
                         {'/path':
                          [minimal_method_json(description=markdown)]},
                         'tags': []}
-
 
     def test_table_inline_strong(self):
         rst = """
@@ -301,7 +297,7 @@ start text _inline inline_ end text
 
 
 '''
-        
+
         json = rest.publish_string(rst)
         assert json == {'paths':
                         {'/path':
@@ -345,7 +341,7 @@ start text _inline inline_ end text
 .. http:get:: /path
 
    Image status
-   
+
    +----------------+---------------------------------------------------------------------+
    | Status         | Description                                                         |
    +----------------+---------------------------------------------------------------------+
@@ -356,7 +352,7 @@ start text _inline inline_ end text
    |                | image.                                                              |
    +----------------+---------------------------------------------------------------------+
 
-"""
+"""  # noqa
         markdown = '''Image status
 
 | Status | Description |
@@ -365,14 +361,13 @@ start text _inline inline_ end text
 | saving | The Image service is currently uploading the raw data for the<br>image. |
 
 
-'''
+'''  # noqa
 
         json = rest.publish_string(rst)
         assert json == {'paths':
-                       {'/path':
-                        [minimal_method_json(description=markdown)]},
-                       'tags': []}
-
+                        {'/path':
+                         [minimal_method_json(description=markdown)]},
+                        'tags': []}
 
     def test_table_inline_literal(self):
         rst = """
@@ -397,13 +392,12 @@ start text _inline inline_ end text
 
 
 '''
-        
+
         json = rest.publish_string(rst)
         assert json == {'paths':
-                       {'/path':
-                        [minimal_method_json(description=markdown)]},
-                       'tags': []}
-
+                        {'/path':
+                         [minimal_method_json(description=markdown)]},
+                        'tags': []}
 
     def test_method_tags(self):
         rst = """

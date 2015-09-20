@@ -17,13 +17,13 @@
 
 from __future__ import unicode_literals
 
+import os
 try:
     from StringIO import StringIO
 except ImportError:
     from io import StringIO
 from unittest import TestCase
 import xml.sax
-import os
 
 from fairy_slipper.cmd import docbkx_to_json
 
@@ -48,5 +48,6 @@ class TestChapterParaParser(TestCase):
             ch.tags,
             [{
                 'name': 'test-v1',
-                'summary': "Image operations ``show`` all fields.\n\nCreates, lists, updates, and deletes images."}]
+                'summary': "Image operations ``show`` all fields.\n"
+                "\nCreates, lists, updates, and deletes images."}]
         )
