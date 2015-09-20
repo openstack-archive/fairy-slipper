@@ -15,25 +15,25 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.4.4",
-    "angular-route": "~1.4.4",
-    "angular-loader": "~1.4.4",
-    "angular-mocks": "~1.4.4",
+    "angular": "~1.4.6",
+    "angular-route": "~1.4.6",
+    "angular-loader": "~1.4.6",
+    "angular-mocks": "~1.4.6",
     "angular-bootstrap": "~0.13.0",
     "bootstrap": "~3.3.5",
     "angular-swagger-ui": "~0.1.6",
-    "angular-resource": "~1.4.3",
+    "angular-resource": "~1.4.6",
     "angular-snap": "~1.8.3",
     "angular-marked": "~0.0.21",
-    "angular-animate": "~1.4.4",
+    "angular-animate": "~1.4.6",
     "angular-highlightjs": "~0.4.1",
     "highlightjs": "~8.7.0",
     "dotjem-angular-tree": "~0.2.1"
   },
   "resolutions": {
-    "angular": "1.4.5"
+    "angular": "1.4.6"
   },
   "devDependencies": {
-    "angular-mocks": "~1.4.5"
+    "angular-mocks": "~1.4.6"
   }
 }
