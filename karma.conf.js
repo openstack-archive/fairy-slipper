@@ -9,7 +9,6 @@ module.exports = function(config){
       "components/angular-route/angular-route.js",
       "components/angular-resource/angular-resource.js",
       "components/angular-animate/angular-animate.js",
-      "components/angular-swagger-ui/dist/scripts/swagger-ui.js",
       "components/angular-bootstrap/ui-bootstrap-tpls.js",
       "components/angular-snap/angular-snap.js",
       "components/snapjs/snap.js",
