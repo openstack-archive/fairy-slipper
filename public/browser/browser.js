@@ -24,6 +24,21 @@ angular.module('fairySlipper.browser', [
     });
   }])
 
+  .config(['markedProvider', function(markedProvider) {
+    markedProvider.setRenderer({
+      table: function(header, body) {
+        return '<table class="table">\n'
+          + '<thead>\n'
+          + header
+          + '</thead>\n'
+          + '<tbody>\n'
+          + body
+          + '</tbody>\n'
+          + '</table>\n';
+      }
+    });
+  }])
+
   .factory('Service', ['$resource', function($resource) {
     return $resource('/doc/:service/:version/', {
     }, {
