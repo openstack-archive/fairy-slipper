@@ -26,20 +26,20 @@ import unittest
 from fairy_slipper.cmd import tempest_log
 
 
-SIMPLE_LOG = """Request (FlavorsV2TestJSON:setUpClass): 200 POST http://192.168.122.201:5000/v2.0/tokens
-Request - Headers: {}
+SIMPLE_LOG = """2015-09-04 15:51:29.023 18793 DEBUG tempest_lib.common.rest_client [req-30784c0a-e9a1-4411-a7c1-20715b26598f ] Request (FlavorsV2TestJSON:setUpClass): 200 POST http://192.168.122.201:5000/v2.0/tokens
+2015-09-04 15:51:29.023 18793 DEBUG tempest_lib.common.rest_client [req-30784c0a-e9a1-4411-a7c1-20715b26598f ] Request - Headers: {}
         Body: None
     Response - Headers: {'status': '200', 'content-length': '2987', 'vary': 'X-Auth-Token', 'server': 'Apache/2.4.7 (Ubuntu)', 'connection': 'close', 'date': 'Sun, 13 Sep 2015 07:43:01 GMT', 'content-type': 'application/json', 'x-openstack-request-id': 'req-1'}
         Body: None
-Request (FlavorsV2TestJSON:test_get_flavor): 200 POST http://192.168.122.201:5000/v2.0/tokens
-Request - Headers: {}
+2015-09-04 15:51:45.472 18793 INFO tempest_lib.common.rest_client [req-b710aeba-6263-4a49-bf50-2da42227c870 ] Request (FlavorsV2TestJSON:test_get_flavor): 200 POST http://192.168.122.201:5000/v2.0/tokens
+2015-09-04 15:51:45.472 18793 DEBUG tempest_lib.common.rest_client [req-b710aeba-6263-4a49-bf50-2da42227c870 ] Request - Headers: {}
         Body: None
     Response - Headers: {'status': '200', 'content-length': '2987', 'vary': 'X-Auth-Token', 'server': 'Apache/2.4.7 (Ubuntu)', 'connection': 'close', 'date': 'Sun, 13 Sep 2015 07:43:01 GMT', 'content-type': 'application/json', 'x-openstack-request-id': 'req-2'}
         Body: None
 """  # noqa
 
-SIMPLE_LOG_BODY = """Request (FlavorsV2TestJSON:test_get_flavor): 200 GET http://192.168.122.201:8774/v2.1/6b45254f6f7c44a1b65ddb8218932226/flavors/1 0.117s
-Request - Headers: {'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Auth-Token': '<omitted>'}
+SIMPLE_LOG_BODY = """2015-09-04 15:51:29.007 18793 INFO tempest_lib.common.rest_client [req-9e329507-e0ce-448c-a363-f49e39dd96b0 ] Request (FlavorsV2TestJSON:test_get_flavor): 200 GET http://192.168.122.201:8774/v2.1/6b45254f6f7c44a1b65ddb8218932226/flavors/1 0.117s
+2015-09-04 15:51:29.007 18793 DEBUG tempest_lib.common.rest_client [req-9e329507-e0ce-448c-a363-f49e39dd96b0 ] Request - Headers: {'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Auth-Token': '<omitted>'}
         Body: None
     Response - Headers: {'status': '200', 'content-length': '430', 'content-location': 'http://192.168.122.201:8774/v2.1/6b45254f6f7c44a1b65ddb8218932226/flavors/1', 'x-compute-request-id': 'req-959a09e8-3628-419d-964a-1be4ca604232', 'vary': 'X-OpenStack-Nova-API-Version', 'connection': 'close', 'x-openstack-nova-api-version': '2.1', 'date': 'Sun, 13 Sep 2015 07:43:01 GMT', 'content-type': 'application/json'}
         Body: {"flavor": {"name": "m1.tiny", "links": [{"href": "http://192.168.122.201:8774/v2.1/6b45254f6f7c44a1b65ddb8218932226/flavors/1", "rel": "self"}, {"href": "http://192.168.122.201:8774/6b45254f6f7c44a1b65ddb8218932226/flavors/1", "rel": "bookmark"}], "ram": 512, "OS-FLV-DISABLED:disabled": false, "vcpus": 1, "swap": "", "os-flavor-access:is_public": true, "rxtx_factor": 1.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 1, "id": "1"}}
@@ -47,6 +47,8 @@ Request - Headers: {'Content-Type': 'application/json', 'Accept': 'application/j
 
 
 class TestLogParser(unittest.TestCase):
+    maxDiff = 10000
+
     def test_simple_parse(self):
         result = tempest_log.parse_logfile(StringIO(SIMPLE_LOG))
         self.assertEqual(result, [

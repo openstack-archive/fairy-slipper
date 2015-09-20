@@ -38,9 +38,16 @@ DEFAULT_PORTS = {
     '8773': 'compute-ec2',
     '9292': 'image',
 }
-REQUEST_RE = re.compile("Request (?P<test>\([^()]+\)):"
+
+PYTHON_LOG_PREFIX_RE = ("^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d{3}) \d+ "
+                        "(?P<log_level>[A-Z]+) (?P<logger_name>\S+) "
+                        "\[(?P<tags>[^\[\]]+)\] ")
+
+REQUEST_RE = re.compile(PYTHON_LOG_PREFIX_RE + "Request (?P<test>\([^()]+\)):"
                         " (?P<status_code>\d+)"
                         " (?P<method>[A-Z]+) (?P<url>\S+)")
+
+REQUEST1_RE = re.compile(PYTHON_LOG_PREFIX_RE + "Request")
 
 
 def parse_logfile(log_file):
@@ -64,6 +71,9 @@ def parse_logfile(log_file):
             current_response = {
                 'status_code': request_dict['status_code']}
         else:
+            start_request = REQUEST1_RE.match(line)
+            if start_request:
+                line = re.sub(PYTHON_LOG_PREFIX_RE, '', line)
             try:
                 key, value = line.split(':', 1)
             except ValueError:
