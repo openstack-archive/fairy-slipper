@@ -7,7 +7,6 @@ angular.module('fairySlipper.browser', [
   'hc.marked',
   'ui.bootstrap',
   'hljs',
-  'swaggerUi',
   'dotjem.angular.tree'
 ])
   .config(['$routeProvider', function($routeProvider) {

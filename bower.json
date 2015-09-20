@@ -21,7 +21,6 @@
     "angular-mocks": "~1.4.6",
     "angular-bootstrap": "~0.13.0",
     "bootstrap": "~3.3.5",
-    "angular-swagger-ui": "~0.1.6",
     "angular-resource": "~1.4.6",
     "angular-snap": "~1.8.3",
     "angular-marked": "~0.0.21",
