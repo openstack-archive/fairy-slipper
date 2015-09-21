@@ -31,7 +31,12 @@
         <div ng-controller="ParametersCtrl" class="col-lg-6">
           <tabset>
             <tab heading="Description">
-              <div class="content" marked="operation.description"></div>
+              <div class="content" ng-if="!isEmpty(operation.description)"
+                   marked="operation.description">
+              </div>
+              <ng-include ng-if="isEmpty(operation.description)"
+                          src="'browser/undocumented-operation.html'">
+              </ng-include>
             </tab>
             <tab heading="Details">
               <div ng-if="parameters.header">
