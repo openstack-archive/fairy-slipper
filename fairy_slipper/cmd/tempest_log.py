@@ -37,6 +37,12 @@ DEFAULT_PORTS = {
     '8776': 'volume',
     '8773': 'compute-ec2',
     '9292': 'image',
+    '9696': 'networking',
+    '9292': 'image',
+    '8082': 'application-catalog',
+    '8004': 'orchestration',
+    '8080': 'object',
+    '8777': 'telemetry',
 }
 
 PYTHON_LOG_PREFIX_RE = ("^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d{3}) \d+ "
@@ -49,13 +55,18 @@ REQUEST_RE = re.compile(PYTHON_LOG_PREFIX_RE + "Request (?P<test>\([^()]+\)):"
 
 REQUEST1_RE = re.compile(PYTHON_LOG_PREFIX_RE + "Request")
 
+RUBBISH_LINE_RE = re.compile("^    _log_request_full \S+:\d+$")
+
 
 def parse_logfile(log_file):
     """Yet another shonky stream parser."""
     calls = []
     current_request = {}
     current_response = {}
+    content_length = 0
     for line in log_file:
+        if RUBBISH_LINE_RE.match(line):
+            continue
         request = REQUEST_RE.match(line)
         if request:
             if current_request and current_response:
@@ -80,34 +91,55 @@ def parse_logfile(log_file):
                 # For some wacky reason, when you request JSON,
                 # sometimes you get text.  Handle this rad behaviour.
                 if current_response.get('headers') is not None:
-                    current_response['body'] += line
+                    try:
+                        current_response['body'] += line
+                    except:
+                        print(line)
+                        continue
                 else:
-                    current_request['body'] += line
+                    try:
+                        current_request['body'] += line
+                    except:
+                        print(line)
+                        continue
                 continue
             key = key.strip()
             value = value.strip()
             if key == 'Request - Headers':
-                current_request['headers'] = eval(value)
+                current_request['headers'] = {k.lower(): v
+                                              for k, v in eval(value).items()}
+                res_or_req = current_request
+                content_length = int(current_request['headers']
+                                     .get('content-length', 0))
             if key == 'Response - Headers':
-                current_response['headers'] = eval(value)
+                current_response['headers'] = {k.lower(): v
+                                               for k, v in eval(value).items()}
+                res_or_req = current_response
+                content_length = int(current_response['headers']
+                                     .get('content-length', 0))
             if key == 'Body':
-                if value == 'None':
+                if content_length == 0:
                     body = None
-                elif value == '':
+                elif value[:4] == 'None':
                     body = None
-                else:
+                elif 'application/json' == res_or_req.get('content-type'):
+                    if '_log_request_full' in value:
+                        value = value.split('_log_request_full')[0]
                     try:
                         body = json.loads(value)
                         body = json.dumps(body, indent=2,
                                           sort_keys=True,
                                           separators=(',', ': '))
+                        continue
                     except ValueError:
                         body = value
-                        log.info("Failed to parse %r", value)
-                if current_response.get('headers') is not None:
-                    current_response['body'] = body
+
+                        log.warning("Headers %r", res_or_req)
+                        log.warning("Failed to parse %r", value)
                 else:
-                    current_request['body'] = body
+                    body = value
+
+                res_or_req['body'] = body
     else:
         calls.append((current_request, current_response))
     return calls
