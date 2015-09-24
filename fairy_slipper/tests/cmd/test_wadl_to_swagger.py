@@ -92,7 +92,6 @@ para2
 
 """)
 
-    @unittest.expectedFailure
     def test_link(self):
         file_content = """<?xml version="1.0" encoding="UTF-8"?>
 <wadl:doc>
@@ -110,8 +109,27 @@ para2
         self.assertEqual(
             parent.result,
             "To create a keypair, make a "
-            "`create keypair <http://developer.openstack.org/#createKeypair>`_"
+            "`create keypair\n<http://developer.openstack.org/#createKeypair>`_"
             " request.\n\n")
+
+    def test_anonymous_link(self):
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
+<wadl:doc>
+  <para>
+    To create a keypair, see <link
+    xlink:href="http://developer.openstack.org/#createKeypair"></link> this link.
+  </para>
+</wadl:doc>
+"""
+
+        parent = MockParent()
+        ch = wadl_to_swagger.ParaParser(parent)
+        xml.sax.parse(StringIO(file_content), ch)
+        self.assertEqual(
+            parent.result,
+            "To create a keypair, see\n"
+            "`<http://developer.openstack.org/#createKeypair>`__"
+            " this link.\n\n")
 
     def test_para_inline_code(self):
         file_content = """<?xml version="1.0" encoding="UTF-8"?>

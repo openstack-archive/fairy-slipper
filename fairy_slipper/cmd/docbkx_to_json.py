@@ -280,6 +280,13 @@ class TableMixin(object):
         self.content.append(str(self.__table))
         self.content.append('\n\n')
 
+    # TODO(Karen)
+    def visit_caption(self, attrs):
+        pass
+
+    def depart_caption(self):
+        pass
+
     def visit_th(self, attrs):
         self.__table.header = True
 
@@ -436,8 +443,10 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
                 content = content.strip()
             elif (self.on_top_tag_stack('programlisting')):
                 content = ' ' * self.nesting + content
-            else:
+            elif self.no_space:
                 content = '' + content.strip()
+            else:
+                content = ' ' + content.strip()
 
         if self.no_space is True:
             self.inline_markup_stack.append(content)
@@ -480,7 +489,7 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
                 self.content.append('\n')
 
     def depart_para(self):
-        content = ' '.join(self.content_stack.pop()).strip()
+        content = ''.join(self.content_stack.pop()).strip()
         wrapped = self.wrapper.wrap(content)
         self.content.append('\n'.join(wrapped))
         if self.search_stack_for('itemizedlist') is None:
@@ -493,30 +502,26 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
                 subsequent_indent=' ' * self.nesting + '  ',)
 
     def visit_code(self, attrs):
-        self.inline_markup_stack.append('``')
         self.no_space = True
 
     def depart_code(self):
-        content = self.inline_markup_stack[0]
-        content += ' '.join(self.inline_markup_stack[1:None])
+        content = ' ``'
+        content += ' '.join(self.inline_markup_stack[0:None])
         content += '``'
         self.content.append(content)
-
         self.inline_markup_stack[:] = []
         self.no_space = False
 
     def visit_emphasis(self, attrs):
         # Bold is the default emphasis
         self.current_emphasis = attrs.get('role', 'bold')
-        self.inline_markup_stack.append(self.EMPHASIS[self.current_emphasis])
         self.no_space = True
 
     def depart_emphasis(self):
-        content = self.inline_markup_stack[0]
-        content += ' '.join(self.inline_markup_stack[1:None])
+        content = ' ' + self.EMPHASIS[self.current_emphasis]
+        content += ' '.join(self.inline_markup_stack[0:None])
         content += self.EMPHASIS[self.current_emphasis]
         self.content.append(content)
-
         self.inline_markup_stack[:] = []
         self.no_space = False
         self.current_emphasis = None

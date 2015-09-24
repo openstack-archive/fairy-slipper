@@ -178,7 +178,7 @@ class TableMixin(object):
         self.content.append(str(self.__table))
         self.content.append('\n\n')
 
-    # TODO(Karen), make table captions bold
+    #TODO(Karen)
     def visit_caption(self, attrs):
         pass
 
@@ -228,6 +228,7 @@ class ParaParser(SubParser, TableMixin):
         self.wrapper = textwrap.TextWrapper(width=self.fill_width)
         self.shortdesc = False
         self.inline_markup_stack = []
+        self.hyperlink_end = False
 
     @property
     def content(self):
@@ -266,7 +267,9 @@ class ParaParser(SubParser, TableMixin):
             elif (self.on_top_tag_stack('programlisting')):
                 content = '\n' + ' ' * self.nesting + content
             elif self.no_space:
-                content = content.strip()
+                content = '' + content.strip()
+            elif self.hyperlink_end and content == '.':
+                self.hyperlink_end = False
             else:
                 content = ' ' + content.strip()
 
@@ -332,46 +335,39 @@ class ParaParser(SubParser, TableMixin):
 
     def visit_title(self, attrs):
         self.current_emphasis = attrs.get('role', 'bold')
-        self.inline_markup_stack.append(self.EMPHASIS[self.current_emphasis])
         self.no_space = True
 
     def depart_title(self):
-        content = self.inline_markup_stack[0]
-        content += ' '.join(self.inline_markup_stack[1:None])
+        content = ' ' + self.EMPHASIS[self.current_emphasis]
+        content += ' '.join(self.inline_markup_stack[0:None])
         content += self.EMPHASIS[self.current_emphasis]
         self.content.append(content)
         self.content.append('\n\n')
-
         self.inline_markup_stack[:] = []
         self.no_space = False
         self.current_emphasis = None
 
     def visit_code(self, attrs):
-        self.inline_markup_stack.append(' ``')
         self.no_space = True
 
     def depart_code(self):
-        content = self.inline_markup_stack[0]
-        content += ' '.join(self.inline_markup_stack[1:None])
+        content = ' ``'
+        content += ' '.join(self.inline_markup_stack[0:None])
         content += '``'
         self.content.append(content)
-
         self.inline_markup_stack[:] = []
         self.no_space = False
 
     def visit_emphasis(self, attrs):
         # Bold is the default emphasis
         self.current_emphasis = attrs.get('role', 'bold')
-        self.inline_markup_stack.append(
-            ' ' + self.EMPHASIS[self.current_emphasis])
         self.no_space = True
 
     def depart_emphasis(self):
-        content = self.inline_markup_stack[0]
-        content += ' '.join(self.inline_markup_stack[1:None])
+        content = ' ' + self.EMPHASIS[self.current_emphasis]
+        content += ' '.join(self.inline_markup_stack[0:None])
         content += self.EMPHASIS[self.current_emphasis]
         self.content.append(content)
-
         self.inline_markup_stack[:] = []
         self.no_space = False
         self.current_emphasis = None
@@ -386,6 +382,25 @@ class ParaParser(SubParser, TableMixin):
     def depart_programlisting(self):
         self.nesting = 0  # no indent for blank lines
         self.content.append('\n\n')
+
+    def visit_link(self, attrs):
+        if attrs:
+            self.inline_markup_stack.append(attrs['xlink:href'])
+            self.no_space = True
+
+    def depart_link(self):
+        content = ' `'
+        #anonymous link
+        if len(self.inline_markup_stack) is 1:
+            content += ('<%s>`__' % self.inline_markup_stack[0])
+        else:
+            content += ' '.join(self.inline_markup_stack[1:None])
+            content += (' <%s>`_' % self.inline_markup_stack[0])
+
+        self.content.append(content)
+        self.inline_markup_stack[:] = []
+        self.no_space = False
+        self.hyperlink_end = True
 
 
 class WADLHandler(xml.sax.ContentHandler):

@@ -87,6 +87,8 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         self.text = ''
         self.col_num = 0
         self.first_row = 0
+        self.hyperlink_name = ''
+        self.refuri = ''
 
     def search_stack_for(self, tag_name):
         for node in self.node_stack:
@@ -320,6 +322,21 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         if self.first_row > 0:
             self.text += self.table_stack.pop()
         self.text += """<br>"""
+
+    def visit_reference(self, node):
+        self.hyperlink_name = node.attributes['name']
+        self.refuri = node.attributes['refuri']
+        self.text += '['
+
+    def depart_reference(self, node):
+        if self.hyperlink_name:
+            self.text += ']'
+            self.text += '(' + self.refuri + ')'
+        else:
+            self.text += '[' + self.refuri + ']'
+
+        self.hyperlink_name = ''
+        self.refuri = ''
 
     def visit_resource(self, node):
         self.text = ''

@@ -242,6 +242,30 @@ start text _inline inline_ end text
                          [minimal_method_json(title='Path Thing')]},
                         'tags': []}
 
+    def test_hyperlink(self):
+        rst = """
+.. http:get:: /path
+
+   For more information about form POST see `Object
+   Storage API v1 (SUPPORTED) <http://docs.openstack.org/api
+   /openstack-object-storage/1.0/content/>`_.
+
+   Example requests and responses:
+
+"""
+
+        markdown = '''For more information about form POST see [Object\nStorage API v1 (SUPPORTED)](http://docs.openstack.org/api/openstack-object-storage/1.0/content/).
+
+Example requests and responses:
+
+'''
+        json = rest.publish_string(rst)
+
+        assert json == {'paths':
+                        {'/path':
+                         [minimal_method_json(description=markdown)]},
+                        'tags': []}
+
     def test_table_simple(self):
         rst = """
 .. http:get:: /path
