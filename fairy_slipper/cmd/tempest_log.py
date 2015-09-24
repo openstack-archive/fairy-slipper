@@ -57,99 +57,156 @@ REQUEST1_RE = re.compile(PYTHON_LOG_PREFIX_RE + "Request")
 
 RUBBISH_LINE_RE = re.compile("^    _log_request_full \S+:\d+$")
 
+REQ_RE = re.compile('(req-[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}'
+                    '-[a-z0-9]{4}-[a-z0-9]{12})')
+
+
+class DB(object):
+
+    def __init__(self):
+        self.requests = {}
+        self.responses = {}
+
+    def _normalize_headers(self, headers):
+        return {k.lower(): v for k, v in headers.items()}
+
+    def create(self, req, request):
+        url = urlparse.urlsplit(request['url'])
+        port = url.netloc.split(':')[-1]
+        service = DEFAULT_PORTS[port]
+
+        self.requests[req] = {
+            'service': service,
+            'url': urlparse.urlunsplit(('', '') + url[2:]),
+            'method': request['method']}
+        self.responses[req] = {
+            'status_code': request['status_code']}
+
+    def set_request_headers(self, req, headers):
+        self.requests[req]['headers'] = self._normalize_headers(headers)
+
+    def set_response_headers(self, req, headers):
+        self.responses[req]['headers'] = self._normalize_headers(headers)
+
+    def get_req_or_resp_length(self, req):
+        if self.responses[req].get('headers') is not None:
+            return int(self.responses[req]['headers'].get('content-length', 0))
+        else:
+            return int(self.requests[req]['headers'].get('content-length', 0))
+
+    def get_req_or_resp_content_type(self, req):
+        if self.responses[req].get('headers') is not None:
+            return self.responses[req]['headers'].get('content-type',
+                                                      'text/plain')
+        else:
+            return self.requests[req]['headers'].get('content-type',
+                                                     'text/plain')
+
+    def append_req_or_resp_body(self, req_id, string):
+        if self.responses[req_id].get('headers') is not None:
+            self.responses[req_id]['body'] += string
+        else:
+            self.requests[req_id]['body'] += string
+
+    def set_req_or_resp_body(self, req_id, string):
+        if self.responses[req_id].get('headers') is not None:
+            self.responses[req_id]['body'] = string
+        else:
+            self.requests[req_id]['body'] = string
+
 
 def parse_logfile(log_file):
     """Yet another shonky stream parser."""
-    calls = []
-    current_request = {}
-    current_response = {}
     content_length = 0
+    current_req_id = ''
+    db = DB()
     for line in log_file:
         if RUBBISH_LINE_RE.match(line):
             continue
         request = REQUEST_RE.match(line)
         if request:
-            if current_request and current_response:
-                calls.append((current_request, current_response))
             request_dict = request.groupdict()
-            url = urlparse.urlsplit(request_dict['url'])
-            port = url.netloc.split(':')[-1]
-            service = DEFAULT_PORTS[port]
-            current_request = {
-                'service': service,
-                'url': urlparse.urlunsplit(('', '') + url[2:]),
-                'method': request_dict['method']}
-            current_response = {
-                'status_code': request_dict['status_code']}
+            try:
+                current_req_id = REQ_RE.match(request_dict['tags']).groups()[0]
+            except AttributeError:
+                # Swift calls don't have the req tag
+                current_req_id = ''
+            if current_req_id:
+                db.create(current_req_id, request_dict)
         else:
             start_request = REQUEST1_RE.match(line)
             if start_request:
                 line = re.sub(PYTHON_LOG_PREFIX_RE, '', line)
+                try:
+                    current_req_id = REQ_RE.match(
+                        start_request.groupdict()['tags']).groups()[0]
+                except AttributeError:
+                    # Swift calls don't have the req tag
+                    current_req_id = ''
+
+                # Skip all boto logs
+                if 'boto' == start_request.groupdict()['logger_name']:
+                    current_req_id = ''
             try:
                 key, value = line.split(':', 1)
             except ValueError:
                 # For some wacky reason, when you request JSON,
                 # sometimes you get text.  Handle this rad behaviour.
-                if current_response.get('headers') is not None:
-                    try:
-                        current_response['body'] += line
-                    except:
-                        print(line)
-                        continue
-                else:
-                    try:
-                        current_request['body'] += line
-                    except:
-                        print(line)
-                        continue
+                if not current_req_id:
+                    continue
+
+                try:
+                    db.append_req_or_resp_body(current_req_id, line)
+                except TypeError:
+                    log.warning('Failed to find body to add to.')
                 continue
+
             key = key.strip()
             value = value.strip()
+
             if key == 'Request - Headers':
-                current_request['headers'] = {k.lower(): v
-                                              for k, v in eval(value).items()}
-                res_or_req = current_request
-                content_length = int(current_request['headers']
-                                     .get('content-length', 0))
+                if current_req_id:
+                    db.set_request_headers(current_req_id, eval(value))
             if key == 'Response - Headers':
-                current_response['headers'] = {k.lower(): v
-                                               for k, v in eval(value).items()}
-                res_or_req = current_response
-                content_length = int(current_response['headers']
-                                     .get('content-length', 0))
+                if current_req_id:
+                    db.set_response_headers(current_req_id, eval(value))
             if key == 'Body':
+                if not current_req_id:
+                    continue
+
+                content_length = db.get_req_or_resp_length(current_req_id)
+                content_type = db.get_req_or_resp_content_type(current_req_id)
+
+                # Trim any messages that are by accident on the end of
+                # the line
+                if '_log_request_full' in value:
+                    value = value.split('_log_request_full')[0]
+
                 if content_length == 0:
                     body = None
                 elif value[:4] == 'None':
                     body = None
-                elif 'application/json' == res_or_req.get('content-type'):
-                    if '_log_request_full' in value:
-                        value = value.split('_log_request_full')[0]
+                elif 'application/json' in content_type:
                     try:
                         body = json.loads(value)
                         body = json.dumps(body, indent=2,
                                           sort_keys=True,
                                           separators=(',', ': '))
-                        continue
                     except ValueError:
                         body = value
-
-                        log.warning("Headers %r", res_or_req)
                         log.warning("Failed to parse %r", value)
                 else:
                     body = value
-
-                res_or_req['body'] = body
-    else:
-        calls.append((current_request, current_response))
-    return calls
+                db.set_req_or_resp_body(current_req_id, body)
+    return db
 
 
 def main1(log_file, output_dir):
     log.info('Reading %s' % log_file)
     calls = parse_logfile(open(log_file))
     services = defaultdict(list)
-    for call in calls:
+    for req in calls.requests:
+        call = (calls.requests[req], calls.responses[req])
         services[call[0]['service']].append(call)
     for service, calls in services.items():
         pathname = path.join(output_dir, '%s-examples.json' % (service))

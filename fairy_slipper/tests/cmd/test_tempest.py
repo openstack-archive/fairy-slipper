@@ -45,12 +45,44 @@ SIMPLE_LOG_BODY = """2015-09-04 15:51:29.007 18793 INFO tempest_lib.common.rest_
         Body: {"flavor": {"name": "m1.tiny", "links": [{"href": "http://192.168.122.201:8774/v2.1/6b45254f6f7c44a1b65ddb8218932226/flavors/1", "rel": "self"}, {"href": "http://192.168.122.201:8774/6b45254f6f7c44a1b65ddb8218932226/flavors/1", "rel": "bookmark"}], "ram": 512, "OS-FLV-DISABLED:disabled": false, "vcpus": 1, "swap": "", "os-flavor-access:is_public": true, "rxtx_factor": 1.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 1, "id": "1"}}
 """  # noqa
 
+DEBUG_LOG = """2015-09-04 15:54:42.296 18793 INFO tempest_lib.common.rest_client [req-39c6042e-5a4a-4517-9fe9-32b34cfaa5a8 ] Request (TestSessionsTenantIsolation:test_delete_session_in_env_from_another_tenant): 403 DELETE http://127.0.0.1:8082/v1/environments/7501923609b145ec88eeb4a5c93e371c/sessions/db214e36e0494c4e9dc67fb0df8548f7 0.010s
+2015-09-04 15:54:42.296 18793 DEBUG tempest_lib.common.rest_client [req-39c6042e-5a4a-4517-9fe9-32b34cfaa5a8 ] Request - Headers: {'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Auth-Token': '<omitted>'}
+        Body: None
+    Response - Headers: {'status': '403', 'content-length': '75', 'connection': 'close', 'date': 'Fri, 04 Sep 2015 15:54:42 GMT', 'content-type': 'text/plain; charset=UTF-8', 'x-openstack-request-id': 'req-39c6042e-5a4a-4517-9fe9-32b34cfaa5a8'}
+        Body: 403 Forbidden
+
+User is not authorized to access these tenant resources
+
+    _log_request_full /opt/stack/new/tempest/.venv/local/lib/python2.7/site-packages/tempest_lib/common/rest_client.py:411
+2015-09-04 15:52:13.727 18793 INFO tempest_lib.common.rest_client [req-0ff36a16-dacd-49c8-9835-7ce92d50f5a7 ] Request (TestEnvironmentsTenantIsolation:tearDown): 200 DELETE http://127.0.0.1:8082/v1/environments/c32c6d5095c4476da549ed065e9b5196 0.054s
+2015-09-04 15:52:13.727 18793 DEBUG tempest_lib.common.rest_client [req-0ff36a16-dacd-49c8-9835-7ce92d50f5a7 ] Request - Headers: {'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Auth-Token': '<omitted>'}
+        Body: None
+    Response - Headers: {'status': '200', 'content-length': '0', 'connection': 'close', 'date': 'Fri, 04 Sep 2015 15:52:13 GMT', 'content-type': 'application/json', 'x-openstack-request-id': 'req-0ff36a16-dacd-49c8-9835-7ce92d50f5a7'}
+        Body:  _log_request_full /opt/stack/new/tempest/.venv/local/lib/python2.7/site-packages/tempest_lib/common/rest_client.py:411
+"""  # noqa
+
+
+DEBUG_LOG_AUTH = """2015-09-04 15:49:46.056 14923 INFO tempest_lib.common.rest_client [req-280bc347-e650-473e-92bb-bcc59103e12c ] Request (main): 200 POST http://127.0.0.1:5000/v2.0/tokens
+2015-09-04 15:49:46.056 14923 DEBUG tempest_lib.common.rest_client [req-280bc347-e650-473e-92bb-bcc59103e12c ] Request - Headers: {}
+        Body: None
+    Response - Headers: {'server': 'Apache/2.4.7 (Ubuntu)', 'vary': 'X-Auth-Token', 'x-openstack-request-id': 'req-280bc347-e650-473e-92bb-bcc59103e12c', 'content-length': '4846', 'connection': 'close', 'status': '200', 'content-type': 'application/json', 'date': 'Fri, 04 Sep 2015 15:49:42 GMT'}
+        Body: None _log_request_full /opt/stack/new/tempest/.tox/venv/local/lib/python2.7/site-packages/tempest_lib/common/rest_client.py:411
+"""  # noqa
+
+
+def db_to_call_list(db):
+    calls = []
+    for req in sorted(db.requests):
+        calls.append((db.requests[req], db.responses[req]))
+    return calls
+
 
 class TestLogParser(unittest.TestCase):
     maxDiff = 10000
 
     def test_simple_parse(self):
-        result = tempest_log.parse_logfile(StringIO(SIMPLE_LOG))
+        result = db_to_call_list(
+            tempest_log.parse_logfile(StringIO(SIMPLE_LOG)))
         self.assertEqual(result, [
             ({'url': '/v2.0/tokens',
               'service': 'identity',
@@ -84,13 +116,14 @@ class TestLogParser(unittest.TestCase):
                           'server': 'Apache/2.4.7 (Ubuntu)'}})])
 
     def test_body_parse(self):
-        result = tempest_log.parse_logfile(StringIO(SIMPLE_LOG_BODY))
+        result = db_to_call_list(
+            tempest_log.parse_logfile(StringIO(SIMPLE_LOG_BODY)))
 
         self.assertEqual(result, [
             ({'url': '/v2.1/6b45254f6f7c44a1b65ddb8218932226/flavors/1',
-              'headers': {'Content-Type': 'application/json',
-                          'Accept': 'application/json',
-                          'X-Auth-Token': '<omitted>'},
+              'headers': {'content-type': 'application/json',
+                          'accept': 'application/json',
+                          'x-auth-token': '<omitted>'},
               'body': None,
               'method': 'GET',
               'service': 'compute'},
@@ -104,3 +137,65 @@ class TestLogParser(unittest.TestCase):
                           'x-compute-request-id': 'req-959a09e8-3628-419d-964a-1be4ca604232',  # noqa
                           'content-type': 'application/json',
                           'connection': 'close'}})])
+
+    def test_debug_log(self):
+        result = db_to_call_list(
+            tempest_log.parse_logfile(StringIO(DEBUG_LOG)))
+
+        self.assertEqual(result, [
+            ({'body': None,
+              'headers': {'accept': 'application/json',
+                          'content-type': 'application/json',
+                          'x-auth-token': '<omitted>'},
+              'method': 'DELETE',
+              'service': 'application-catalog',
+              'url': '/v1/environments/c32c6d5095c4476da549ed065e9b5196'},
+             {'body': None,
+              'headers': {'connection': 'close',
+                          'content-length': '0',
+                          'content-type': 'application/json',
+                          'date': 'Fri, 04 Sep 2015 15:52:13 GMT',
+                          'status': '200',
+                          'x-openstack-request-id':
+                          'req-0ff36a16-dacd-49c8-9835-7ce92d50f5a7'},
+              'status_code': '200'}),
+            ({'body': None,
+              'headers': {'accept': 'application/json',
+                          'content-type': 'application/json',
+                          'x-auth-token': '<omitted>'},
+              'method': 'DELETE',
+              'service': 'application-catalog',
+              'url': '/v1/environments/7501923609b145ec88eeb4a5c93e371c'
+              '/sessions/db214e36e0494c4e9dc67fb0df8548f7'},
+             {'body': '403 Forbidden\n'
+              'User is not authorized to access these tenant resources\n\n',
+              'headers': {'connection': 'close',
+                          'content-length': '75',
+                          'content-type': 'text/plain; charset=UTF-8',
+                          'date': 'Fri, 04 Sep 2015 15:54:42 GMT',
+                          'status': '403',
+                          'x-openstack-request-id':
+                          'req-39c6042e-5a4a-4517-9fe9-32b34cfaa5a8'},
+              'status_code': '403'})])
+
+    def test_debug_admin_log(self):
+        result = db_to_call_list(
+            tempest_log.parse_logfile(StringIO(DEBUG_LOG_AUTH)))
+
+        self.assertEqual(result, [
+            ({'body': None,
+              'headers': {},
+              'method': 'POST',
+              'service': 'identity',
+              'url': '/v2.0/tokens'},
+             {'body': None,
+              'headers': {'connection': 'close',
+                          'content-length': '4846',
+                          'content-type': 'application/json',
+                          'date': 'Fri, 04 Sep 2015 15:49:42 GMT',
+                          'server': 'Apache/2.4.7 (Ubuntu)',
+                          'status': '200',
+                          'vary': 'X-Auth-Token',
+                          'x-openstack-request-id':
+                          'req-280bc347-e650-473e-92bb-bcc59103e12c'},
+              'status_code': '200'})])
