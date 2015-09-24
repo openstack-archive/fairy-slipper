@@ -30,10 +30,15 @@
             </swagger-path>
           </h4>
         </div>
-        <div ng-controller="ParametersCtrl" class="col-md-6">
+        <div ng-controller="ParametersCtrl" class="col-lg-6">
           <tabset>
             <tab heading="Description">
-              <div class="content" marked="operation.description"></div>
+              <div class="content" ng-if="!isEmpty(operation.description)"
+                   marked="operation.description">
+              </div>
+              <ng-include ng-if="isEmpty(operation.description)"
+                          src="'browser/undocumented-operation.html'">
+              </ng-include>
             </tab>
             <tab heading="Details">
               <div ng-if="parameters.header">
@@ -59,7 +64,7 @@
             </tab>
           </tabset>
         </div>
-        <div class="col-md-6">
+        <div class="col-lg-6">
           <h4>Request</h4>
           <swagger-example ng-if="!isEmpty(operation.examples)"
                            swagger="swagger"

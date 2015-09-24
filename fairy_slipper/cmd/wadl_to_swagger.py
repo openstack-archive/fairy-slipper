@@ -137,6 +137,11 @@ def create_parameter(name, _in, description='',
     }
 
 
+def join_url(parts):
+    """Return a joined url without any duplicate slashes"""
+    return '/'.join(parts).replace('//', '/')
+
+
 class SubParser(xml.sax.ContentHandler):
     def __init__(self, parent):
         # general state
@@ -610,10 +615,10 @@ class WADLHandler(xml.sax.ContentHandler):
         # Methods and Resource Types
         if name == 'resource' and attrs.get('type'):
             self.resource_types[attrs.get('type').strip('#')] \
-                = '/'.join(self.url)
+                = join_url(self.url)
         if self.on_top_tag_stack('resource', 'method'):
             href = attrs.get('href').strip('#')
-            self.url_map[href] = '/'.join(self.url)
+            self.url_map[href] = join_url(self.url)
             self.resource_ids[href] = [r_id for r_id in self.resource_id_stack
                                        if r_id]
 
@@ -842,7 +847,7 @@ def main1(source_file, output_dir):
                     operation['responses'][status_code] = \
                         {'examples': {'text/plain': response}}
         else:
-            log.warning("Couldn't find matching URL for %s" % urlpath)
+            log.warning("Couldn't find matching URL for example %s" % urlpath)
 
     os.chdir(output_dir)
     pathname = '%s-%s-swagger.json' % (api_ref['service'],
