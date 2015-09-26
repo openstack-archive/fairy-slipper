@@ -2,6 +2,3 @@
 branch = True
 source = fairy_slipper
 omit = fairy_slipper/openstack/*
-
-[report]
-ignore-errors = True
