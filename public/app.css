@@ -22,6 +22,11 @@ body, h1, h2, h3, h4, h5, h6 {
 
 }
 
+.sidebar-nav > li > .sidebar-nav {
+    margin-left: 10px;
+
+}
+
 dd {
     margin-left: 10px;
 }
@@ -94,12 +99,12 @@ a.accordion-toggle:focus, a.accordion-toggle:hover {
     color: #2a4e68;
 }
 
-.sidebar .selected, .sidebar .selected a{
+.sidebar .selected > a, .sidebar .selected > a:hover, .sidebar .selected > a:focus{
     background: #496e8a;
     color: #fff;
 }
 
-.sidebar .li:hover {
+.sidebar a:hover {
     background: #bccfde;
     color: #2a4e68;
 }

@@ -39,10 +39,6 @@
         <span class="glyphicon glyphicon-chevron-right"></span>
       </div>
       <div class="sidebar">
-        <div class="btn-group">
-          <label class="btn btn-primary" ng-model="filterByModel" btn-radio="'by-tag'">Tag</label>
-          <label class="btn btn-primary" ng-model="filterByModel" btn-radio="'by-path'">Path</label>
-        </div>
         <ul class="nav sidebar-nav">
           <li ng-repeat="service in services"
               class="">
@@ -53,6 +49,16 @@
                 <a href="#/{{ filterByModel }}/{{ api.url }}">
                   {{ api.version }}
                 </a>
+
+                <ul class="nav sidebar-nav">
+                  <li ng-repeat="api in api.section"
+                      ng-class="{'selected': api.url == $routeParams.service + '/' + $routeParams.version + '/'}">
+                    <a href="#/{{ filterByModel }}/{{ api.url }}">
+                      {{ api.title }}
+                    </a>
+                  </li>
+                </ul>
+
               </li>
             </ul>
           </li>
