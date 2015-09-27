@@ -46,6 +46,8 @@ module.exports = function(config){
       suite: 'unit'
     },
 
+    captureTimeout: 120000,
+
     customLaunchers: {
       Chrome_travis_ci: {
         base: 'Chrome',
