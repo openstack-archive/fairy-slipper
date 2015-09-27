@@ -7,7 +7,7 @@
 <div ng-repeat="tag in swagger.tags">
   <h3>{{ tag.summary }}</h3>
   <div marked="tag.description"></div>
-  <accordion>
+  <accordion close-others="false">
     <accordion-group ng-repeat="operation in operations[tag.name]"
                      is-open="operation_open">
       <accordion-heading>
