@@ -1,0 +1,6 @@
+.. http:get:: /
+   :title: Simple route
+
+   :tag: simple
+           
+

@@ -112,7 +112,11 @@ class ServicesController(object):
             logger.error("Can't find documentation at %s", filepath)
             self.services_info = {}
             return
-        self.services_info = json.load(open(filepath))
+        try:
+            self.services_info = json.load(open(filepath))
+        except ValueError:
+            logger.error("Failed to load %s", filepath)
+            raise
         for key, info in self.services_info.items():
             # Add the path into each element, this is to make
             # consumption by the JS client easier.
