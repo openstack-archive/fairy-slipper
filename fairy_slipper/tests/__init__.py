@@ -16,6 +16,7 @@
 # limitations under the License.
 
 import os
+import copy
 from unittest import TestCase
 
 from pecan import set_config
@@ -30,12 +31,30 @@ class FunctionalTest(TestCase):
     Provides a literal application and for testing its integration
     with the framework.
     """
+    CONFIG = {
+        'server': {
+            'port': '8080',
+            'host': '0.0.0.0'
+        },
+        'app': {
+            'root': 'fairy_slipper.controllers.root.RootController',
+            'modules': ['fairy_slipper'],
+            'static_root': '%(confdir)s/public',
+            'api_doc': '%(confdir)s/fairy_slipper/tests/api_doc_fixture',
+            'template_path': '%(confdir)s/templates',
+            'debug': True,
+            'errors': {
+                '404': '/error/404',
+                '__force_dict__': True
+            }
+        }}
+
+    def __init__(self, *args, **kwargs):
+        self.CONFIG = copy.deepcopy(self.CONFIG)
+        super(FunctionalTest, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        self.app = load_test_app(os.path.join(
-            os.path.dirname(__file__),
-            'config.py'
-        ))
+        self.app = load_test_app(copy.deepcopy(self.CONFIG))
 
     def tearDown(self):
         set_config({}, overwrite=True)

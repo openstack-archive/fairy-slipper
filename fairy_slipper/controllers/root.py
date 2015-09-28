@@ -109,6 +109,8 @@ class ServicesController(object):
         filepath = path.join(conf.app.api_doc, 'index.json')
         self.url_map = {}
         if not path.exists(filepath):
+            logger.error("Can't find documentation at %s", filepath)
+            self.services_info = {}
             return
         self.services_info = json.load(open(filepath))
         for key, info in self.services_info.items():
@@ -145,6 +147,9 @@ class ServicesController(object):
 
 class RootController(object):
 
+    def __init__(self):
+        self.doc = ServicesController()
+
     @expose(content_type='text/html')
     def index(self):
         filepath = path.join(conf.app.static_root, 'index.html')
@@ -159,5 +164,3 @@ class RootController(object):
             status = 0
         message = getattr(status_map.get(status), 'explanation', '')
         return dict(status=status, message=message)
-
-    doc = ServicesController()

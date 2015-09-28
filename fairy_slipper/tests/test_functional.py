@@ -19,6 +19,19 @@
 from fairy_slipper.tests import FunctionalTest
 
 
+class TestRootControllerNegative(FunctionalTest):
+
+    def setUp(self):
+        self.CONFIG['app']['api_doc'] = \
+            '%(confdir)s/fairy_slipper/tests/api_doc_missing'
+        super(TestRootControllerNegative, self).setUp()
+
+    def test_get_doc_index(self):
+        response = self.app.get('/doc/')
+        assert response.json == []
+        assert response.status_int == 200
+
+
 class TestRootController(FunctionalTest):
 
     def test_get(self):
