@@ -776,8 +776,11 @@ def main1(source_file, output_dir):
         files.add(filepath.split('#', 1)[0])
 
     # Load supplementary examples file
+    example_name = (api_ref['service']
+                    .replace('-admin', '')
+                    .replace('-extensions', ''))
     examples_file = path.join(path.dirname(source_file),
-                              api_ref['service'] + '-examples.json')
+                              example_name + '-examples.json')
     if path.exists(examples_file):
         log.info('Reading examples from %s' % examples_file)
         examples = json.load(open(examples_file))

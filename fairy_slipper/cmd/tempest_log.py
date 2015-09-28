@@ -33,7 +33,7 @@ log = logging.getLogger(__name__)
 
 DEFAULT_PORTS = {
     '5000': 'identity',
-    '35357': 'identity-admin',
+    '35357': 'identity',
     '8774': 'compute',
     '8776': 'volume',
     '8773': 'compute-ec2',
