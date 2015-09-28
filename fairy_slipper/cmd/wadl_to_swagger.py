@@ -183,7 +183,7 @@ class TableMixin(object):
         self.content.append(str(self.__table))
         self.content.append('\n\n')
 
-    #TODO(Karen)
+    # TODO(Karen)
     def visit_caption(self, attrs):
         pass
 
@@ -395,7 +395,7 @@ class ParaParser(SubParser, TableMixin):
 
     def depart_link(self):
         content = ' `'
-        #anonymous link
+        # anonymous link
         if len(self.inline_markup_stack) is 1:
             content += ('<%s>`__' % self.inline_markup_stack[0])
         else:

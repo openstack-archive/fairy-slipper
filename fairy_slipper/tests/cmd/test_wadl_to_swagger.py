@@ -109,7 +109,8 @@ para2
         self.assertEqual(
             parent.result,
             "To create a keypair, make a "
-            "`create keypair\n<http://developer.openstack.org/#createKeypair>`_"
+            "`create keypair\n"
+            "<http://developer.openstack.org/#createKeypair>`_"
             " request.\n\n")
 
     def test_anonymous_link(self):
@@ -120,7 +121,7 @@ para2
     xlink:href="http://developer.openstack.org/#createKeypair"></link> this link.
   </para>
 </wadl:doc>
-"""
+"""  # noqa
 
         parent = MockParent()
         ch = wadl_to_swagger.ParaParser(parent)

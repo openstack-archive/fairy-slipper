@@ -258,7 +258,7 @@ start text _inline inline_ end text
 
 Example requests and responses:
 
-'''
+'''  # noqa
         json = rest.publish_string(rst)
 
         assert json == {'paths':
