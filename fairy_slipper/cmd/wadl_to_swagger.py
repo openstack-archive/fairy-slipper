@@ -816,18 +816,22 @@ def main1(source_file, output_dir):
     for ex_request, ex_response in examples:
         for urlpath in output['paths']:
             url_matcher = "^" + URL_TEMPLATE_RE.sub('[^/]+', urlpath) + "$"
+            method = ex_request['method'].lower()
             if re.match(url_matcher, ex_request['url']):
                 if len(output['paths'][urlpath]) > 1:
                     # Skip any of the multi-payload endpoints.  They
                     # are madness.
                     break
 
-                # Override any requests
-                try:
+                for op in output['paths'][urlpath]:
                     operation = output['paths'][urlpath][0]
-                except (KeyError, IndexError):
-                    log.warning("Couldn't find any operations for %s", urlpath)
+                    if operation['method'].lower() == method:
+                        break
+                else:
+                    log.warning("Couldn't find any operations %s for %s",
+                                method, urlpath)
                     break
+
                 request = HTTP_REQUEST_TMPL.render(
                     headers=ex_request['headers'],
                     method=ex_request['method'],
