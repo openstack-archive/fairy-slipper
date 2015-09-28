@@ -826,8 +826,7 @@ def main1(source_file, output_dir):
                     # are madness.
                     break
 
-                for op in output['paths'][urlpath]:
-                    operation = output['paths'][urlpath][0]
+                for operation in output['paths'][urlpath]:
                     if operation['method'].lower() == method:
                         break
                 else:
