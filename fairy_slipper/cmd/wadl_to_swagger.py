@@ -851,7 +851,10 @@ def main1(source_file, output_dir):
                     operation['responses'][status_code] = \
                         {'examples': {'text/plain': response}}
         else:
-            log.warning("Couldn't find matching URL for example %s" % urlpath)
+            log.warning("Service %s %s doesn't have matching "
+                        "URL for example %s %s",
+                        output['info']['service'], output['info']['version'],
+                        method, ex_request['url'])
 
     os.chdir(output_dir)
     pathname = '%s-%s-swagger.json' % (api_ref['service'],
