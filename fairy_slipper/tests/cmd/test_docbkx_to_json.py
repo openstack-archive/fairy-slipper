@@ -51,3 +51,25 @@ class TestChapterParaParser(TestCase):
                 'summary': "Image operations ``show`` all fields.\n"
                 "\nCreates, lists, updates, and deletes images."}]
         )
+
+    def test_para_programlisting(self):
+        filename = "test-file.xml"
+        test_filename = os.path.dirname(os.path.abspath(__file__))
+        test_filename += "/ch_test-v3.xml"
+
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
+        <book xml:id="test-v3" version="3">
+        <xi:include href="%s"/>
+        </book>
+        """ % (test_filename)
+
+        ch = docbkx_to_json.APIRefContentHandler(filename)
+        xml.sax.parse(StringIO(file_content), ch)
+
+        self.assertEqual(
+            ch.tags,
+            [{
+                'name': 'test-v3',
+                'summary': "You can encode sets into a blob. Do something with ``type`` to\n``application/json`` and JSON strings in a ``blob`` . Example:\n\n::\n\n   \"blob\": {\n           \"default\": false\n       }\n\nOr:\n\n::\n\n   \"blob\": {\n           \"foobar_user\": [\n               \"role:compute-user\"\n           ]\n       }"
+            }]
+        )

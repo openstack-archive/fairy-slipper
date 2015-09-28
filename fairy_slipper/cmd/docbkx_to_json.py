@@ -442,7 +442,7 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
             elif self.content[-1].endswith(' '):
                 content = content.strip()
             elif (self.on_top_tag_stack('programlisting')):
-                content = ' ' * self.nesting + content
+                content = '\n' + ' ' * self.nesting + content
             elif self.no_space:
                 content = '' + content.strip()
             else:
