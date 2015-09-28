@@ -12,6 +12,9 @@
                      is-open="operation_open">
       <accordion-heading>
         <div class="operation-header">
+          <i class="pull-right glyphicon"
+             ng-class="{'glyphicon-menu-down': operation_open, 'glyphicon-menu-right': !operation_open}">
+          </i>
           <div class="operation-method">
             <swagger-method method="operation.method"></swagger-method>
           </div>
@@ -73,7 +76,7 @@
                            src="operation.examples"
                            trigger-load="operation_open">
           </swagger-example>
-          <div ng-if="isEmpty(response.examples)">
+          <div ng-if="isEmpty(operation.examples)" class="well text-muted">
             No request recorded.
           </div>
           <h4>Responses</h4>
@@ -85,7 +88,7 @@
                 {{ status_code }}: {{ response.description }}
                 <i ng-if="!isEmpty(response.examples)"
                    class="pull-right glyphicon"
-                   ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                   ng-class="{'glyphicon-menu-down': status.open, 'glyphicon-menu-right': !status.open}"></i>
               </accordion-heading>
               <swagger-example swagger="swagger"
                                src="response.examples"

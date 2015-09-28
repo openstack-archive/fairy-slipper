@@ -126,3 +126,9 @@ a.accordion-toggle:focus, a.accordion-toggle:hover {
     margin: 0 auto;
     top: 50%;
 }
+
+/* Disable all boarders and shadows on accordians */
+.panel {
+    border: 0;
+    box-shadow: 0 0 0 0;
+}
