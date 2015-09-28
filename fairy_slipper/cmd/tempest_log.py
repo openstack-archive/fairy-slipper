@@ -23,6 +23,7 @@ import json
 import logging
 from os import path
 import re
+import six
 try:
     import urlparse
 except ImportError:
@@ -191,12 +192,19 @@ def parse_logfile(log_file):
                 elif 'application/json' in content_type:
                     try:
                         body = json.loads(value)
+                    except ValueError:
+                        body = value
+                        log.warning("Failed to as JSON %r", value)
+                        try:
+                            body = eval(value)
+                            log.warning("Succeed parsing as Python %r", value)
+                        except Exception:
+                            body = value
+
+                    if not isinstance(body, six.string_types):
                         body = json.dumps(body, indent=2,
                                           sort_keys=True,
                                           separators=(',', ': '))
-                    except ValueError:
-                        body = value
-                        log.warning("Failed to parse %r", value)
                 else:
                     body = value
                 db.set_req_or_resp_body(current_req_id, body)
