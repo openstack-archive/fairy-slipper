@@ -51,8 +51,9 @@ class TestRootController(FunctionalTest):
         assert response.json == [
             {'url': 'identity/v2/',
              'version': 'v2',
-             'license': {'url': 'http://www.apache.org/licenses/LICENSE-2.0.html',
-                          'name': 'Apache 2.0'},
+             'license': {
+                 'url': 'http://www.apache.org/licenses/LICENSE-2.0.html',
+                 'name': 'Apache 2.0'},
              'service': 'identity',
              'title': 'Identity'}]
         assert response.status_int == 200
@@ -67,8 +68,9 @@ class TestRootController(FunctionalTest):
             {'info':
              {'url': 'identity/v2/',
               'version': 'v2',
-              'license': {'url': 'http://www.apache.org/licenses/LICENSE-2.0.html',
-                          'name': 'Apache 2.0'},
+              'license': {
+                  'url': 'http://www.apache.org/licenses/LICENSE-2.0.html',
+                  'name': 'Apache 2.0'},
               'service': 'identity',
               'title': 'Identity'},
              'paths': {'/': [{'responses': {},

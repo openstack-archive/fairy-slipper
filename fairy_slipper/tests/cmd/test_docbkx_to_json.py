@@ -70,6 +70,6 @@ class TestChapterParaParser(TestCase):
             ch.tags,
             [{
                 'name': 'test-v3',
-                'summary': "You can encode sets into a blob. Do something with ``type`` to\n``application/json`` and JSON strings in a ``blob`` . Example:\n\n::\n\n   \"blob\": {\n           \"default\": false\n       }\n\nOr:\n\n::\n\n   \"blob\": {\n           \"foobar_user\": [\n               \"role:compute-user\"\n           ]\n       }"
+                'summary': "You can encode sets into a blob. Do something with ``type`` to\n``application/json`` and JSON strings in a ``blob`` . Example:\n\n::\n\n   \"blob\": {\n           \"default\": false\n       }\n\nOr:\n\n::\n\n   \"blob\": {\n           \"foobar_user\": [\n               \"role:compute-user\"\n           ]\n       }"  # noqa
             }]
         )
