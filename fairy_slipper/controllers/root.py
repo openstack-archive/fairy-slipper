@@ -134,7 +134,7 @@ class ServicesController(object):
 
     @expose('json')
     def index(self):
-        return self.services_info.values()
+        return list(self.services_info.values())
 
     @expose('json')
     def _lookup(self, *components):
