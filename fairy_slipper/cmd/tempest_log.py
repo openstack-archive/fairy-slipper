@@ -181,6 +181,8 @@ def parse_logfile(log_file):
                 # the line
                 if '_log_request_full' in value:
                     value = value.split('_log_request_full')[0]
+                if '_check_samples' in value:
+                    value = value.split('_check_samples')[0]
 
                 if content_length == 0:
                     body = None
