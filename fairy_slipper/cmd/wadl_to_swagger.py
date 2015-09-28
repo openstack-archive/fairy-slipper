@@ -821,7 +821,11 @@ def main1(source_file, output_dir):
             url_matcher = "^" + URL_TEMPLATE_RE.sub('[^/]+', urlpath) + "$"
             method = ex_request['method'].lower()
             if re.match(url_matcher, ex_request['url']):
-                if len(output['paths'][urlpath]) > 1:
+                method_count = defaultdict(int)
+                for operation in output['paths'][urlpath]:
+                    method_count[operation['method'].lower()] += 1
+
+                if any(i > 1 for i in method_count.values()):
                     # Skip any of the multi-payload endpoints.  They
                     # are madness.
                     break
