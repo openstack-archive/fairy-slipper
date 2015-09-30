@@ -139,6 +139,94 @@ banana
                          [minimal_method_json(description=markdown)]},
                         'tags': []}
 
+    @unittest.expectedFailure
+    def test_body_ul_with_literal(self):
+        rst = """
+.. http:get:: /path
+
+   Some normal body text
+
+   - the first item
+   - the second item
+     A new paragraph under second item
+   - Create object:
+
+     ``curl -i $publicURL/janeausten/helloworld.txt -X PUT -H
+     "Content-Length: 1" -H "Content-Type: text/html; charset=UTF-8"
+     -H "X-Auth-Token: $token"``
+
+
+"""
+
+
+        markdown = '''Some normal body text
+
+
+ * the first item
+
+ * the second item
+   A new paragraph under second item
+
+ * Create object:
+  `curl -i $publicURL/janeausten/helloworld.txt -X PUT -H\n"Content-Length: 1" -H "Content-Type: text/html; charset=UTF-8"\n-H "X-Auth-Token: $token"`
+
+'''
+        json = rest.publish_string(rst)
+
+        assert json == {'paths':
+                        {'/path':
+                         [minimal_method_json(description=markdown)]},
+                        'tags': []}
+
+    @unittest.expectedFailure
+    def test_body_ul_with_literal_block(self):
+        rst = """
+.. http:get:: /path
+
+   Some normal body text
+
+   - the first item
+   - the second item
+   - Create object:
+
+     ::
+
+       HTTP/1.1 201 Created
+       Last-Modified: Fri, 17 Jan 2014 17:28:35 GMT
+       Content-Length: 116
+       X-Trans-Id: tx4d5e4f06d357462bb732f-0052d96843
+       Date: Fri, 17 Jan 2014 17:28:35 GMT
+
+"""
+
+        markdown = '''Some normal body text
+
+
+ * the first item
+
+
+ * the second item
+
+
+ * Create object:
+
+   ```     
+   HTTP/1.1 201 Created
+   Last-Modified: Fri, 17 Jan 2014 17:28:35 GMT
+   Content-Length: 116
+   X-Trans-Id: tx4d5e4f06d357462bb732f-0052d96843
+   Date: Fri, 17 Jan 2014 17:28:35 GMT
+   ```
+
+'''
+        json = rest.publish_string(rst)
+
+        assert json == {'paths':
+                        {'/path':
+                         [minimal_method_json(description=markdown)]},
+                        'tags': []}
+
+
     def test_body_strong(self):
         rst = """
 .. http:get:: /path

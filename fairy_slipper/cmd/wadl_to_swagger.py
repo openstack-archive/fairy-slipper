@@ -234,6 +234,7 @@ class ParaParser(SubParser, TableMixin):
         self.shortdesc = False
         self.inline_markup_stack = []
         self.hyperlink_end = False
+        self.literal_block = False
 
     @property
     def content(self):
@@ -270,7 +271,10 @@ class ParaParser(SubParser, TableMixin):
             elif self.content[-1].endswith(' '):
                 content = content.strip()
             elif (self.on_top_tag_stack('programlisting')):
-                content = '\n' + ' ' * self.nesting + content
+                if self.content[-1].endswith('<'):
+                    pass
+                else:
+                    content = '\n' + ' ' * self.nesting + content
             elif self.no_space:
                 content = '' + content.strip()
             elif self.hyperlink_end and content == '.':
@@ -284,6 +288,7 @@ class ParaParser(SubParser, TableMixin):
             self.content.append(content)
 
     def visit_listitem(self, attrs):
+
         self.nesting = len([tag for tag in self.tag_stack
                             if tag == 'listitem']) - 1
         self.content_stack.append([' ' * self.nesting + '-'])
@@ -295,7 +300,11 @@ class ParaParser(SubParser, TableMixin):
     def depart_listitem(self):
         content = self.content_stack.pop()
         self.content.append(''.join(content))
-        self.content.append('\n')
+
+        if self.content[-1].endswith('\n\n'):
+            pass
+        else:
+            self.content.append('\n')
 
         self.nesting = len([tag for tag in self.tag_stack
                             if tag == 'listitem'])
@@ -321,13 +330,21 @@ class ParaParser(SubParser, TableMixin):
                 self.content.append('\n')
 
     def depart_para(self):
-        content = ''.join(self.content_stack.pop()).strip()
-        wrapped = self.wrapper.wrap(content)
-        self.content.append('\n'.join(wrapped))
+        # TODO(karen)
+        # wrapping of literal blocks
+        if self.literal_block:
+            content = ''.join(self.content_stack.pop()).strip()
+            self.content.append(content)
+            self.literal_block = False
+        else:
+            content = ''.join(self.content_stack.pop()).strip()
+            wrapped = self.wrapper.wrap(content)
+            self.content.append('\n'.join(wrapped))
+
         if self.search_stack_for('itemizedlist') is None:
             self.content.append('\n\n')
         else:
-            self.content.append('\n')
+            self.content.append('\n\n')
             self.wrapper = textwrap.TextWrapper(
                 width=self.fill_width,
                 initial_indent=' ' * self.nesting + '  ',
@@ -387,6 +404,7 @@ class ParaParser(SubParser, TableMixin):
     def depart_programlisting(self):
         self.nesting = 0  # no indent for blank lines
         self.content.append('\n\n')
+        self.literal_block = True
 
     def visit_link(self, attrs):
         if attrs:

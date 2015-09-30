@@ -189,6 +189,171 @@ para5
 """)
 
 
+    def test_listitem_para(self):
+       file_content = """<?xml version="1.0" encoding="UTF-8"?>
+<wadl:doc>
+  <para>This operation does not accept a request body.</para>
+  <para>Example requests and responses:</para>
+  <itemizedlist>
+     <listitem><para>Show account details and list containers:</para>
+     <para>Some more details.</para>
+     </listitem>
+     <listitem><para>See the example response below.</para></listitem>
+  </itemizedlist>
+</wadl:doc>
+"""
+
+       parent = MockParent()
+       ch = wadl_to_swagger.ParaParser(parent)
+       xml.sax.parse(StringIO(file_content), ch)
+       self.assertEqual(
+           parent.result,
+           """This operation does not accept a request body.\n\nExample requests and responses:\n\n- Show account details and list containers:\n\n  Some more details.\n\n- See the example response below.\n\n"""
+       )
+
+
+    def test_listitem_para_code(self):
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
+<wadl:doc>
+   <para>This operation does not accept a request body.</para>
+   <para>Example requests and responses:</para>
+   <itemizedlist>
+      <listitem><para>Show account details and list containers:</para>
+                <para><code>curl -i
+                            $publicURL?format=json -X GET -H
+                            "X-Auth-Token: $token"</code></para>
+                <para>See the example response below.</para>
+      </listitem>
+      </itemizedlist>
+</wadl:doc>
+"""
+
+        parent = MockParent()
+        ch = wadl_to_swagger.ParaParser(parent)
+        xml.sax.parse(StringIO(file_content), ch)
+        self.assertEqual(
+            parent.result,
+            """This operation does not accept a request body.\n\nExample requests and responses:\n\n- Show account details and list containers:\n\n  ``curl -i $publicURL?format=json -X GET -H \"X-Auth-Token:\n  $token\"``\n\n  See the example response below.\n\n"""
+        )
+
+
+    def test_listitem_para_programlisting(self):
+       file_content = """<?xml version="1.0" encoding="UTF-8"?>
+<wadl:doc>
+    <para>Delete the <code>steven</code>container:</para>
+<itemizedlist>
+<listitem>
+<para>Container command:</para>
+<para><code>curl -i $publicURL/steven -X DELETE -H "X-Auth-Token: $token"</code></para>
+            <para>If the container does not exist, the response is:</para>
+            <para><programlisting>HTTP/1.1 404 Not Found
+Content-Length: 70
+Content-Type: text/html; charset=UTF-8
+Date: Thu, 16 Jan 2014 18:00:20 GMT
+&lt;html>&lt;h1>Conflict&lt;/h1>&lt;p>Trying to complete your request.&lt;/p>&lt;/html>
+</programlisting></para>
+</listitem>
+<listitem><para>Second container command:</para><para>Write to disk.</para>
+</listitem>
+</itemizedlist>
+</wadl:doc>
+"""
+
+       parent = MockParent()
+       ch = wadl_to_swagger.ParaParser(parent)
+       xml.sax.parse(StringIO(file_content), ch)
+       self.assertEqual(
+           parent.result,
+           """Delete the ``steven`` container:\n\n- Container command:\n\n  ``curl -i $publicURL/steven -X DELETE -H \"X-Auth-Token: $token\"``\n\n  If the container does not exist, the response is:\n\n::\n\n   HTTP/1.1 404 Not Found\n   Content-Length: 70\n   Content-Type: text/html; charset=UTF-8\n   Date: Thu, 16 Jan 2014 18:00:20 GMT\n   <html>\n   <h1>Conflict\n   </h1>\n   <p>Trying to complete your request.\n   </p>\n   </html>\n\n- Second container command:\n\n  Write to disk.\n\n"""
+       )
+
+
+    def test_para_code_block(self):
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
+<wadl:doc>
+  <para>This is an example request:</para>
+  <para><programlisting>GET /v2.0/routers/{router_id}
+Accept: application/json</programlisting></para>
+  <para>para2</para>
+</wadl:doc>
+"""
+
+        parent = MockParent()
+        ch = wadl_to_swagger.ParaParser(parent)
+        xml.sax.parse(StringIO(file_content), ch)
+        self.assertEqual(
+            parent.result,
+            """This is an example request:
+
+::
+
+   GET /v2.0/routers/{router_id}
+   Accept: application/json
+
+para2
+
+""")
+
+
+    def test_para_code_block_language(self):
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
+<wadl:doc>
+  <para>This is an example request:</para>
+<para><programlisting language="json">"OS-OAUTH1": {
+    "access_token_id": "cce0b8be7"
+}</programlisting></para>
+  <para>para2</para>
+</wadl:doc>
+"""
+
+        parent = MockParent()
+        ch = wadl_to_swagger.ParaParser(parent)
+        xml.sax.parse(StringIO(file_content), ch)
+        self.assertEqual(
+            parent.result,
+            """This is an example request:
+
+.. code-block:: json
+
+   "OS-OAUTH1": {
+       "access_token_id": "cce0b8be7"
+   }
+
+para2
+
+""")
+
+
+    @unittest.expectedFailure
+    def test_listitem_one_para(self):
+       file_content = """<?xml version="1.0" encoding="UTF-8"?>
+<wadl:doc>
+        <para>Example requests and responses:</para>
+            <itemizedlist>
+                <listitem><para>Copy the <code>goodbye</code> object
+                        from the <code>marktwain</code> container to
+                        the <code>janeausten</code> container:
+                            <code>curl -i $publicURL/marktwain/goodbye
+                            -X COPY -H "X-Auth-Token: $token" -H
+                            "Destination: janeausten/goodbye"</code>
+                        <programlisting>HTTP/1.1 201 Created
+Content-Length: 0
+X-Copied-From: marktwain/goodbye
+</programlisting></para></listitem>
+</itemizedlist>
+</wadl:doc>
+"""
+
+       #TODO(karen)
+       parent = MockParent()
+       ch = wadl_to_swagger.ParaParser(parent)
+       xml.sax.parse(StringIO(file_content), ch)
+       self.assertEqual(
+           parent.result,
+           """Example requests and responses:\n\n- Copy the ``goodbye`` object from the ``marktwain`` container to the ``janeausten`` container: ``curl -i $publicURL/marktwain/goodbye -X COPY -H "X-Auth-Token: $token" -H "Destination: janeausten/goodbye"``\n\n::\n\nHTTP/1.1 201 Created\n  Content-Length: 0\n  X-Copied-From: marktwain/goodbye\n\n"""
+       )
+
+
 class TestWADLHandler(unittest.TestCase):
 
     def test_simple_wadl(self):

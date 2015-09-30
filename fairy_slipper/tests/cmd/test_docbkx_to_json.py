@@ -52,7 +52,7 @@ class TestChapterParaParser(TestCase):
                 "\nCreates, lists, updates, and deletes images."}]
         )
 
-    def test_para_programlisting(self):
+    def test_code_block(self):
         filename = "test-file.xml"
         test_filename = os.path.dirname(os.path.abspath(__file__))
         test_filename += "/ch_test-v3.xml"
