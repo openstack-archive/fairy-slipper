@@ -353,6 +353,43 @@ X-Copied-From: marktwain/goodbye
            """Example requests and responses:\n\n- Copy the ``goodbye`` object from the ``marktwain`` container to the ``janeausten`` container: ``curl -i $publicURL/marktwain/goodbye -X COPY -H "X-Auth-Token: $token" -H "Destination: janeausten/goodbye"``\n\n::\n\nHTTP/1.1 201 Created\n  Content-Length: 0\n  X-Copied-From: marktwain/goodbye\n\n"""
        )
 
+    def test_table_caption(self):
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
+<wadl:doc>
+  <table><caption>Image status</caption></table>
+  <table><caption>Image <code>with a code literal</code> <literal>inside</literal></caption></table>
+  <table><caption>A <emphasis>bold</emphasis> caption <emphasis>again</emphasis></caption></table>
+  <table><caption><emphasis role="italic>An italicized</emphasis> caption</caption></table>
+  <table><caption>A caption with <emphasis>bold</emphasis> text embedded</caption></table>
+</wadl:doc>
+"""
+
+        parent = MockParent()
+        ch = wadl_to_swagger.ParaParser(parent)
+        xml.sax.parse(StringIO(file_content), ch)
+        self.assertEqual(
+            parent.result,
+            """**Image status**
+
+++
+
+**Image with a code literal inside**
+
+++
+
+**A bold caption again**
+
+++
+
+**An italicized caption**
+
+++
+
+**A caption with bold text embedded**
+
+++
+
+""")
 
 class TestWADLHandler(unittest.TestCase):
 

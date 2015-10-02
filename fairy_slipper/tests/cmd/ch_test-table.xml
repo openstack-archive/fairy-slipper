@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+    <section xml:id="table-v3">
+        <para>Creates, lists, updates images.</para>
+        <table rules="all" frame="border">
+            <caption>Image status</caption>
+	</table>
+	<table rules="all" frame="border">
+            <caption>Image <emphasis>with embedded bold</emphasis> status</caption>
+	</table>
+      </section>
+</chapter>

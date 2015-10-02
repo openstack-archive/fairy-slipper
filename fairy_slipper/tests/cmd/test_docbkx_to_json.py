@@ -73,3 +73,26 @@ class TestChapterParaParser(TestCase):
                 'summary': "You can encode sets into a blob. Do something with ``type`` to\n``application/json`` and JSON strings in a ``blob`` . Example:\n\n::\n\n   \"blob\": {\n           \"default\": false\n       }\n\nOr:\n\n::\n\n   \"blob\": {\n           \"foobar_user\": [\n               \"role:compute-user\"\n           ]\n       }"  # noqa
             }]
         )
+
+    def test_table_caption(self):
+        filename = "test-file.xml"
+        test_filename = os.path.dirname(os.path.abspath(__file__))
+        test_filename += "/ch_test-table.xml"
+
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
+        <book xml:id="table-v3" version="1">
+        <xi:include href="%s"/>
+        </book>
+        """ % (test_filename)
+
+        ch = docbkx_to_json.APIRefContentHandler(filename)
+        xml.sax.parse(StringIO(file_content), ch)
+
+        self.assertEqual(
+            ch.tags,
+            [{
+                'name': 'table-v3',
+                'summary': "Creates, lists, updates images.\n"
+                "\n**Image status**\n\n++\n\n**Image with embedded bold status**\n\n++"
+            }]
+        )

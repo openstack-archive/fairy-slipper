@@ -107,6 +107,8 @@ MIME_MAP = {
 VERSION_RE = re.compile('v[0-9\.]+')
 WHITESPACE_RE = re.compile('[\s]+', re.MULTILINE)
 URL_TEMPLATE_RE = re.compile('{[^{}]+}')
+CAPTION_RE = re.compile('[*`]*')
+
 
 environment = Environment()
 HTTP_REQUEST = """{{ method }} {{ url }} HTTP/1.1
@@ -183,12 +185,15 @@ class TableMixin(object):
         self.content.append(str(self.__table))
         self.content.append('\n\n')
 
-    # TODO(Karen)
     def visit_caption(self, attrs):
-        pass
+        self.content_stack.append([])
 
     def depart_caption(self):
-        pass
+        content = ''.join(self.content_stack.pop()).strip()
+        content = CAPTION_RE.sub('', content)
+        content = WHITESPACE_RE.sub(' ', content)
+        content = '**' + content + '**'
+        self.content.append(content)
 
     def visit_th(self, attrs):
         self.__table.header = True

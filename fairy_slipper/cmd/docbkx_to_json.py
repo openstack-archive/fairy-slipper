@@ -268,6 +268,7 @@ VERSION_RE = re.compile('v[0-9\.]+')
 WHITESPACE_RE = re.compile('[\s]+', re.MULTILINE)
 TITLE_RE = re.compile(
     '(.*) API v([\d.]+) (\S*)[ ]*\((SUPPORTED|CURRENT|DEPRECATED)\)')
+CAPTION_RE = re.compile('[*`]*')
 
 
 class TableMixin(object):
@@ -280,12 +281,15 @@ class TableMixin(object):
         self.content.append(str(self.__table))
         self.content.append('\n\n')
 
-    # TODO(Karen)
     def visit_caption(self, attrs):
-        pass
+        self.content_stack.append([])
 
     def depart_caption(self):
-        pass
+        content = ''.join(self.content_stack.pop()).strip()
+        content = CAPTION_RE.sub('', content)
+        content = WHITESPACE_RE.sub(' ', content)
+        content = '**' + content + '**'
+        self.content.append(content)
 
     def visit_th(self, attrs):
         self.__table.header = True
