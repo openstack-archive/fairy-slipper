@@ -357,9 +357,9 @@ X-Copied-From: marktwain/goodbye
         file_content = """<?xml version="1.0" encoding="UTF-8"?>
 <wadl:doc>
   <table><caption>Image status</caption></table>
-  <table><caption>Image <code>with a code literal</code> <literal>inside</literal></caption></table>
+  <table><caption>Image <code>with a code literal</code> <code>inside</code></caption></table>
   <table><caption>A <emphasis>bold</emphasis> caption <emphasis>again</emphasis></caption></table>
-  <table><caption><emphasis role="italic>An italicized</emphasis> caption</caption></table>
+  <table><caption><emphasis role="italic">An italicized</emphasis> caption</caption></table>
   <table><caption>A caption with <emphasis>bold</emphasis> text embedded</caption></table>
 </wadl:doc>
 """
