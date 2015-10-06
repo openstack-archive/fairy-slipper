@@ -264,7 +264,7 @@ Date: Thu, 16 Jan 2014 18:00:20 GMT
        xml.sax.parse(StringIO(file_content), ch)
        self.assertEqual(
            parent.result,
-           """Delete the ``steven`` container:\n\n- Container command:\n\n  ``curl -i $publicURL/steven -X DELETE -H \"X-Auth-Token: $token\"``\n\n  If the container does not exist, the response is:\n\n::\n\n   HTTP/1.1 404 Not Found\n   Content-Length: 70\n   Content-Type: text/html; charset=UTF-8\n   Date: Thu, 16 Jan 2014 18:00:20 GMT\n   <html>\n   <h1>Conflict\n   </h1>\n   <p>Trying to complete your request.\n   </p>\n   </html>\n\n- Second container command:\n\n  Write to disk.\n\n"""
+           """Delete the ``steven`` container:\n\n- Container command:\n\n  ``curl -i $publicURL/steven -X DELETE -H \"X-Auth-Token: $token\"``\n\n  If the container does not exist, the response is:\n\n  ::\n\n     HTTP/1.1 404 Not Found\n     Content-Length: 70\n     Content-Type: text/html; charset=UTF-8\n     Date: Thu, 16 Jan 2014 18:00:20 GMT\n     <html>\n     <h1>Conflict\n     </h1>\n     <p>Trying to complete your request.\n     </p>\n     </html>\n\n\n- Second container command:\n\n  Write to disk.\n\n"""
        )
 
 
@@ -289,6 +289,7 @@ Accept: application/json</programlisting></para>
 
    GET /v2.0/routers/{router_id}
    Accept: application/json
+
 
 para2
 
@@ -319,13 +320,13 @@ para2
        "access_token_id": "cce0b8be7"
    }
 
+
 para2
 
 """)
 
 
-    @unittest.expectedFailure
-    def test_listitem_one_para(self):
+    def test_listitem_all_in_one_para(self):
        file_content = """<?xml version="1.0" encoding="UTF-8"?>
 <wadl:doc>
         <para>Example requests and responses:</para>
@@ -344,13 +345,12 @@ X-Copied-From: marktwain/goodbye
 </wadl:doc>
 """
 
-       #TODO(karen)
        parent = MockParent()
        ch = wadl_to_swagger.ParaParser(parent)
        xml.sax.parse(StringIO(file_content), ch)
        self.assertEqual(
            parent.result,
-           """Example requests and responses:\n\n- Copy the ``goodbye`` object from the ``marktwain`` container to the ``janeausten`` container: ``curl -i $publicURL/marktwain/goodbye -X COPY -H "X-Auth-Token: $token" -H "Destination: janeausten/goodbye"``\n\n::\n\nHTTP/1.1 201 Created\n  Content-Length: 0\n  X-Copied-From: marktwain/goodbye\n\n"""
+           """Example requests and responses:\n\n- Copy the ``goodbye`` object from the ``marktwain`` container to\n  the ``janeausten`` container: ``curl -i\n  $publicURL/marktwain/goodbye -X COPY -H "X-Auth-Token: $token" -H\n  "Destination: janeausten/goodbye"``  ::\n\n     HTTP/1.1 201 Created\n     Content-Length: 0\n     X-Copied-From: marktwain/goodbye\n\n\n"""
        )
 
     def test_table_caption(self):

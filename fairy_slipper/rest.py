@@ -89,6 +89,9 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         self.first_row = 0
         self.hyperlink_name = ''
         self.refuri = ''
+        self.listitem = False
+        self.listitem_cnt = 0
+        self.lit_block = False
 
     def search_stack_for(self, tag_name):
         for node in self.node_stack:
@@ -127,7 +130,12 @@ class JSONTranslator(nodes.GenericNodeVisitor):
 
     def visit_Text(self, node):
         if self.first_row is 0:
-            self.text += node.astext()
+            if self.lit_block and self.listitem:
+                litblock = node.astext().split('\n')
+                litblock = '\n        '.join(litblock)
+                self.text += litblock
+            else:
+                self.text += node.astext()
 
     def depart_Text(self, node):
         pass
@@ -175,24 +183,36 @@ class JSONTranslator(nodes.GenericNodeVisitor):
             self.text += '**'
 
     def visit_literal_block(self, node):
-        self.text += '```\n'
+        #todo(karen) nested listitems
+        if self.listitem:
+            self.text += '        '
+        else:
+            self.text += '```\n'
+        self.lit_block = True
 
     def depart_literal_block(self, node):
-        self.text += '\n```\n'
+        if self.listitem:
+            self.text += '\n\n'
+        else:
+            self.text += '\n```\n'
+        self.lit_block = False
 
     def visit_bullet_list(self, node):
         self.bullet_stack.append('*')
 
     def depart_bullet_list(self, node):
         self.bullet_stack.pop()
+        self.list_para_cnt = 0
 
     def visit_list_item(self, node):
         item = '\n%s%s ' % (' ' * len(self.bullet_stack),
                             self.bullet_stack[-1])
         self.text += item
+        self.listitem = True
 
     def depart_list_item(self, node):
-        pass
+        self.listitem = False
+        self.listitem_cnt = 0
 
     def visit_title(self, node):
         self.current_node_name = node.__class__.__name__
@@ -207,6 +227,14 @@ class JSONTranslator(nodes.GenericNodeVisitor):
     def visit_paragraph(self, node):
         if self.first_row > 0:
             self.table_stack.append(node.astext())
+        else:
+            if self.listitem is True:
+                if self.listitem_cnt > 0:
+                    if self.lit_block:
+                        self.text += '        '
+                    else:
+                        self.text += ' ' * len(self.bullet_stack) + ' '
+                self.listitem_cnt += 1
 
     def depart_paragraph(self, node):
         if self.first_row is 0:
