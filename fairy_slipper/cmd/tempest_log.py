@@ -95,6 +95,17 @@ class DB(object):
         else:
             return int(self.requests[req]['headers'].get('content-length', 0))
 
+    def set_req_or_resp_length(self, req_id, content_length):
+        if self.responses[req_id].get('headers'):
+            h = self.responses[req_id].get('headers')
+            h['content-length'] = content_length
+            self.responses[req_id]['headers'] = h
+        else:
+            if self.requests[req_id].get('headers'):
+                h = self.requests[req_id].get('headers')
+                h['content-length'] = content_length
+                self.requests[req_id]['headers'] = h
+
     def get_req_or_resp_content_type(self, req):
         if self.responses[req].get('headers') is not None:
             return self.responses[req]['headers'].get('content-type',
@@ -207,7 +218,14 @@ def parse_logfile(log_file):
                                           separators=(',', ': '))
                 else:
                     body = value
+
+                if body is None:
+                    content_length = '0'
+                else:
+                    content_length = str(len(body))
                 db.set_req_or_resp_body(current_req_id, body)
+                db.set_req_or_resp_length(current_req_id, content_length)
+
     return db
 
 
