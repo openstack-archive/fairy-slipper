@@ -11,6 +11,11 @@ function usage {
     echo "  -u, --update             Update the virtual environment with any newer package versions"
     echo "  -h, --help               Print this usage message"
     echo "  -d, --debug              Run tests with testtools instead of testr. This allows you to use PDB"
+    echo "  --docs-only              Only generate docs"
+    echo "  --verbose-docs           Verbose logging of document generation"
+    echo "  --docbkx2json            Only perform docbookx to json conversion"
+    echo "  --wadl2swagger           Only perform wadl to swagger conversion"
+    echo "  --swagger2rst            Only perform swagger to rst conversion"
 }
 
 venv=.venv
@@ -22,8 +27,13 @@ debug=0
 force=0
 wrapper=""
 update=0
+docs_only=
+verbose_docs=""
+docbkx2json=
+wadl2swagger=
+swagger2rst=
 
-if ! options=$(getopt -o VNnfuhd -l virtual-env,no-virtual-env,no-site-packages,force,update,help,debug -- "$@")
+if ! options=$(getopt -o VNnfuhd -l virtual-env,no-virtual-env,no-site-packages,force,update,help,debug,docs-only,verbose-docs,docbkx2json,wadl2swagger,swagger2rst -- "$@")
 then
   # parse error
   usage
@@ -40,6 +50,11 @@ while [ $# -gt 0 ]; do
         -f|--force) force=1;;
         -u|--update) update=1;;
         -d|--debug) debug=1;;
+        --docs-only) docs_only=1;;
+        --verbose-docs) verbose_docs="-v";;
+        --docbkx2json) docbkx2json=1;;
+        --wadl2swagger) wadl2swagger=1;;
+        --swagger2rst) swagger2rst=1;;
     esac
     shift
 done
@@ -98,11 +113,28 @@ function migrate_docbkx {
       mkdir api_doc
     fi
 
-    ${wrapper} find api-site/api-ref/src/docbkx/ -name api-ref-\* -type f -exec fairy-slipper-docbkx-to-json -o conversion_files -v {} \;
-    ${wrapper} find conversion_files -name api-ref\*json -type f -exec fairy-slipper-wadl-to-swagger -o conversion_files -v {} \;
-    ${wrapper} find conversion_files -name \*-swagger.json -type f -exec fairy-slipper-swagger-to-rst -o api_doc -v {} \;
+    generate_all=
+    if [[ -z $docbkx2json && -z $wadl2swagger && -z $swagger2rst ]]; then
+      generate_all=1
+    fi
+
+    if [[ -n $docbkx2json || -n $generate_all ]]; then
+      ${wrapper} find api-site/api-ref/src/docbkx/ -name api-ref-\* -type f -exec fairy-slipper-docbkx-to-json -o conversion_files $verbose_docs {} \;
+    fi
+
+    if [[ -n $wadl2swagger || -n $generate_all ]]; then
+      ${wrapper} find conversion_files -name api-ref\*json -type f -exec fairy-slipper-wadl-to-swagger -o conversion_files $verbose_docs {} \;
+    fi
+
+    if [[ -n $swagger2rst || -n $generate_all ]]; then
+      ${wrapper} find conversion_files -name \*-swagger.json -type f -exec fairy-slipper-swagger-to-rst -o api_doc $verbose_docs {} \;
+    fi
 }
 
-install_fairy_slipper
-install_api_site
+
+if [ -z $docs_only ]; then
+  install_fairy_slipper
+  install_api_site
+fi
+
 migrate_docbkx
