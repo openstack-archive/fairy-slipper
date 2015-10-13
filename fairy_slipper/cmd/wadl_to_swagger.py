@@ -73,6 +73,8 @@ TYPE_MAP = {
     'imageforcreate': 'string',
     'xsd:ip': 'string',
     'xsd:base64binary': 'string',
+    'enum': 'array',
+    'xsd:float': 'number',
 
     # TODO(arrsim) This array types also set the items
     # "tags": {
@@ -573,10 +575,11 @@ class WADLHandler(xml.sax.ContentHandler):
             response['headers'][name]['description'] = content.strip()
         elif style == 'body':
             parameters = self.current_api['parameters']
-            schema_name = parameters[0]['schema']['$ref'].rsplit('/', 1)[1]
-            schema_name = schema_name + '_' + status_code
-            schema = self.schemas[schema_name]
-            schema['properties'][name]['description'] = content.strip()
+            if len(parameters) > 0:
+                schema_name = parameters[0]['schema']['$ref'].rsplit('/', 1)[1]
+                schema_name = schema_name + '_' + status_code
+                schema = self.schemas[schema_name]
+                schema['properties'][name]['description'] = content.strip()
 
     def search_stack_for(self, tag_name):
         for tag, attrs in zip(reversed(self.tag_stack),
@@ -793,15 +796,17 @@ class WADLHandler(xml.sax.ContentHandler):
                 type=attrs.get('type', 'string'),
                 required=attrs.get('required'))
             if parameter['in'] == 'body':
-                schema_name = parameters[0]['schema']['$ref'].rsplit('/', 1)[1]
-                schema_name = schema_name + '_' + status_code
-                if schema_name not in self.schemas:
-                    self.schemas[schema_name] = {'type': 'object',
-                                                 'properties': {}}
-                schema_properties = self.schemas[schema_name]['properties']
-                schema_properties[parameter['name']] = parameter
-                del parameter['name']
-                del parameter['in']
+                if len(parameters) > 0:
+                    s = parameters[0]['schema']['$ref']
+                    schema_name = s.rsplit('/', 1)[1]
+                    schema_name = schema_name + '_' + status_code
+                    if schema_name not in self.schemas:
+                        self.schemas[schema_name] = {'type': 'object',
+                                                    'properties': {}}
+                    schema_properties = self.schemas[schema_name]['properties']
+                    schema_properties[parameter['name']] = parameter
+                    del parameter['name']
+                    del parameter['in']
             elif parameter['in'] == 'header':
                 headers = self.current_api['responses'][status_code]['headers']
                 headers[parameter['name']] = parameter
