@@ -96,3 +96,28 @@ class TestChapterParaParser(TestCase):
                 "\n**Image status**\n\n++\n\n**Image with embedded bold status**\n\n++"
             }]
         )
+
+    def test_nested_listitems(self):
+        filename = "test-file.xml"
+        test_filename = os.path.dirname(os.path.abspath(__file__))
+        test_filename += "/ch_test-listitems.xml"
+
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
+        <book xml:id="listitems-v1" version="1">
+        <xi:include href="%s"/>
+        </book>
+        """ % (test_filename)
+
+        self.maxDiff = None
+        ch = docbkx_to_json.APIRefContentHandler(filename)
+        xml.sax.parse(StringIO(file_content), ch)
+
+        self.assertEqual(
+            ch.tags,
+            [{
+                'name': 'listitems-v1',
+                'summary': "- Para 1, listitem1\n\n  Para 2, listitem1\n\n"
+                "  - Embedded item1\n\n  - Embedded item2\n\n  - Embedded item3\n\n"
+                "  Para 3, listitem1\n\n- Para1, listitem2\n\nsome more para text"
+            }]
+        )

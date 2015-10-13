@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+  <section xml:id="listitems-v1">
+        <itemizedlist>
+            <listitem>
+                <para>Para 1, listitem1</para>
+                <para>Para 2, listitem1</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Embedded item1</para>
+                    </listitem>
+                    <listitem>
+                        <para>Embedded item2</para>
+                    </listitem>
+                    <listitem>
+		      <para>Embedded item3</para>
+		    </listitem>
+                </itemizedlist>
+                <para>Para 3, listitem1</para>
+            </listitem>
+	    <listitem><para>Para1, listitem2</para></listitem>
+        </itemizedlist>
+	<para>some more para text</para>
+      </section>
+</chapter>

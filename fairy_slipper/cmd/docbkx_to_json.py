@@ -343,6 +343,7 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
         self.fill_width = 67
         self.wrapper = textwrap.TextWrapper(width=self.fill_width)
         self.inline_markup_stack = []
+        self.base_indent = ' '
 
     @property
     def content(self):
@@ -460,23 +461,42 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
     def visit_listitem(self, attrs):
         self.nesting = len([tag for tag in self.tag_stack
                             if tag == 'listitem']) - 1
-        self.content_stack.append([' ' * self.nesting + '-'])
+        if self.nesting > 0:
+            prev_nesting = self.nesting - 1
+            self.base_indent = ' ' * prev_nesting + '  '
+        else:
+            self.base_indent = ' '
+
+        self.content_stack.append([(self.base_indent * self.nesting) + '-'])
         self.wrapper = textwrap.TextWrapper(
             width=self.fill_width,
             initial_indent=' ',
-            subsequent_indent=' ' * self.nesting + '  ',)
+            subsequent_indent=self.base_indent * self.nesting + '  ',)
 
     def depart_listitem(self):
         content = self.content_stack.pop()
         self.content.append(''.join(content))
-        self.content.append('\n')
+        if self.content[-1].endswith('\n\n'):
+            pass
+        else:
+            self.content.append('\n')
 
         self.nesting = len([tag for tag in self.tag_stack
-                            if tag == 'listitem'])
+                            if tag == 'listitem']) - 1
+        if self.nesting > 0:
+            prev_nesting = self.nesting - 1
+            self.base_indent = ' ' * prev_nesting + '  '
+        else:
+            self.base_indent = ' '
 
     def depart_itemizedlist(self):
         if self.search_stack_for('itemizedlist') is None:
             self.wrapper = textwrap.TextWrapper(width=self.fill_width)
+        else:
+            self.wrapper = textwrap.TextWrapper(
+                width=self.fill_width,
+                initial_indent=self.base_indent * self.nesting + '  ',
+                subsequent_indent=self.base_indent * self.nesting + '  ',)
 
     def depart_orderedlist(self):
         if self.search_stack_for('itemizedlist') is None:
@@ -496,14 +516,15 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
         content = ''.join(self.content_stack.pop()).strip()
         wrapped = self.wrapper.wrap(content)
         self.content.append('\n'.join(wrapped))
+        self.content.append('\n\n')
+
         if self.search_stack_for('itemizedlist') is None:
-            self.content.append('\n\n')
+            pass
         else:
-            self.content.append('\n')
             self.wrapper = textwrap.TextWrapper(
                 width=self.fill_width,
-                initial_indent=' ' * self.nesting + '  ',
-                subsequent_indent=' ' * self.nesting + '  ',)
+                initial_indent=self.base_indent * self.nesting + '  ',
+                subsequent_indent=self.base_indent * self.nesting + '  ',)
 
     def visit_code(self, attrs):
         self.no_space = True

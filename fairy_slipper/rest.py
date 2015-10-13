@@ -90,8 +90,8 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         self.hyperlink_name = ''
         self.refuri = ''
         self.listitem = False
-        self.listitem_cnt = 0
         self.lit_block = False
+        self.list_indent = 0
 
     def search_stack_for(self, tag_name):
         for node in self.node_stack:
@@ -130,7 +130,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
 
     def visit_Text(self, node):
         if self.first_row is 0:
-            if self.lit_block and self.listitem:
+            if self.lit_block and len(self.bullet_stack) > 0:
                 litblock = node.astext().split('\n')
                 litblock = '\n        '.join(litblock)
                 self.text += litblock
@@ -183,15 +183,14 @@ class JSONTranslator(nodes.GenericNodeVisitor):
             self.text += '**'
 
     def visit_literal_block(self, node):
-        #todo(karen) nested listitems
-        if self.listitem:
+        if len(self.bullet_stack) > 0:
             self.text += '        '
         else:
             self.text += '```\n'
         self.lit_block = True
 
     def depart_literal_block(self, node):
-        if self.listitem:
+        if len(self.bullet_stack) > 0:
             self.text += '\n\n'
         else:
             self.text += '\n```\n'
@@ -205,14 +204,22 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         self.list_para_cnt = 0
 
     def visit_list_item(self, node):
-        item = '\n%s%s ' % (' ' * len(self.bullet_stack),
+        indent = len(self.bullet_stack)
+        if indent is 1:
+            self.list_indent = 0
+        elif indent is 2:
+            self.list_indent = indent
+        elif indent is 3:
+            self.list_indent = 4
+
+        item = '\n%s%s ' % (' ' * self.list_indent,
                             self.bullet_stack[-1])
         self.text += item
         self.listitem = True
 
     def depart_list_item(self, node):
         self.listitem = False
-        self.listitem_cnt = 0
+        self.list_indent = 0
 
     def visit_title(self, node):
         self.current_node_name = node.__class__.__name__
@@ -228,13 +235,17 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         if self.first_row > 0:
             self.table_stack.append(node.astext())
         else:
+            #single line listitem
             if self.listitem is True:
-                if self.listitem_cnt > 0:
+                pass
+            else:
+                #multi-para listitem
+                if len(self.bullet_stack) > 0:
                     if self.lit_block:
                         self.text += '        '
                     else:
-                        self.text += ' ' * len(self.bullet_stack) + ' '
-                self.listitem_cnt += 1
+                        self.text += ' ' * self.list_indent + ' '
+            self.listitem = False
 
     def depart_paragraph(self, node):
         if self.first_row is 0:

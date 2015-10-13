@@ -148,10 +148,10 @@ banana
         markdown = '''Some normal body text
 
 
- * the first item
+* the first item
 
 
- * the second item
+* the second item
 
 '''
         json = rest.publish_string(rst)
@@ -184,17 +184,17 @@ banana
         markdown = '''Some normal body text
 
 
- * the first item
+* the first item
 
 
- * the second item
+* the second item
 
-  A new paragraph under second item
+ A new paragraph under second item
 
 
- * Create object:
+* Create object:
 
-  `curl -i $publicURL/janeausten/helloworld.txt -X PUT -H
+ `curl -i $publicURL/janeausten/helloworld.txt -X PUT -H
 "Content-Length: 1" -H "Content-Type: text/html; charset=UTF-8"
 -H "X-Auth-Token: $token"`
 
@@ -232,19 +232,74 @@ banana
         markdown = '''Some normal body text
 
 
- * the first item
+* the first item
 
 
- * the second item
+* the second item
 
 
- * Create object:
+* Create object:
 
         HTTP/1.1 201 Created
         Last-Modified: Fri, 17 Jan 2014 17:28:35 GMT
         Content-Length: 116
         X-Trans-Id: tx4d5e4f06d357462bb732f-0052d96843
         Date: Fri, 17 Jan 2014 17:28:35 GMT
+
+'''
+
+        json = rest.publish_string(rst)
+
+        assert json == {'paths':
+                        {'/path':
+                         [minimal_method_json(description=markdown)]},
+                        'tags': []}
+
+
+    def test_body_ul_with_ul(self):
+        rst = """
+.. http:get:: /path
+
+   Some normal body text
+
+   - the first item
+   - the second item
+
+     A new paragraph under second item
+
+     - item under second item:
+
+       ``curl -i $publicURL/janeausten/helloworld.txt``
+
+       And some more text
+
+   - the third item
+
+   Some normal body text again
+
+"""
+
+        markdown = '''Some normal body text
+
+
+* the first item
+
+
+* the second item
+
+ A new paragraph under second item
+
+
+  * item under second item:
+
+   `curl -i $publicURL/janeausten/helloworld.txt`
+
+   And some more text
+
+
+* the third item
+
+Some normal body text again
 
 '''
         self.maxDiff = None

@@ -240,6 +240,7 @@ class ParaParser(SubParser, TableMixin):
         self.inline_markup_stack = []
         self.hyperlink_end = False
         self.litblockstr = ''
+        self.base_indent = ' '
 
     @property
     def content(self):
@@ -282,7 +283,7 @@ class ParaParser(SubParser, TableMixin):
                     if self.search_stack_for('itemizedlist') is None:  
                         content = '\n' + ' ' * self.nesting + content
                     else:
-                        content = '\n' + ' ' * self.nesting + '  ' + content
+                        content = '\n' + self.base_indent * self.nesting + '  ' + content
             elif self.no_space:
                 content = '' + content.strip()
             elif self.hyperlink_end and content == '.':
@@ -298,11 +299,17 @@ class ParaParser(SubParser, TableMixin):
     def visit_listitem(self, attrs):
         self.nesting = len([tag for tag in self.tag_stack
                             if tag == 'listitem']) - 1
-        self.content_stack.append([' ' * self.nesting + '-'])
+        if self.nesting > 0:
+            prev_nesting = self.nesting - 1
+            self.base_indent = ' ' * prev_nesting + '  '
+        else:
+            self.base_indent = ' '
+
+        self.content_stack.append([self.base_indent * self.nesting + '-'])
         self.wrapper = textwrap.TextWrapper(
             width=self.fill_width,
             initial_indent=' ',
-            subsequent_indent=' ' * self.nesting + '  ',)
+            subsequent_indent=self.base_indent * self.nesting + '  ',)
 
     def depart_listitem(self):
         content = self.content_stack.pop()
@@ -311,12 +318,23 @@ class ParaParser(SubParser, TableMixin):
             pass
         else:
             self.content.append('\n')
+
         self.nesting = len([tag for tag in self.tag_stack
-                            if tag == 'listitem'])
+                            if tag == 'listitem']) - 1
+        if self.nesting > 0:
+            prev_nesting = self.nesting - 1
+            self.base_indent = ' ' * prev_nesting + '  '
+        else:
+            self.base_indent = ' '
 
     def depart_itemizedlist(self):
         if self.search_stack_for('itemizedlist') is None:
             self.wrapper = textwrap.TextWrapper(width=self.fill_width)
+        else:
+            self.wrapper = textwrap.TextWrapper(
+                width=self.fill_width,
+                initial_indent=self.base_indent * self.nesting + '  ',
+                subsequent_indent=self.base_indent * self.nesting + '  ',)
 
     def depart_orderedlist(self):
         if self.search_stack_for('itemizedlist') is None:
@@ -353,7 +371,7 @@ class ParaParser(SubParser, TableMixin):
             if self.search_stack_for('itemizedlist') is None:
                 wrapped += '' + parts[1] + litcontent[0] + '\n'
             else:
-                indent = ' ' * self.nesting + '  '
+                indent = self.base_indent * self.nesting + '  '
                 wrapped += indent + parts[1] + indent + litcontent[0] + '\n'
 
             postwrap = self.wrapper.wrap(litcontent[2])
@@ -364,14 +382,14 @@ class ParaParser(SubParser, TableMixin):
             wrapped = self.wrapper.wrap(content)
             self.content.append('\n'.join(wrapped))
 
+        self.content.append('\n\n')
         if self.search_stack_for('itemizedlist') is None:
-            self.content.append('\n\n')
+            pass
         else:
-            self.content.append('\n\n')
             self.wrapper = textwrap.TextWrapper(
                 width=self.fill_width,
-                initial_indent=' ' * self.nesting + '  ',
-                subsequent_indent=' ' * self.nesting + '  ',)
+                initial_indent=self.base_indent * self.nesting + '  ',
+                subsequent_indent=self.base_indent * self.nesting + '  ',)
         if self.shortdesc is True:
             self.kwargs['shortdesc'] = self.result.strip()
             # Reset state variables
@@ -423,13 +441,13 @@ class ParaParser(SubParser, TableMixin):
             if self.search_stack_for('itemizedlist') is None:
                 self.content.append('::\n\n')
             else:
-                self.content.append(' ' * self.nesting + '  ' + '::\n\n')
+                self.content.append(self.base_indent * self.nesting + '  ' + '::\n\n')
         else:
             if self.search_stack_for('itemizedlist') is None:
                 self.litblockstr = '.. code-block:: %s\n\n' % attrs['language']
                 self.content.append('.. code-block:: %s\n\n' % attrs['language'])
             else:
-                self.content.append(' ' * self.nesting + '  ' + '.. code-block:: %s\n\n' % attrs['language'])
+                self.content.append(self.base_indent * self.nesting + '  ' + '.. code-block:: %s\n\n' % attrs['language'])
 
     def depart_programlisting(self):
         self.nesting = 0  # no indent for blank lines

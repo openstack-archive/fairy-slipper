@@ -212,6 +212,41 @@ para5
        )
 
 
+    def test_nested_listitem(self):
+       file_content = """<?xml version="1.0" encoding="UTF-8"?>
+       <wadl:doc>
+       <itemizedlist>
+            <listitem>
+                <para>Para 1, listitem1</para>
+                <para>Para 2, listitem1</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Embedded item1</para>
+                    </listitem>
+                    <listitem>
+                        <para>Embedded item2</para>
+                    </listitem>
+                    <listitem>
+		      <para>Embedded item3</para>
+		    </listitem>
+                </itemizedlist>
+                <para>Para 3, listitem1</para>
+            </listitem>
+	    <listitem><para>Para1, listitem2</para></listitem>
+        </itemizedlist>
+	<para>some more junk</para>
+       </wadl:doc>
+"""
+       self.maxDiff = None
+       parent = MockParent()
+       ch = wadl_to_swagger.ParaParser(parent)
+       xml.sax.parse(StringIO(file_content), ch)
+       self.assertEqual(
+            parent.result,
+           """- Para 1, listitem1\n\n  Para 2, listitem1\n\n  - Embedded item1\n\n  - Embedded item2\n\n  - Embedded item3\n\n  Para 3, listitem1\n\n- Para1, listitem2\n\nsome more junk\n\n"""
+       )
+
+
     def test_listitem_para_code(self):
         file_content = """<?xml version="1.0" encoding="UTF-8"?>
 <wadl:doc>
