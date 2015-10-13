@@ -267,7 +267,8 @@ SECTIONS = {'API_Versions': 'api-versions',
 VERSION_RE = re.compile('v[0-9\.]+')
 WHITESPACE_RE = re.compile('[\s]+', re.MULTILINE)
 TITLE_RE = re.compile(
-    '(.*) API v([\d.]+) (\S*)[ ]*\((SUPPORTED|CURRENT|DEPRECATED)\)')
+    '(.*) API (v([\d.]+) )?(\S*)[ ]*\((SUPPORTED|CURRENT|DEPRECATED|\
+EXPERIMENTAL)\)')
 CAPTION_RE = re.compile('[*`]*')
 
 
@@ -413,7 +414,7 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
             title = content.strip()
             match = TITLE_RE.match(title)
             if match:
-                title, version, ext, state = match.groups()
+                title, version, version_num, ext, state = match.groups()
             else:
                 raise Exception("Title %s doesn't match RE" % title)
             self.api_parser.title = ('%s %s' % (title, ext)).strip()
