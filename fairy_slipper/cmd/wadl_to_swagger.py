@@ -450,7 +450,7 @@ class ParaParser(SubParser, TableMixin):
                     '.. code-block:: %s\n\n' % attrs['language']
                     )
                 self.content.append(
-                    '.. code-block:: %s\n\n'% attrs['language']
+                    '.. code-block:: %s\n\n' % attrs['language']
                 )
             else:
                 self.content.append(
