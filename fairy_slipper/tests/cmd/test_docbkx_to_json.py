@@ -108,7 +108,6 @@ class TestChapterParaParser(TestCase):
         </book>
         """ % (test_filename)
 
-        self.maxDiff = None
         ch = docbkx_to_json.APIRefContentHandler(filename)
         xml.sax.parse(StringIO(file_content), ch)
 

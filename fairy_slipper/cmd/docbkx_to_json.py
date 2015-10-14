@@ -467,7 +467,7 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
         else:
             self.base_indent = ' '
 
-        self.content_stack.append([(self.base_indent * self.nesting) + '-'])
+        self.content_stack.append([self.base_indent * self.nesting + '-'])
         self.wrapper = textwrap.TextWrapper(
             width=self.fill_width,
             initial_indent=' ',

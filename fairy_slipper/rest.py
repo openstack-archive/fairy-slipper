@@ -235,11 +235,11 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         if self.first_row > 0:
             self.table_stack.append(node.astext())
         else:
-            #single line listitem
+            # listitem text
             if self.listitem is True:
                 pass
             else:
-                #multi-para listitem
+                # another para in listitem
                 if len(self.bullet_stack) > 0:
                     if self.lit_block:
                         self.text += '        '

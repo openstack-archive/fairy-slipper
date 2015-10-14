@@ -133,7 +133,6 @@ banana
                          [minimal_method_json(description=markdown)]},
                         'tags': []}
 
-
     def test_body_ul(self):
         rst = """
 .. http:get:: /path
@@ -160,7 +159,6 @@ banana
                         {'/path':
                          [minimal_method_json(description=markdown)]},
                         'tags': []}
-
 
     def test_body_ul_with_literal(self):
         rst = """
@@ -205,7 +203,6 @@ banana
                         {'/path':
                          [minimal_method_json(description=markdown)]},
                         'tags': []}
-
 
     def test_body_ul_with_literal_block(self):
         rst = """
@@ -254,7 +251,6 @@ banana
                         {'/path':
                          [minimal_method_json(description=markdown)]},
                         'tags': []}
-
 
     def test_body_ul_with_ul(self):
         rst = """
@@ -309,7 +305,6 @@ Some normal body text again
                         {'/path':
                          [minimal_method_json(description=markdown)]},
                         'tags': []}
-
 
     def test_body_strong(self):
         rst = """

@@ -188,9 +188,8 @@ para5
 
 """)
 
-
     def test_listitem_para(self):
-       file_content = """<?xml version="1.0" encoding="UTF-8"?>
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
 <wadl:doc>
   <para>This operation does not accept a request body.</para>
   <para>Example requests and responses:</para>
@@ -202,50 +201,48 @@ para5
   </itemizedlist>
 </wadl:doc>
 """
-
-       parent = MockParent()
-       ch = wadl_to_swagger.ParaParser(parent)
-       xml.sax.parse(StringIO(file_content), ch)
-       self.assertEqual(
-           parent.result,
-           """This operation does not accept a request body.\n\nExample requests and responses:\n\n- Show account details and list containers:\n\n  Some more details.\n\n- See the example response below.\n\n"""
-       )
-
+        parent = MockParent()
+        ch = wadl_to_swagger.ParaParser(parent)
+        xml.sax.parse(StringIO(file_content), ch)
+        self.assertEqual(
+            parent.result,
+            """This operation does not accept a request body.\n\nExample requests and responses:\n\n- Show account details and list containers:\n\n  Some more details.\n\n- See the example response below.\n\n"""
+        )
 
     def test_nested_listitem(self):
-       file_content = """<?xml version="1.0" encoding="UTF-8"?>
-       <wadl:doc>
-       <itemizedlist>
-            <listitem>
-                <para>Para 1, listitem1</para>
-                <para>Para 2, listitem1</para>
-                <itemizedlist>
-                    <listitem>
-                        <para>Embedded item1</para>
-                    </listitem>
-                    <listitem>
-                        <para>Embedded item2</para>
-                    </listitem>
-                    <listitem>
-		      <para>Embedded item3</para>
-		    </listitem>
-                </itemizedlist>
-                <para>Para 3, listitem1</para>
-            </listitem>
-	    <listitem><para>Para1, listitem2</para></listitem>
-        </itemizedlist>
-	<para>some more junk</para>
-       </wadl:doc>
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
+<wadl:doc>
+<itemizedlist>
+<listitem>
+<para>Para 1, listitem1</para>
+<para>Para 2, listitem1</para>
+<itemizedlist>
+<listitem>
+<para>Embedded item1</para>
+</listitem>
+<listitem>
+<para>Embedded item2</para>
+</listitem>
+<listitem>
+<para>Embedded item3</para>
+</listitem>
+</itemizedlist>
+<para>Para 3, listitem1</para>
+</listitem>
+<listitem><para>Para1, listitem2</para></listitem>
+</itemizedlist>
+<para>Another para of text</para>
+</wadl:doc>
 """
-       self.maxDiff = None
-       parent = MockParent()
-       ch = wadl_to_swagger.ParaParser(parent)
-       xml.sax.parse(StringIO(file_content), ch)
-       self.assertEqual(
+        parent = MockParent()
+        ch = wadl_to_swagger.ParaParser(parent)
+        xml.sax.parse(StringIO(file_content), ch)
+        self.assertEqual(
             parent.result,
-           """- Para 1, listitem1\n\n  Para 2, listitem1\n\n  - Embedded item1\n\n  - Embedded item2\n\n  - Embedded item3\n\n  Para 3, listitem1\n\n- Para1, listitem2\n\nsome more junk\n\n"""
-       )
-
+            """- Para 1, listitem1\n\n  Para 2, listitem1\n\n  - Embedded item1
+\n  - Embedded item2\n\n  - Embedded item3\n\n  Para 3, listitem1
+\n- Para1, listitem2\n\nAnother para of text\n\n"""
+        )
 
     def test_listitem_para_code(self):
         file_content = """<?xml version="1.0" encoding="UTF-8"?>
@@ -262,30 +259,36 @@ para5
       </itemizedlist>
 </wadl:doc>
 """
-
         parent = MockParent()
         ch = wadl_to_swagger.ParaParser(parent)
         xml.sax.parse(StringIO(file_content), ch)
         self.assertEqual(
             parent.result,
-            """This operation does not accept a request body.\n\nExample requests and responses:\n\n- Show account details and list containers:\n\n  ``curl -i $publicURL?format=json -X GET -H \"X-Auth-Token:\n  $token\"``\n\n  See the example response below.\n\n"""
+            """This operation does not accept a request body.
+\nExample requests and responses:\n\n- Show account details and list containers:
+\n  ``curl -i $publicURL?format=json -X GET -H \"X-Auth-Token:\n  $token\"``
+\n  See the example response below.\n\n"""
         )
 
-
     def test_listitem_para_programlisting(self):
-       file_content = """<?xml version="1.0" encoding="UTF-8"?>
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
 <wadl:doc>
-    <para>Delete the <code>steven</code>container:</para>
+<para>Delete the <code>steven</code>container:</para>
 <itemizedlist>
 <listitem>
 <para>Container command:</para>
-<para><code>curl -i $publicURL/steven -X DELETE -H "X-Auth-Token: $token"</code></para>
-            <para>If the container does not exist, the response is:</para>
-            <para><programlisting>HTTP/1.1 404 Not Found
+<para>
+<code>curl -i $publicURL/steven 
+-X DELETE -H "X-Auth-Token: $token"</code>
+</para>
+<para>If the container does not exist, the response is:</para>
+<para><programlisting>HTTP/1.1 404 Not Found
 Content-Length: 70
 Content-Type: text/html; charset=UTF-8
 Date: Thu, 16 Jan 2014 18:00:20 GMT
-&lt;html>&lt;h1>Conflict&lt;/h1>&lt;p>Trying to complete your request.&lt;/p>&lt;/html>
+&lt;html>
+&lt;h1>Conflict&lt;/h1>
+&lt;p>Trying to complete your request.&lt;/p>&lt;/html>
 </programlisting></para>
 </listitem>
 <listitem><para>Second container command:</para><para>Write to disk.</para>
@@ -293,15 +296,13 @@ Date: Thu, 16 Jan 2014 18:00:20 GMT
 </itemizedlist>
 </wadl:doc>
 """
-
-       parent = MockParent()
-       ch = wadl_to_swagger.ParaParser(parent)
-       xml.sax.parse(StringIO(file_content), ch)
-       self.assertEqual(
-           parent.result,
-           """Delete the ``steven`` container:\n\n- Container command:\n\n  ``curl -i $publicURL/steven -X DELETE -H \"X-Auth-Token: $token\"``\n\n  If the container does not exist, the response is:\n\n  ::\n\n     HTTP/1.1 404 Not Found\n     Content-Length: 70\n     Content-Type: text/html; charset=UTF-8\n     Date: Thu, 16 Jan 2014 18:00:20 GMT\n     <html>\n     <h1>Conflict\n     </h1>\n     <p>Trying to complete your request.\n     </p>\n     </html>\n\n\n- Second container command:\n\n  Write to disk.\n\n"""
-       )
-
+        parent = MockParent()
+        ch = wadl_to_swagger.ParaParser(parent)
+        xml.sax.parse(StringIO(file_content), ch)
+        self.assertEqual(
+            parent.result,
+            """Delete the ``steven`` container:\n\n- Container command:\n\n  ``curl -i $publicURL/steven -X DELETE -H \"X-Auth-Token: $token\"``\n\n  If the container does not exist, the response is:\n\n  ::\n\n     HTTP/1.1 404 Not Found\n     Content-Length: 70\n     Content-Type: text/html; charset=UTF-8\n     Date: Thu, 16 Jan 2014 18:00:20 GMT\n     <html>\n     <h1>Conflict\n     </h1>\n     <p>Trying to complete your request.\n     </p>\n     </html>\n\n\n- Second container command:\n\n  Write to disk.\n\n"""
+        )
 
     def test_para_code_block(self):
         file_content = """<?xml version="1.0" encoding="UTF-8"?>
@@ -312,7 +313,6 @@ Accept: application/json</programlisting></para>
   <para>para2</para>
 </wadl:doc>
 """
-
         parent = MockParent()
         ch = wadl_to_swagger.ParaParser(parent)
         xml.sax.parse(StringIO(file_content), ch)
@@ -330,7 +330,6 @@ para2
 
 """)
 
-
     def test_para_code_block_language(self):
         file_content = """<?xml version="1.0" encoding="UTF-8"?>
 <wadl:doc>
@@ -341,7 +340,6 @@ para2
   <para>para2</para>
 </wadl:doc>
 """
-
         parent = MockParent()
         ch = wadl_to_swagger.ParaParser(parent)
         xml.sax.parse(StringIO(file_content), ch)
@@ -360,9 +358,8 @@ para2
 
 """)
 
-
     def test_listitem_all_in_one_para(self):
-       file_content = """<?xml version="1.0" encoding="UTF-8"?>
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
 <wadl:doc>
         <para>Example requests and responses:</para>
             <itemizedlist>
@@ -379,26 +376,33 @@ X-Copied-From: marktwain/goodbye
 </itemizedlist>
 </wadl:doc>
 """
-
-       parent = MockParent()
-       ch = wadl_to_swagger.ParaParser(parent)
-       xml.sax.parse(StringIO(file_content), ch)
-       self.assertEqual(
-           parent.result,
-           """Example requests and responses:\n\n- Copy the ``goodbye`` object from the ``marktwain`` container to\n  the ``janeausten`` container: ``curl -i\n  $publicURL/marktwain/goodbye -X COPY -H "X-Auth-Token: $token" -H\n  "Destination: janeausten/goodbye"``  ::\n\n     HTTP/1.1 201 Created\n     Content-Length: 0\n     X-Copied-From: marktwain/goodbye\n\n\n"""
-       )
+        parent = MockParent()
+        ch = wadl_to_swagger.ParaParser(parent)
+        xml.sax.parse(StringIO(file_content), ch)
+        self.assertEqual(
+            parent.result,
+            """Example requests and responses:
+\n- Copy the ``goodbye`` object from the ``marktwain`` container to
+  the ``janeausten`` container: ``curl -i
+  $publicURL/marktwain/goodbye -X COPY -H "X-Auth-Token: $token" -H
+  "Destination: janeausten/goodbye"``  ::\n\n     HTTP/1.1 201 Created
+     Content-Length: 0\n     X-Copied-From: marktwain/goodbye\n\n\n"""
+        )
 
     def test_table_caption(self):
         file_content = """<?xml version="1.0" encoding="UTF-8"?>
 <wadl:doc>
   <table><caption>Image status</caption></table>
-  <table><caption>Image <code>with a code literal</code> <code>inside</code></caption></table>
-  <table><caption>A <emphasis>bold</emphasis> caption <emphasis>again</emphasis></caption></table>
-  <table><caption><emphasis role="italic">An italicized</emphasis> caption</caption></table>
-  <table><caption>A caption with <emphasis>bold</emphasis> text embedded</caption></table>
+  <table><caption>Image <code>with a code literal</code>
+  <code>inside</code></caption></table>
+  <table><caption>A <emphasis>bold</emphasis> caption <emphasis>again</emphasis>
+  </caption></table>
+  <table><caption><emphasis role="italic">An italicized</emphasis> caption</caption>
+  </table>
+  <table><caption>A caption with <emphasis>bold</emphasis> text embedded</caption>
+  </table>
 </wadl:doc>
 """
-
         parent = MockParent()
         ch = wadl_to_swagger.ParaParser(parent)
         xml.sax.parse(StringIO(file_content), ch)
