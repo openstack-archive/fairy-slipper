@@ -206,7 +206,11 @@ para5
         xml.sax.parse(StringIO(file_content), ch)
         self.assertEqual(
             parent.result,
-            """This operation does not accept a request body.\n\nExample requests and responses:\n\n- Show account details and list containers:\n\n  Some more details.\n\n- See the example response below.\n\n"""
+            """This operation does not accept a request body.
+\nExample requests and responses:
+\n- Show account details and list containers:
+\n  Some more details.
+\n- See the example response below.\n\n"""
         )
 
     def test_nested_listitem(self):
@@ -265,7 +269,8 @@ para5
         self.assertEqual(
             parent.result,
             """This operation does not accept a request body.
-\nExample requests and responses:\n\n- Show account details and list containers:
+\nExample requests and responses:
+\n- Show account details and list containers:
 \n  ``curl -i $publicURL?format=json -X GET -H \"X-Auth-Token:\n  $token\"``
 \n  See the example response below.\n\n"""
         )
@@ -278,8 +283,8 @@ para5
 <listitem>
 <para>Container command:</para>
 <para>
-<code>curl -i $publicURL/steven 
--X DELETE -H "X-Auth-Token: $token"</code>
+<code>curl -i $publicURL/steven
+ -X DELETE -H "X-Auth-Token: $token"</code>
 </para>
 <para>If the container does not exist, the response is:</para>
 <para><programlisting>HTTP/1.1 404 Not Found
@@ -301,7 +306,17 @@ Date: Thu, 16 Jan 2014 18:00:20 GMT
         xml.sax.parse(StringIO(file_content), ch)
         self.assertEqual(
             parent.result,
-            """Delete the ``steven`` container:\n\n- Container command:\n\n  ``curl -i $publicURL/steven -X DELETE -H \"X-Auth-Token: $token\"``\n\n  If the container does not exist, the response is:\n\n  ::\n\n     HTTP/1.1 404 Not Found\n     Content-Length: 70\n     Content-Type: text/html; charset=UTF-8\n     Date: Thu, 16 Jan 2014 18:00:20 GMT\n     <html>\n     <h1>Conflict\n     </h1>\n     <p>Trying to complete your request.\n     </p>\n     </html>\n\n\n- Second container command:\n\n  Write to disk.\n\n"""
+            """Delete the ``steven`` container:
+\n- Container command:
+\n  ``curl -i $publicURL/steven -X DELETE -H \"X-Auth-Token: $token\"``
+\n  If the container does not exist, the response is:
+\n  ::\n\n     HTTP/1.1 404 Not Found\n     Content-Length: 70
+     Content-Type: text/html; charset=UTF-8
+     Date: Thu, 16 Jan 2014 18:00:20 GMT
+     <html>\n     <h1>Conflict\n     </h1>
+     <p>Trying to complete your request.\n     </p>
+     </html>\n\n\n- Second container command:
+\n  Write to disk.\n\n"""
         )
 
     def test_para_code_block(self):
@@ -395,11 +410,15 @@ X-Copied-From: marktwain/goodbye
   <table><caption>Image status</caption></table>
   <table><caption>Image <code>with a code literal</code>
   <code>inside</code></caption></table>
-  <table><caption>A <emphasis>bold</emphasis> caption <emphasis>again</emphasis>
+  <table>
+  <caption>A <emphasis>bold</emphasis> caption <emphasis>again</emphasis>
   </caption></table>
-  <table><caption><emphasis role="italic">An italicized</emphasis> caption</caption>
+  <table>
+  <caption>
+  <emphasis role="italic">An italicized</emphasis> caption</caption>
   </table>
-  <table><caption>A caption with <emphasis>bold</emphasis> text embedded</caption>
+  <table>
+  <caption>A caption with <emphasis>bold</emphasis> text embedded</caption>
   </table>
 </wadl:doc>
 """
@@ -429,6 +448,7 @@ X-Copied-From: marktwain/goodbye
 ++
 
 """)
+
 
 class TestWADLHandler(unittest.TestCase):
 

@@ -442,17 +442,21 @@ class ParaParser(SubParser, TableMixin):
             if self.search_stack_for('itemizedlist') is None:
                 self.content.append('::\n\n')
             else:
-                self.content.append(self.base_indent * self.nesting + \
+                self.content.append(self.base_indent * self.nesting +
                                     '  ' + '::\n\n')
         else:
             if self.search_stack_for('itemizedlist') is None:
-                self.litblockstr = '.. code-block:: %s\n\n' \
-                                   % attrs['language']
-                self.content.append('.. code-block:: %s\n\n' \
-                                    % attrs['language'])
+                self.litblockstr = (
+                    '.. code-block:: %s\n\n' % attrs['language']
+                    )
+                self.content.append(
+                    '.. code-block:: %s\n\n'% attrs['language']
+                )
             else:
-                self.content.append(self.base_indent * self.nesting + '  ' + \
-                                    '.. code-block:: %s\n\n' % attrs['language'])
+                self.content.append(
+                    self.base_indent * self.nesting +
+                    '  ' + '.. code-block:: %s\n\n' % attrs['language']
+                )
 
     def depart_programlisting(self):
         self.nesting = 0  # no indent for blank lines

@@ -93,7 +93,8 @@ class TestChapterParaParser(TestCase):
             [{
                 'name': 'table-v3',
                 'summary': "Creates, lists, updates images.\n"
-                "\n**Image status**\n\n++\n\n**Image with embedded bold status**\n\n++"
+                "\n**Image status**\n\n++\n"
+                "\n**Image with embedded bold status**\n\n++"
             }]
         )
 
@@ -116,7 +117,9 @@ class TestChapterParaParser(TestCase):
             [{
                 'name': 'listitems-v1',
                 'summary': "- Para 1, listitem1\n\n  Para 2, listitem1\n\n"
-                "  - Embedded item1\n\n  - Embedded item2\n\n  - Embedded item3\n\n"
-                "  Para 3, listitem1\n\n- Para1, listitem2\n\nsome more para text"
+                "  - Embedded item1\n\n  - Embedded item2\n"
+                "\n  - Embedded item3\n\n"
+                "  Para 3, listitem1\n\n- Para1, listitem2\n"
+                "\nsome more para text"
             }]
         )
