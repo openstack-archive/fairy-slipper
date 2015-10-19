@@ -184,14 +184,14 @@ class JSONTranslator(nodes.GenericNodeVisitor):
 
     def visit_literal_block(self, node):
         if len(self.bullet_stack) > 0:
-            self.text += '        '
+            self.text += '\n        '
         else:
             self.text += '```\n'
         self.lit_block = True
 
     def depart_literal_block(self, node):
         if len(self.bullet_stack) > 0:
-            self.text += '\n\n'
+            self.text += '\n'
         else:
             self.text += '\n```\n'
         self.lit_block = False
@@ -201,18 +201,13 @@ class JSONTranslator(nodes.GenericNodeVisitor):
 
     def depart_bullet_list(self, node):
         self.bullet_stack.pop()
-        self.list_para_cnt = 0
+        self.list_indent = len(self.bullet_stack) - 1
+        if len(self.bullet_stack) is 0:
+            self.text += '\n'
 
     def visit_list_item(self, node):
-        indent = len(self.bullet_stack)
-        if indent is 1:
-            self.list_indent = 0
-        elif indent is 2:
-            self.list_indent = indent
-        elif indent is 3:
-            self.list_indent = 4
-
-        item = '\n%s%s ' % (' ' * self.list_indent,
+        self.list_indent = len(self.bullet_stack) - 1
+        item = '\n%s%s ' % ('  ' * self.list_indent,
                             self.bullet_stack[-1])
         self.text += item
         self.listitem = True
@@ -242,14 +237,21 @@ class JSONTranslator(nodes.GenericNodeVisitor):
                 # another para in listitem
                 if len(self.bullet_stack) > 0:
                     if self.lit_block:
-                        self.text += '        '
+                        self.text += '\n' + '        '
                     else:
-                        self.text += ' ' * self.list_indent + ' '
-            self.listitem = False
+                        self.text += '\n' + '  ' * self.list_indent + ' '
 
     def depart_paragraph(self, node):
         if self.first_row is 0:
-            self.text += "\n\n"
+            if self.listitem:
+                self.text += '\n'
+                self.listitem = False
+            else:
+                if len(self.bullet_stack) > 0:
+                    self.text += "\n"
+                else:
+                    # default paragraph
+                    self.text += "\n\n"
         else:
             if self.first_row > 0:
                 para = self.table_stack.pop()

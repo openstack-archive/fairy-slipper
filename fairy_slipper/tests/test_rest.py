@@ -149,7 +149,6 @@ banana
 
 * the first item
 
-
 * the second item
 
 '''
@@ -184,11 +183,9 @@ banana
 
 * the first item
 
-
 * the second item
 
  A new paragraph under second item
-
 
 * Create object:
 
@@ -231,9 +228,7 @@ banana
 
 * the first item
 
-
 * the second item
-
 
 * Create object:
 
@@ -280,11 +275,9 @@ banana
 
 * the first item
 
-
 * the second item
 
  A new paragraph under second item
-
 
   * item under second item:
 
@@ -292,13 +285,11 @@ banana
 
    And some more text
 
-
 * the third item
 
 Some normal body text again
 
 '''
-        self.maxDiff = None
         json = rest.publish_string(rst)
 
         assert json == {'paths':
