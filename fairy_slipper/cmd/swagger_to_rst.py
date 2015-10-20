@@ -40,17 +40,17 @@ TMPL_API = """
    {{line}}
 {%- endfor %}
 {% if request['examples']['application/json'] %}
-   :requestexample: {{version}}/examples/{{request['id']}}_req.json
+   :requestexample: {{version}}/examples/{{request['operationId']}}_req.json
 {%- endif -%}
 {% if request['examples']['text/plain'] %}
-   :requestexample: {{version}}/examples/{{request['id']}}_req.txt
+   :requestexample: {{version}}/examples/{{request['operationId']}}_req.txt
 {%- endif -%}
 {% for status_code, response in request.responses.items() -%}
 {%- if response['examples']['application/json'] %}
-   :responseexample {{status_code}}: {{version}}/examples/{{request['id']}}_resp_{{status_code}}.json
+   :responseexample {{status_code}}: {{version}}/examples/{{request['operationId']}}_resp_{{status_code}}.json
 {%- endif -%}
 {%- if response['examples']['text/plain'] %}
-   :responseexample {{status_code}}: {{version}}/examples/{{request['id']}}_resp_{{status_code}}.txt
+   :responseexample {{status_code}}: {{version}}/examples/{{request['operationId']}}_resp_{{status_code}}.txt
 {%- endif -%}
 {% endfor -%}
 {% for mime in request.consumes %}
@@ -65,7 +65,7 @@ TMPL_API = """
 {% for parameter in request.parameters -%}
 {% if parameter.in == 'body' -%}
 {% if parameter.schema %}
-   :requestschema: {{version}}/{{request['id']}}.json
+   :requestschema: {{version}}/{{request['operationId']}}.json
 {%- endif -%}
 {% elif parameter.in == 'path' %}
 {{ parameter|format_param('parameter') }}
@@ -214,7 +214,7 @@ def write_examples(swagger, output_dir):
         for operation in operations:
             if 'examples' in operation:
                 for mime, example in operation['examples'].items():
-                    filename = '%s' % '_'.join([operation['id'], 'req'])
+                    filename = '%s' % '_'.join([operation['operationId'], 'req'])
                     if mime == 'application/json':
                         filepath = path.join(full_path, filename + '.json')
                         log.info("Writing %s", filepath)
@@ -229,7 +229,7 @@ def write_examples(swagger, output_dir):
                         file.write(example)
             for status_code, response in operation['responses'].items():
                 for mime, example in response['examples'].items():
-                    filename = '%s' % '_'.join([operation['id'],
+                    filename = '%s' % '_'.join([operation['operationId'],
                                                 'resp',
                                                 status_code])
                     if mime == 'application/json':

@@ -508,7 +508,7 @@ class TestWADLHandler(unittest.TestCase):
              [{'consumes': [],
                'description': '',
                'examples': {},
-               'id': 'createThing',
+               'operationId': 'createThing',
                'method': 'post',
                'parameters': [
                    {'description': '',

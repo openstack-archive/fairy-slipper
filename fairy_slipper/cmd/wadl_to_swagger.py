@@ -641,7 +641,7 @@ class WADLHandler(xml.sax.ContentHandler):
                 else:
                     self.apis[url] = root_api = []
                 self.current_api = {
-                    'id': id,
+                    'operationId': id,
                     'tags': set(),
                     'method': name,
                     'produces': set(),
@@ -802,7 +802,7 @@ class WADLHandler(xml.sax.ContentHandler):
                     schema_name = schema_name + '_' + status_code
                     if schema_name not in self.schemas:
                         self.schemas[schema_name] = {'type': 'object',
-                                                    'properties': {}}
+                                                     'properties': {}}
                     schema_properties = self.schemas[schema_name]['properties']
                     schema_properties[parameter['name']] = parameter
                     del parameter['name']
@@ -877,13 +877,16 @@ def main1(source_file, output_dir):
             }
         },
         u'paths': defaultdict(list),
-        u'schemes': {},
+        u'schemes': [],
         u'tags': api_ref['tags'],
-        u'basePath': {},
+        u'basePath': "",
         u'securityDefinitions': {},
-        u'host': {},
+        u'host': "",
         u'definitions': {},
-        u'externalDocs': {},
+        u'externalDocs': {
+            'description': 'OpenStack Docs',
+            'url': 'http://docs.openstack.org',
+        },
         u"swagger": u"2.0",
     }
     for file in files:
