@@ -71,6 +71,11 @@ class DB(object):
     def _normalize_headers(self, headers):
         return {k.lower(): v for k, v in headers.items()}
 
+    def exists(self, req):
+        if req in self.requests:
+            return True
+        return False
+
     def create(self, req, request):
         url = urlparse.urlsplit(request['url'])
         port = url.netloc.split(':')[-1]
@@ -171,6 +176,14 @@ def parse_logfile(log_file):
                     db.append_req_or_resp_body(current_req_id, line)
                 except TypeError:
                     log.warning('Failed to find body to add to.')
+                continue
+
+            if not current_req_id:
+                continue
+
+            if not db.exists(current_req_id):
+                log.warning("Can't find request %r" % current_req_id)
+                current_req_id = ''
                 continue
 
             key = key.strip()
