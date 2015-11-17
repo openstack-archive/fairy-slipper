@@ -135,11 +135,18 @@ para2
     def test_para_inline_code(self):
         file_content = """<?xml version="1.0" encoding="UTF-8"?>
 <wadl:doc>
-  <para>Code sample: <code>admin</code></para>
-  <para><code>bget task</code>the program now!</para>
-  <para>Code sample: <code>admin</code>more code on its way!</para>
-  <para>Code sample:<code>admin</code>.</para>
+  <para>Code sample <code>admin</code></para>
+  <para><code>get task</code>, program!</para>
+  <para><code>get task</code> program!</para>
+  <para>Code sample <code>admin</code> and more code.</para>
+  <para>Code <code>admin</code>.</para>
+  <para>Code <code>admin</code>. Another sentence started.</para>
   <para>para5</para>
+  <para>Code <code>test</code>: with colon</para>
+  <para>Code <code>test</code>; with semi-colon</para>
+  <para>Code <code>test</code>; with semi-colon and <code>
+  end test</code>.</para>
+  <para>Code (<code>test</code>) with parens.</para>
 </wadl:doc>
 """
 
@@ -148,15 +155,27 @@ para2
         xml.sax.parse(StringIO(file_content), ch)
         self.assertEqual(
             parent.result,
-            """Code sample: ``admin``
+            """Code sample ``admin``
 
-``bget task`` the program now!
+``get task``, program!
 
-Code sample: ``admin`` more code on its way!
+``get task`` program!
 
-Code sample: ``admin`` .
+Code sample ``admin`` and more code.
+
+Code ``admin``.
+
+Code ``admin``. Another sentence started.
 
 para5
+
+Code ``test``: with colon
+
+Code ``test``; with semi-colon
+
+Code ``test``; with semi-colon and ``end test``.
+
+Code (``test``) with parens.
 
 """)
 
@@ -166,8 +185,13 @@ para5
   <para>Some text with <emphasis>bold words at the end of the sentence</emphasis>.</para>
   <para><emphasis>Bold text is cool</emphasis></para>
   <para>Multi word text is <emphasis>brilliant</emphasis>and then some.</para>
-  <para>Lovely <emphasis>bold</emphasis></para>
+  <para>Really <emphasis>bold</emphasis></para>
   <para>para5</para>
+  <para>This is a <emphasis>sentence</emphasis>; another phrase follows.</para>
+  <para>Text with (<emphasis>parenthesis</emphasis>) and then **text**: with colon.</para>
+  <para>A <emphasis>comma</emphasis>, and more <code>text</code>.</para>
+  <para>Some text with <emphasis>back</emphasis> <emphasis>to back</emphasis>
+        emphasized text.</para>
 </wadl:doc>
 """  # noqa
 
@@ -176,15 +200,23 @@ para5
         xml.sax.parse(StringIO(file_content), ch)
         self.assertEqual(
             parent.result,
-            """Some text with **bold words at the end of the sentence** .
+            """Some text with **bold words at the end of the sentence**.
 
 **Bold text is cool**
 
 Multi word text is **brilliant** and then some.
 
-Lovely **bold**
+Really **bold**
 
 para5
+
+This is a **sentence**; another phrase follows.
+
+Text with (**parenthesis**) and then **text**: with colon.
+
+A **comma**, and more ``text``.
+
+Some text with **back** **to back** emphasized text.
 
 """)
 
@@ -519,7 +551,9 @@ class TestWADLHandler(unittest.TestCase):
                                '#/definitions/createThing'}}],
                'produces': [],
                'responses': {'202': {'examples': {},
-                                     'headers': {}}},
+                                     'headers': {},
+                                     'schema': {},
+                                     'description': ''}},
                'summary': 'Creates and uses a port interface '
                'to attach the port to a server instance.',
                'tags': ['things'],

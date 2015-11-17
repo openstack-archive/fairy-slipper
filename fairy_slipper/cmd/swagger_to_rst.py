@@ -214,7 +214,8 @@ def write_examples(swagger, output_dir):
         for operation in operations:
             if 'examples' in operation:
                 for mime, example in operation['examples'].items():
-                    filename = '%s' % '_'.join([operation['operationId'], 'req'])
+                    filename = '%s' % '_'.join(
+                        [operation['operationId'], 'req'])
                     if mime == 'application/json':
                         filepath = path.join(full_path, filename + '.json')
                         log.info("Writing %s", filepath)

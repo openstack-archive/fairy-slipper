@@ -270,6 +270,7 @@ TITLE_RE = re.compile(
     '(.*) API (v([\d.]+) )?(\S*)[ ]*\((SUPPORTED|CURRENT|DEPRECATED|\
 EXPERIMENTAL)\)')
 CAPTION_RE = re.compile('[*`]*')
+MARKUP_RE = re.compile('[.,:;)]+')
 
 
 class TableMixin(object):
@@ -345,6 +346,8 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
         self.wrapper = textwrap.TextWrapper(width=self.fill_width)
         self.inline_markup_stack = []
         self.base_indent = ' '
+        self.hyperlink_end = False
+        self.markup_end = False
 
     @property
     def content(self):
@@ -451,6 +454,18 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
                 content = '\n' + ' ' * self.nesting + content
             elif self.no_space:
                 content = '' + content.strip()
+            elif self.hyperlink_end:
+                self.hyperlink_end = False
+                if content == '.' or content == ':':
+                    pass
+                else:
+                    content = ' ' + content.strip()
+            elif self.markup_end:
+                self.markup_end = False
+                if MARKUP_RE.match(content):
+                    pass
+                else:
+                    content = ' ' + content.strip()
             else:
                 content = ' ' + content.strip()
 
@@ -532,11 +547,16 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
 
     def depart_code(self):
         content = ' ``'
+        if self.content:
+            if self.content[-1].endswith('(') or \
+              self.content[-1].endswith(' '):
+                content = '``'
         content += ' '.join(self.inline_markup_stack[0:None])
         content += '``'
         self.content.append(content)
         self.inline_markup_stack[:] = []
         self.no_space = False
+        self.markup_end = True
 
     def visit_emphasis(self, attrs):
         # Bold is the default emphasis
@@ -545,12 +565,17 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
 
     def depart_emphasis(self):
         content = ' ' + self.EMPHASIS[self.current_emphasis]
+        if self.content:
+            if self.content[-1].endswith('(') or \
+              self.content[-1].endswith(' '):
+                content = '' + self.EMPHASIS[self.current_emphasis]
         content += ' '.join(self.inline_markup_stack[0:None])
         content += self.EMPHASIS[self.current_emphasis]
         self.content.append(content)
         self.inline_markup_stack[:] = []
         self.no_space = False
         self.current_emphasis = None
+        self.markup_end = True
 
     def visit_programlisting(self, attrs):
         if not attrs:

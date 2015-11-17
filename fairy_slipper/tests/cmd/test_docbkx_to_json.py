@@ -49,7 +49,9 @@ class TestChapterParaParser(TestCase):
             [{
                 'name': 'test-v1',
                 'summary': "Image operations ``show`` all fields.\n"
-                "\nCreates, lists, updates, and deletes images."}]
+                "\nCreates, lists, updates, and deletes images.\n"
+                "\nCreates, **lists**, ``updates`` and **deletes images**"
+                "\n\nCreates, (``x+5``), and deletes **images**."}]
         )
 
     def test_code_block(self):
@@ -70,7 +72,7 @@ class TestChapterParaParser(TestCase):
             ch.tags,
             [{
                 'name': 'test-v3',
-                'summary': "You can encode sets into a blob. Do something with ``type`` to\n``application/json`` and JSON strings in a ``blob`` . Example:\n\n::\n\n   \"blob\": {\n           \"default\": false\n       }\n\nOr:\n\n::\n\n   \"blob\": {\n           \"foobar_user\": [\n               \"role:compute-user\"\n           ]\n       }"  # noqa
+                'summary': "You can encode sets into a blob. Do something with ``type`` to\n``application/json`` and JSON strings in a ``blob``. Example:\n\n::\n\n   \"blob\": {\n           \"default\": false\n       }\n\nOr:\n\n::\n\n   \"blob\": {\n           \"foobar_user\": [\n               \"role:compute-user\"\n           ]\n       }"  # noqa
             }]
         )
 

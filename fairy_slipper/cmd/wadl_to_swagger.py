@@ -110,7 +110,7 @@ VERSION_RE = re.compile('v[0-9\.]+')
 WHITESPACE_RE = re.compile('[\s]+', re.MULTILINE)
 URL_TEMPLATE_RE = re.compile('{[^{}]+}')
 CAPTION_RE = re.compile('[*`]*')
-
+MARKUP_RE = re.compile('[.,:;)]+')
 
 environment = Environment()
 HTTP_REQUEST = """{{ method }} {{ url }} HTTP/1.1
@@ -243,6 +243,7 @@ class ParaParser(SubParser, TableMixin):
         self.hyperlink_end = False
         self.litblockstr = ''
         self.base_indent = ' '
+        self.markup_end = False
 
     @property
     def content(self):
@@ -268,7 +269,6 @@ class ParaParser(SubParser, TableMixin):
         # Fold up any white space into a single char
         if not self.on_top_tag_stack('programlisting'):
             content = WHITESPACE_RE.sub(' ', content)
-
         if content == ' ':
             return
         if content[0] == '\n':
@@ -288,9 +288,19 @@ class ParaParser(SubParser, TableMixin):
                         content = '\n' + self.base_indent * self.nesting + \
                                   '  ' + content
             elif self.no_space:
-                content = '' + content.strip()
-            elif self.hyperlink_end and content == '.':
+                content = content.strip()
+            elif self.hyperlink_end:
                 self.hyperlink_end = False
+                if content == '.' or content == ':':
+                    pass
+                else:
+                    content = ' ' + content.strip()
+            elif self.markup_end:
+                self.markup_end = False
+                if MARKUP_RE.match(content):
+                    pass
+                else:
+                    content = ' ' + content.strip()
             else:
                 content = ' ' + content.strip()
 
@@ -418,11 +428,16 @@ class ParaParser(SubParser, TableMixin):
 
     def depart_code(self):
         content = ' ``'
+        if self.content:
+            if self.content[-1].endswith('(') or \
+               self.content[-1].endswith(' '):
+                content = '``'
         content += ' '.join(self.inline_markup_stack[0:None])
         content += '``'
         self.content.append(content)
         self.inline_markup_stack[:] = []
         self.no_space = False
+        self.markup_end = True
 
     def visit_emphasis(self, attrs):
         # Bold is the default emphasis
@@ -431,12 +446,17 @@ class ParaParser(SubParser, TableMixin):
 
     def depart_emphasis(self):
         content = ' ' + self.EMPHASIS[self.current_emphasis]
+        if self.content:
+            if self.content[-1].endswith('(') or \
+                 self.content[-1].endswith(' '):
+                content = '' + self.EMPHASIS[self.current_emphasis]
         content += ' '.join(self.inline_markup_stack[0:None])
         content += self.EMPHASIS[self.current_emphasis]
         self.content.append(content)
         self.inline_markup_stack[:] = []
         self.no_space = False
         self.current_emphasis = None
+        self.markup_end = True
 
     def visit_programlisting(self, attrs):
         self.nesting = 3
@@ -747,6 +767,8 @@ class WADLHandler(xml.sax.ContentHandler):
                 return
             status_code = attrs['status']
             response = {
+                'description': '',
+                'schema': {},
                 'headers': {},
                 'examples': {},
             }
