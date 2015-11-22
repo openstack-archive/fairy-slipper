@@ -827,6 +827,9 @@ class WADLHandler(xml.sax.ContentHandler):
                                                      'properties': {}}
                     schema_properties = self.schemas[schema_name]['properties']
                     schema_properties[parameter['name']] = parameter
+                    response = self.current_api['responses'][status_code]
+                    response['schema']['$ref'] = "#/definitions/%s" % \
+                                                 schema_name
                     del parameter['name']
                     del parameter['in']
             elif parameter['in'] == 'header':

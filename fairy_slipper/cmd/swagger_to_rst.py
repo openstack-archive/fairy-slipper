@@ -45,12 +45,15 @@ TMPL_API = """
 {% if request['examples']['text/plain'] %}
    :requestexample: {{version}}/examples/{{request['operationId']}}_req.txt
 {%- endif -%}
-{% for status_code, response in request.responses.items() -%}
+{% for status_code, response in request.responses.items() %}
 {%- if response['examples']['application/json'] %}
    :responseexample {{status_code}}: {{version}}/examples/{{request['operationId']}}_resp_{{status_code}}.json
 {%- endif -%}
 {%- if response['examples']['text/plain'] %}
    :responseexample {{status_code}}: {{version}}/examples/{{request['operationId']}}_resp_{{status_code}}.txt
+{%- endif -%}
+{%- if response['schema']['$ref'] %}
+   :responseschema {{status_code}}: {{version}}/{{response['schema']['$ref'].rsplit('/', 1)[1]}}.json
 {%- endif -%}
 {% endfor -%}
 {% for mime in request.consumes %}

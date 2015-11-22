@@ -525,6 +525,15 @@ class TestWADLHandler(unittest.TestCase):
     </request>
     <response status="202">
       <representation mediaType="application/json">
+        <param name="thing-a-imagig-response" style="plain"
+               type="xsd:string" required="true">
+          <wadl:doc>
+            <para>
+               Specify the <code>interfaceAttachment</code>
+               action in the request body.
+            </para>
+          </wadl:doc>
+        </param>
       </representation>
     </response>
   </method>
@@ -552,7 +561,8 @@ class TestWADLHandler(unittest.TestCase):
                'produces': [],
                'responses': {'202': {'examples': {},
                                      'headers': {},
-                                     'schema': {},
+                                     'schema': {
+                                         '$ref': '#/definitions/createThing_202'},
                                      'description': ''}},
                'summary': 'Creates and uses a port interface '
                'to attach the port to a server instance.',
@@ -570,4 +580,15 @@ class TestWADLHandler(unittest.TestCase):
                 'format': '',
                 'required': True,
                 'type': 'string'}},
-              'type': 'object'}})
+              'type': 'object'},
+            'createThing_202':
+             {'properties':
+              {'thing-a-imagig-response':
+               {'description':
+                'Specify the ``interfaceAttachment``'
+                ' action in the request body.',
+                'format': '',
+                'required': True,
+                'type': 'string'}},
+              'type': 'object'}}
+        )

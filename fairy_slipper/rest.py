@@ -481,6 +481,13 @@ class JSONTranslator(nodes.GenericNodeVisitor):
                  'in': 'body',
                  'required': True,
                  'schema': {'$ref': filepath}})
+        elif name == 'responseschema':
+            responses = resource['responses']
+            status_code = node[0].astext()
+            filepath = node[1].astext()
+            if 'schema' not in responses[status_code]:
+                responses[status_code]['schema'] = {}
+            responses[status_code]['schema'] = {'$ref': filepath}
         elif name == 'parameter':
             param_name = node[0].astext()
             description = node[1].astext()
@@ -718,6 +725,9 @@ class Resource(Directive):
         GroupedField('statuscode', label='Status Codes',
                      rolename='statuscode',
                      names=('statuscode', 'status', 'code')),
+        GroupedField('responseschema', label='Response Schema',
+                     rolename='responseschema',
+                     names=('reponse-schema', 'responseschema')),
 
         # Swagger Extensions
         GroupedField('responseexample', label='Response Example',
