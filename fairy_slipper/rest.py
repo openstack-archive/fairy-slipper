@@ -485,6 +485,8 @@ class JSONTranslator(nodes.GenericNodeVisitor):
             responses = resource['responses']
             status_code = node[0].astext()
             filepath = node[1].astext()
+            if status_code not in responses:
+                responses[status_code] = new_response
             if 'schema' not in responses[status_code]:
                 responses[status_code]['schema'] = {}
             responses[status_code]['schema'] = {'$ref': filepath}
