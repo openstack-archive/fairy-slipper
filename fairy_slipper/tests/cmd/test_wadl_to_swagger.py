@@ -562,7 +562,8 @@ class TestWADLHandler(unittest.TestCase):
                'responses': {'202': {'examples': {},
                                      'headers': {},
                                      'schema': {
-                                         '$ref': '#/definitions/createThing_202'},
+                                         '$ref':
+                                         '#/definitions/createThing_202'},
                                      'description': ''}},
                'summary': 'Creates and uses a port interface '
                'to attach the port to a server instance.',
@@ -581,7 +582,7 @@ class TestWADLHandler(unittest.TestCase):
                 'required': True,
                 'type': 'string'}},
               'type': 'object'},
-            'createThing_202':
+             'createThing_202':
              {'properties':
               {'thing-a-imagig-response':
                {'description':

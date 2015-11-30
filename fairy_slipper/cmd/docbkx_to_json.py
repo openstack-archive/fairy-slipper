@@ -549,7 +549,7 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
         content = ' ``'
         if self.content:
             if self.content[-1].endswith('(') or \
-              self.content[-1].endswith(' '):
+               self.content[-1].endswith(' '):
                 content = '``'
         content += ' '.join(self.inline_markup_stack[0:None])
         content += '``'
@@ -567,7 +567,7 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
         content = ' ' + self.EMPHASIS[self.current_emphasis]
         if self.content:
             if self.content[-1].endswith('(') or \
-              self.content[-1].endswith(' '):
+               self.content[-1].endswith(' '):
                 content = '' + self.EMPHASIS[self.current_emphasis]
         content += ' '.join(self.inline_markup_stack[0:None])
         content += self.EMPHASIS[self.current_emphasis]
