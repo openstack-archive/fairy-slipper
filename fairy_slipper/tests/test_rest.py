@@ -666,6 +666,24 @@ Example requests and responses:
                                            'example.json'}}}})]},
                         'tags': []}
 
+    def test_response_schema(self):
+        rst = """
+.. http:get:: /path
+
+   :responseschema 200: schema_200.json
+"""
+        json = rest.publish_string(rst)
+
+        assert json == {'paths':
+                        {'/path':
+                         [minimal_method_json(
+                             responses={'200':
+                                        {'description': '',
+                                         'schema':
+                                         {'$ref':
+                                          'schema_200.json'}}})]},
+                        'tags': []}
+
     def test_statuscode(self):
         rst = """
 .. http:get:: /path

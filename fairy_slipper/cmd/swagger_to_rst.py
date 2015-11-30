@@ -36,9 +36,11 @@ TMPL_API = """
 .. http:{{request.method}}:: {{path}}
    :title: {{request.title}}
    :synopsis: {{request.summary}}
+{%- if request.description != '' %}
 {% for line in request.description.split('\n') %}
    {{line}}
 {%- endfor %}
+{%- endif %}
 {% if request['examples']['application/json'] %}
    :requestexample: {{version}}/examples/{{request['operationId']}}_req.json
 {%- endif -%}
@@ -70,7 +72,7 @@ TMPL_API = """
 {% if parameter.schema %}
    :requestschema: {{version}}/{{request['operationId']}}.json
 {%- endif -%}
-{% elif parameter.in == 'path' %}
+{%- elif parameter.in == 'path' %}
 {{ parameter|format_param('parameter') }}
 {%- elif parameter.in == 'query' %}
 {{ parameter|format_param('query') }}
@@ -106,8 +108,19 @@ def format_param(obj, type='query'):
     param_wrap = textwrap.TextWrapper(
         initial_indent=param,
         subsequent_indent=' ' * len(param))
-    new_text = param_wrap.wrap(obj['description'])
-    return '\n'.join(new_text)
+    if ('::\n\n' in obj['description']) or \
+       ('.. code-block::' in obj['description']):
+        param_len = len(param)
+        for i, line in enumerate(obj['description'].split('\n')):
+            if i is 0:
+                param += line + '\n'
+            else:
+                param += ' ' * param_len + line + '\n'
+        return param
+    else:
+        new_text = param_wrap.wrap(obj['description'])
+        return '\n'.join(new_text)
+
 
 environment.filters['format_param'] = format_param
 
