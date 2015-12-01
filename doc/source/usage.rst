@@ -37,15 +37,61 @@ The `api_doc` output is organized by service in directories, such as
 
 You may see warnings logged, such as::
 
-2015-11-30 14:57:13,946 fairy_slipper.cmd.wadl_to_swagger WARNING Can't find method listFlavors
-2015-11-30 14:57:14,377 fairy_slipper.cmd.wadl_to_swagger WARNING No tags for method getServerAddresses
+    2015-11-30 14:57:13,946 fairy_slipper.cmd.wadl_to_swagger WARNING Can't find method listFlavors
+    2015-11-30 14:57:14,377 fairy_slipper.cmd.wadl_to_swagger WARNING No tags for method getServerAddresses
 
 That means that the WADL itself has an unclear definition. So far we have been
-able to address these warnings by patching the WADL files.
+able to address these warnings by patching the WADL files. Here are example
+patches that fixed what was uncovered in the past:
+
+ * https://review.openstack.org/#/c/213571/ (couldn't find a List flavors method)
+ * https://review.openstack.org/#/c/215350/ (couldn't find a /ips method)
+
+To find out which WADL files have issues, run the `migrate.sh` script with
+`--verbose-docs`::
+
+    2015-12-01 08:23:14,549 fairy_slipper.cmd.wadl_to_swagger INFO Parsing /Users/annegentle/src/fairy-slipper/api-site/api-ref/src/wadls/netconn-api/src/os-networks.wadl
+    2015-12-01 08:23:14,551 fairy_slipper.cmd.wadl_to_swagger WARNING No tags for method listVersionsv2-neutron
+    2015-12-01 08:23:14,552 fairy_slipper.cmd.wadl_to_swagger WARNING No tags for method showVersionDetailsv2-neutron
 
 How to build and display API guides
 -----------------------------------
 
+Once you have the migrated files, including RST and JSON files, you can run the
+web server to display the API reference information.
+
+Prerequisites:
+
+ * npm
+ * bower
+ 
+This installs bower into the global system path, which is not ideal. However,
+if you run into issues while running the server, you can run these commands::
+
+    sudo npm install -g bower
+    bower install installed
+
+To run the web server after getting migrated content with the `migrate.sh`
+script, you run the `run_server.sh` script::
+
+    ./run_server.sh
+
+A Pecan-based web server then runs on http://127.0.0.1:8080 in your local
+environment.
+
+To see the JSON listing of all documented APIs, go to:
+http://127.0.0.1:8080/doc/
+
+Then, you can look at individual REST API URL such as:
+
+"url": "identity/v2/",
+
+by adding identity/v2/ to the local server URL http://127.0.0.1:8080/doc/.
+
+The actual Swagger JSON file is here for inspection once you're running the web
+server:
+
+http://127.0.0.1:8080/doc/identity/v2/
 
 How to author API reference information
 ---------------------------------------
