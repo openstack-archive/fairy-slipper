@@ -37,19 +37,95 @@ The `api_doc` output is organized by service in directories, such as
 
 You may see warnings logged, such as::
 
-2015-11-30 14:57:13,946 fairy_slipper.cmd.wadl_to_swagger WARNING Can't find method listFlavors
-2015-11-30 14:57:14,377 fairy_slipper.cmd.wadl_to_swagger WARNING No tags for method getServerAddresses
+    2015-11-30 14:57:13,946 fairy_slipper.cmd.wadl_to_swagger WARNING Can't find method listFlavors
+    2015-11-30 14:57:14,377 fairy_slipper.cmd.wadl_to_swagger WARNING No tags for method getServerAddresses
 
 That means that the WADL itself has an unclear definition. So far we have been
-able to address these warnings by patching the WADL files.
+able to address these warnings by patching the WADL files. Here are example
+patches that fixed what was uncovered in the past:
+
+ * https://review.openstack.org/#/c/213571/ (couldn't find a List flavors method)
+ * https://review.openstack.org/#/c/215350/ (couldn't find a /ips method)
+
+To find out which WADL files have issues, run the `migrate.sh` script with
+`--verbose-docs`::
+
+    2015-12-01 08:23:14,549 fairy_slipper.cmd.wadl_to_swagger INFO Parsing /Users/annegentle/src/fairy-slipper/api-site/api-ref/src/wadls/netconn-api/src/os-networks.wadl
+    2015-12-01 08:23:14,551 fairy_slipper.cmd.wadl_to_swagger WARNING No tags for method listVersionsv2-neutron
+    2015-12-01 08:23:14,552 fairy_slipper.cmd.wadl_to_swagger WARNING No tags for method showVersionDetailsv2-neutron
 
 How to build and display API guides
 -----------------------------------
 
+Once you have the migrated files, including RST and JSON files, you can run the
+web server to display the API reference information.
+
+Prerequisites:
+
+ * npm
+ * bower
+ 
+This installs bower into the global system path, which is not ideal. However,
+if you run into issues while running the server, you can run these commands::
+
+    sudo npm install -g bower
+    bower install installed
+
+To run the web server after getting migrated content with the `migrate.sh`
+script, you run the `run_server.sh` script::
+
+    ./run_server.sh
+
+A Pecan-based web server then runs on http://127.0.0.1:8080 in your local
+environment.
+
+To see the JSON listing of all documented APIs, go to:
+http://127.0.0.1:8080/doc/
+
+Then, you can look at individual REST API URL such as:
+
+"url": "identity/v2/",
+
+by adding identity/v2/ to the local server URL http://127.0.0.1:8080/doc/.
+
+The actual Swagger JSON file is here for inspection once you're running the web
+server:
+
+http://127.0.0.1:8080/doc/identity/v2/
 
 How to author API reference information
 ---------------------------------------
 
+Once all the WADL information is migrated to the new format, we need to author
+API information in a certain format so we can integrate it on the
+http://developer.openstack.org pages.
+
+The interim `conversion_files` files are:
+
+ * JSON files containing tags that Sphinx uses to put content together
+ * JSON files containing Swagger snippets with all the possible paths from WADL
+
+The basic `api_doc` files are contained in directories per service and version:
+
+ * <servicename>/<version>/v1.rst: contains a listing of each
+   GET/PUT/POST/DELETE call as a Sphinx directive  such as `.. http:put::` with
+   a title, synopsis, request and response examples pointing to files in the
+   `/examples/` directory, accepts and produces info, tag info, request schema,
+   and parameters along with documented status codes.
+ * <servicename>/<version>/v1-tags.rst: contains the groupings such as API
+   versions, that were available in the WADL file. Contains considerable more
+   docs and descriptions if that content was originally written in the WADL,
+   such as defining backup statuses, for example.
+ * <servicename>/<version>/: contains a Swagger-format listing of all calls
+   users can get from that service. These JSON files are able to be assembled
+   into a longer Swagger file. *
+
+.. note::
+   Theoretically, anyway. Have yet to do this re-assembly in practice. Or, the
+   Swagger can be hand-written using the Swagger format for an API that
+   did not originally have a WADL file migrated. In that case, you would still
+   use the file and directory structure described above to have the Angular JS
+   app display the content.
 
 How to author API concepts and how-to articles
 ----------------------------------------------
