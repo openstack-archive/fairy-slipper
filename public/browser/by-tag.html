@@ -51,7 +51,7 @@
                 <dl>
                   <dt ng-repeat-start="parameter in parameters.header">{{parameter.name}}
                   </dt>
-                  <dd ng-repeat-end>{{parameter.description}}</dd>
+                  <dd ng-repeat-end><span marked="parameter.description"/></dd>
                 </dl>
               </div>
               <div ng-if="parameters.query">
@@ -59,7 +59,7 @@
                 <dl>
                   <dt ng-repeat-start="parameter in parameters.query">{{parameter.name}}
                   </dt>
-                  <dd ng-repeat-end>{{parameter.description}}</dd>
+                  <dd ng-repeat-end><span marked="parameter.description"/></dd>
                 </dl>
               </div>
               <div ng-if="parameters.body">

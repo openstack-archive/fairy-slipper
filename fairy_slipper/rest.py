@@ -455,6 +455,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
             if not description and status_code in STATUS_CODE_MAP:
                 description = STATUS_CODE_MAP[status_code]
             responses[status_code]['description'] = description
+            node.clear()
         elif name == 'responseexample':
             responses = resource['responses']
             status_code = node[0].astext()
@@ -466,6 +467,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
             if 'examples' not in responses[status_code]:
                 responses[status_code]['examples'] = {}
             responses[status_code]['examples'][mimetype] = {'$ref': filepath}
+            node.clear()
         elif name == 'requestexample':
             status_code = node[0].astext()
             filepath = node[1].astext()
@@ -474,6 +476,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
             if 'examples' not in resource:
                 resource['examples'] = {}
             resource['examples'][mimetype] = {'$ref': filepath}
+            node.clear()
         elif name == 'requestschema':
             filepath = node[1].astext()
             resource['parameters'].append(
@@ -481,6 +484,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
                  'in': 'body',
                  'required': True,
                  'schema': {'$ref': filepath}})
+            node.clear()
         elif name == 'responseschema':
             responses = resource['responses']
             status_code = node[0].astext()
@@ -490,6 +494,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
             if 'schema' not in responses[status_code]:
                 responses[status_code]['schema'] = {}
             responses[status_code]['schema'] = {'$ref': filepath}
+            node.clear()
         elif name == 'parameter':
             param_name = node[0].astext()
             description = node[1].astext()
@@ -499,9 +504,11 @@ class JSONTranslator(nodes.GenericNodeVisitor):
                  'in': 'path',
                  'type': 'string',
                  'required': True})
+            node.clear()
         elif name == 'query':
             param_name = node[0].astext()
-            description = node[1].astext()
+            self.text = ''
+            description = ''
             resource['parameters'].append(
                 {'name': param_name,
                  'description': description,
@@ -510,7 +517,8 @@ class JSONTranslator(nodes.GenericNodeVisitor):
                  'required': False})
         elif name == 'reqheader':
             param_name = node[0].astext()
-            description = node[1].astext()
+            description = ''
+            self.text = ''
             resource['parameters'].append(
                 {'name': param_name,
                  'description': description,
@@ -520,17 +528,29 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         elif name == 'tag':
             tag = node[1].astext()
             resource['tags'].append(tag)
+            node.clear()
         elif name == 'accepts':
             mimetype = node[1].astext()
             resource['consumes'].append(mimetype)
+            node.clear()
         elif name == 'produces':
             mimetype = node[1].astext()
             resource['produces'].append(mimetype)
-
-        node.clear()
+            node.clear()
+        else:
+            node.clear()
 
     def depart_field(self, node):
-        pass
+        name = node.attributes['names'][0]
+        resource = self.node_stack[-1]
+        if name == 'query' or name == 'reqheader':
+            param_name = node[0].astext()
+            if self.text.startswith(param_name):
+                resource['parameters'][-1]['description'] \
+                    = self.text[len(param_name):]
+            else:
+                resource['parameters'][-1]['description'] = self.text
+            self.text = ''
 
     def visit_field_name(self, node):
         self.node_stack[-1]['name'] = node.astext()
