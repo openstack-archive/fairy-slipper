@@ -93,6 +93,10 @@ server:
 
 http://127.0.0.1:8080/doc/identity/v2/
 
+If you want to work on the server code (AngularJS) itself, install `grunt` and
+you can then view the web server at http://127.0.0.1:9000 (port 9000 instead of
+8080) with automatic reloading.
+
 How to author API reference information
 ---------------------------------------
 
@@ -130,7 +134,18 @@ The basic `api_doc` files are contained in directories per service and version:
 How to author API concepts and how-to articles
 ----------------------------------------------
 
+The landing page at developer.openstack.org is sourced from
+https://github.com/openstack/api-site/tree/master/www/index.html. It
+is undergoing a revision, but the page currently contains links to SDKs, CLIs,
+and API reference information for OpenStack services.
 
+For API articles such as "What are the request and response formats for an API"
+or "Server concepts" we can point to the Compute API Guide for example,
+published to http://developer.openstack.org/api-guide/compute/ and sourced from
+https://github.com/openstack/nova/tree/master/api-guide/source. These articles
+are written in RST and built with Sphinx. Each OpenStack project should follow
+that pattern for conceptual and how-to information published in articles to
+developer.openstack.org.
 
 How to generate API reference outlines from code
 ------------------------------------------------
