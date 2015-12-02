@@ -4,4 +4,5 @@ venv_path=${venv_path:-${tools_path}}
 venv_dir=${venv_name:-/../.venv}
 TOOLS=${tools_path}
 VENV=${venv:-${venv_path}/${venv_dir}}
+echo "Sourcing the virtual environment now."
 source ${VENV}/bin/activate && "$@"
