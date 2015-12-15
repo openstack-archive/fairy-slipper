@@ -92,6 +92,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         self.listitem = False
         self.lit_block = False
         self.list_indent = 0
+        self.text_res_desc = ''
 
     def search_stack_for(self, tag_name):
         for node in self.node_stack:
@@ -506,6 +507,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
                  'required': True})
             node.clear()
         elif name == 'query':
+            self.text_res_desc = self.text
             param_name = node[0].astext()
             self.text = ''
             description = ''
@@ -516,9 +518,10 @@ class JSONTranslator(nodes.GenericNodeVisitor):
                  'type': 'string',
                  'required': False})
         elif name == 'reqheader':
+            self.text_res_desc = self.text
             param_name = node[0].astext()
-            description = ''
             self.text = ''
+            description = ''
             resource['parameters'].append(
                 {'name': param_name,
                  'description': description,
@@ -550,7 +553,7 @@ class JSONTranslator(nodes.GenericNodeVisitor):
                     = self.text[len(param_name):]
             else:
                 resource['parameters'][-1]['description'] = self.text
-            self.text = ''
+            self.text = self.text_res_desc
 
     def visit_field_name(self, node):
         self.node_stack[-1]['name'] = node.astext()

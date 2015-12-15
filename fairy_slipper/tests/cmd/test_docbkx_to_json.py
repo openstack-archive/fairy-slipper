@@ -125,3 +125,31 @@ class TestChapterParaParser(TestCase):
                 "\nsome more para text"
             }]
         )
+
+    def test_link(self):
+        filename = "test-file.xml"
+        test_filename = os.path.dirname(os.path.abspath(__file__))
+        test_filename += "/ch_test-link.xml"
+
+        file_content = """<?xml version="1.0" encoding="UTF-8"?>
+        <book xml:id="link-v1" version="1">
+        <xi:include href="%s"/>
+        </book>
+        """ % (test_filename)
+
+        ch = docbkx_to_json.APIRefContentHandler(filename)
+        xml.sax.parse(StringIO(file_content), ch)
+
+        self.assertEqual(
+            ch.tags,
+            [{
+                'name': 'link-v1',
+                'summary': "To create a keypair, make a "
+                "`create keypair"
+                "\n<http://developer.openstack.org/#createKeypair>`_"
+                " request.\n\n"
+                "To test a link that ends the sentence, make a "
+                "`create keypair\n"
+                "<http://developer.openstack.org/#createKeypair>`_."
+            }]
+        )

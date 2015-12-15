@@ -588,6 +588,25 @@ class APIChapterContentHandler(xml.sax.ContentHandler, TableMixin):
         self.nesting = 0  # no indent for blank lines
         self.content.append('\n\n')
 
+    def visit_link(self, attrs):
+        if attrs:
+            self.inline_markup_stack.append(attrs['xlink:href'])
+            self.no_space = True
+
+    def depart_link(self):
+        content = ' `'
+        # anonymous link
+        if len(self.inline_markup_stack) is 1:
+            content += ('<%s>`__' % self.inline_markup_stack[0])
+        else:
+            content += ' '.join(self.inline_markup_stack[1:None])
+            content += (' <%s>`_' % self.inline_markup_stack[0])
+
+        self.content.append(content)
+        self.inline_markup_stack[:] = []
+        self.no_space = False
+        self.hyperlink_end = True
+
 
 class APIRefContentHandler(xml.sax.ContentHandler):
 

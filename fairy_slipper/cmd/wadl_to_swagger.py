@@ -47,7 +47,9 @@ TYPE_MAP = {
     'xsd:datetime': 'string',
     'regexp': 'string',
     'xsd:datetime': 'string',
+    'xsd:date': 'string',
     'xsd:dict': 'object',
+    'dict': 'object',
     'alarm': 'string',
     'xsd:timestamp': 'string',
     'xsd:char': 'string',
@@ -585,6 +587,8 @@ class WADLHandler(xml.sax.ContentHandler):
             status_codes = status_code.split(' ')
             if '200' in status_codes:
                 status_code = '200'
+            elif '201' in status_codes:
+                status_code = '201'
             # TODO(arrsim) need to do something with the other status
             # codes
         param = self.search_stack_for('param')
@@ -809,6 +813,8 @@ class WADLHandler(xml.sax.ContentHandler):
                 status_codes = status_code.split(' ')
                 if '200' in status_codes:
                     status_code = '200'
+                elif '201' in status_codes:
+                    status_code = '201'
                 # TODO(arrsim) need to do something with the other status codes
             name = attrs['name']
             parameter = create_parameter(
