@@ -581,6 +581,51 @@ Example requests and responses:
                          [minimal_method_json(description=markdown)]},
                         'tags': []}
 
+    def test_table_with_list(self):
+        rst = """
+.. http:get:: /path
+
+   Some text before table
+
+   +------------------------+------------------------------------------+
+   | Response code          | Description                              |
+   +------------------------+------------------------------------------+
+   | ``Bad Request (400)``  | The Identity service failed to parse the |
+   |                        | following errors occurred:               |
+   |                        |                                          |
+   |                        | - A required attribute was missing.      |
+   |                        |                                          |
+   |                        | - An attribute that is not allowed was a |
+   |                        |   POST request in a basic CRUD op.       |
+   |                        |                                          |
+   |                        | - An ``attribute`` of an unexpected data |
+   +------------------------+------------------------------------------+
+   | ``Forbidden (403)``    | The identity was successfully authent.   |
+   |                        | authorized to perform the action.        |
+   +------------------------+------------------------------------------+
+
+"""
+
+        markdown = '''Some text before table
+
+| Response code | Description |
+| --- | --- |
+| `Bad Request (400)` | The Identity service failed to parse the<br>following \
+errors occurred:<ul><li>A required attribute was missing.</li><li>An\
+ attribute that is not allowed was a<br>POST request in a basic CRUD op.\
+</li><li>An `attribute` of an unexpected data</li></ul> |
+| `Forbidden (403)` | The identity was successfully authent.<br>authorized\
+ to perform the action. |
+
+
+'''
+
+        json = rest.publish_string(rst)
+        assert json == {'paths':
+                        {'/path':
+                         [minimal_method_json(description=markdown)]},
+                        'tags': []}
+
     def test_method_tags(self):
         rst = """
 .. http:get:: /path

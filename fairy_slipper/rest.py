@@ -198,24 +198,36 @@ class JSONTranslator(nodes.GenericNodeVisitor):
         self.lit_block = False
 
     def visit_bullet_list(self, node):
-        self.bullet_stack.append('*')
+        if self.first_row > 0:
+            self.text += """<ul>"""
+        else:
+            self.bullet_stack.append('*')
 
     def depart_bullet_list(self, node):
-        self.bullet_stack.pop()
-        self.list_indent = len(self.bullet_stack) - 1
-        if len(self.bullet_stack) is 0:
-            self.text += '\n'
+        if self.first_row > 0:
+            self.text += """</ul>"""
+        else:
+            self.bullet_stack.pop()
+            self.list_indent = len(self.bullet_stack) - 1
+            if len(self.bullet_stack) is 0:
+                self.text += '\n'
 
     def visit_list_item(self, node):
-        self.list_indent = len(self.bullet_stack) - 1
-        item = '\n%s%s ' % ('  ' * self.list_indent,
-                            self.bullet_stack[-1])
-        self.text += item
-        self.listitem = True
+        if self.first_row > 0:
+            self.text += """<li>"""
+        else:
+            self.list_indent = len(self.bullet_stack) - 1
+            item = '\n%s%s ' % ('  ' * self.list_indent,
+                                self.bullet_stack[-1])
+            self.text += item
+            self.listitem = True
 
     def depart_list_item(self, node):
-        self.listitem = False
-        self.list_indent = 0
+        if self.first_row > 0:
+            self.text += """</li>"""
+        else:
+            self.listitem = False
+            self.list_indent = 0
 
     def visit_title(self, node):
         self.current_node_name = node.__class__.__name__
