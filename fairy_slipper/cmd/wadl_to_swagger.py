@@ -909,8 +909,8 @@ def main1(source_file, output_dir):
         },
         u'paths': defaultdict(list),
         u'tags': api_ref['tags'],
-        u'basePath': "",
-        u'host': "",
+        u'basePath': "/",
+        u'host': "developer.openstack.org",
         u'definitions': {},
         u'externalDocs': {
             'description': 'OpenStack Docs',
