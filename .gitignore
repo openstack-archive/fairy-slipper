@@ -58,6 +58,7 @@ bower_components
 .tmp/
 api-site/
 conversion_files/
+conversion_files_valid/
 api_doc/
 /public/components/
 /.eggs/

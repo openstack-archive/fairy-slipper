@@ -15,6 +15,7 @@ function usage {
     echo "  --verbose-docs           Verbose logging of document generation"
     echo "  --docbkx2json            Only perform docbookx to json conversion"
     echo "  --wadl2swagger           Only perform wadl to swagger conversion"
+    echo "  --wadl2swaggervalid      Only perform wadl to swagger valid conversion"
     echo "  --swagger2rst            Only perform swagger to rst conversion"
 }
 
@@ -31,9 +32,10 @@ docs_only=
 verbose_docs=""
 docbkx2json=
 wadl2swagger=
+wadl2swaggervalid=
 swagger2rst=
 
-if ! options=$(getopt -o VNnfuhd -l virtual-env,no-virtual-env,no-site-packages,force,update,help,debug,docs-only,verbose-docs,docbkx2json,wadl2swagger,swagger2rst -- "$@")
+if ! options=$(getopt -o VNnfuhd -l virtual-env,no-virtual-env,no-site-packages,force,update,help,debug,docs-only,verbose-docs,docbkx2json,wadl2swagger,wadl2swaggervalid,swagger2rst -- "$@")
 then
   # parse error
   usage
@@ -54,6 +56,7 @@ while [ $# -gt 0 ]; do
         --verbose-docs) verbose_docs="-v";;
         --docbkx2json) docbkx2json=1;;
         --wadl2swagger) wadl2swagger=1;;
+        --wadl2swaggervalid) wadl2swaggervalid=1;;
         --swagger2rst) swagger2rst=1;;
     esac
     shift
@@ -109,6 +112,9 @@ function migrate_docbkx {
     if [ ! -d conversion_files ]; then
       mkdir conversion_files
     fi
+    if [ ! -d conversion_files_valid ]; then
+      mkdir conversion_files_valid
+    fi
     if [ ! -d api_doc ]; then
       mkdir api_doc
     fi
@@ -124,6 +130,10 @@ function migrate_docbkx {
 
     if [[ -n $wadl2swagger || -n $generate_all ]]; then
       ${wrapper} find conversion_files -name api-ref\*json -type f -exec fairy-slipper-wadl-to-swagger -o conversion_files $verbose_docs {} \;
+    fi
+
+    if [[ -n $wadl2swaggervalid || -n $generate_all ]]; then
+        ${wrapper} find conversion_files -name api-ref\*json -type f -exec fairy-slipper-wadl-to-swagger-valid -o conversion_files_valid $verbose_docs {} \;
     fi
 
     if [[ -n $swagger2rst || -n $generate_all ]]; then
