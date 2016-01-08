@@ -704,9 +704,10 @@ class WADLHandler(xml.sax.ContentHandler):
                 for param, doc in self.url_params.items():
                     if ('{%s}' % param) in url:
                         parameter = create_parameter(param, 'template', doc)
-                        parameter['required'] = True # in = path, requires true
+                        # in = path, requires true
+                        parameter['required'] = True
                         self.current_api['parameters'].append(parameter)
-                        #self.current_api['parameters'].append(
+                        # self.current_api['parameters'].append(
                         #    create_parameter(param, 'template', doc))
 
         # URL paths
@@ -918,8 +919,7 @@ def main1(source_file, output_dir):
         tag_array.append(
             {"description": tag['description'],
              "name": tag['name'],
-             "x-summary": tag['summary']
-        })
+             "x-summary": tag['summary']})
 
     # Load supplementary examples file
     example_name = (api_ref['service']
