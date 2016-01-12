@@ -27,5 +27,8 @@
     "pretest": "npm install",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js --single-run"
+  },
+  "dependencies": {
+    "json-schema-remote": "^0.1.5"
   }
 }

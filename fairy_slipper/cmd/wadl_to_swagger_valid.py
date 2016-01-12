@@ -77,12 +77,6 @@ TYPE_MAP = {
     'xsd:base64binary': 'string',
     'enum': 'array',
     'xsd:float': 'number',
-
-    # TODO(arrsim) This array types also set the items
-    # "tags": {
-    #    "type": "array",
-    #    "items": {
-    #        "type": "string"
     'xsd:list': 'array',
     'array': 'array',
 }
@@ -654,7 +648,7 @@ class WADLHandler(xml.sax.ContentHandler):
                     self.current_api = {
                         'produces': set(),
                         'consumes': set(),
-                        'examples': {},
+                        'x-examples': {},
                         'responses': {},
                         'parameters': {},
                     }
@@ -704,7 +698,13 @@ class WADLHandler(xml.sax.ContentHandler):
                 for param, doc in self.url_params.items():
                     if ('{%s}' % param) in url:
                         parameter = create_parameter(param, 'template', doc)
-                        # in = path, requires true
+
+                        # Swagger: array type requires items object
+                        if parameter['type'] == 'array':
+                            parameter['items'] = {}
+                            parameter['items']['type'] = 'string'
+
+                        # Swagger: in = path, requires true
                         parameter['required'] = True
                         self.current_api['parameters'].append(parameter)
 
@@ -798,13 +798,19 @@ class WADLHandler(xml.sax.ContentHandler):
                 description='',
                 type=attrs.get('type', 'string'),
                 required=attrs.get('required'))
+
+            # Swagger: array type requires items object
+            if parameter['type'] == 'array':
+                parameter['items'] = {}
+                parameter['items']['type'] = 'string'
+
             if parameter['in'] == 'body':
                 schema_name = parameters[0]['schema']['$ref'].rsplit('/', 1)[1]
                 if schema_name not in self.schemas:
                     self.schemas[schema_name] = {'type': 'object',
                                                  'properties': {}}
                 schema_properties = self.schemas[schema_name]['properties']
-                # Array of required properties
+                # Swagger: array of required properties
                 if parameter['required'] is True:
                     if 'required' not in self.schemas[schema_name]:
                         self.schemas[schema_name]['required'] = []
@@ -838,6 +844,12 @@ class WADLHandler(xml.sax.ContentHandler):
                 description='',
                 type=attrs.get('type', 'string'),
                 required=attrs.get('required'))
+
+            # Swagger: array type requires items object
+            if parameter['type'] == 'array':
+                parameter['items'] = {}
+                parameter['items']['type'] = 'string'
+
             if parameter['in'] == 'body':
                 if len(parameters) > 0:
                     s = parameters[0]['schema']['$ref']
@@ -935,7 +947,7 @@ def main1(source_file, output_dir):
         u'info': {
             'version': api_ref['version'],
             'title': api_ref['title'],
-            # No service field, add as extension
+            # Swagger: No service field, add as extension
             'x-service': api_ref['service'],
             'license': {
                 "name": "Apache 2.0",
@@ -967,7 +979,7 @@ def main1(source_file, output_dir):
         ch = WADLHandler(abs_filename, api_ref)
         xml.sax.parse(file, ch)
 
-        # path item objects
+        # Swagger: Path Item objects
         for urlpath, apis in ch.apis.items():
             output['paths'][urlpath] = {}
             for i in apis:
