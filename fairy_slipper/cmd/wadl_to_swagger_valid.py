@@ -583,8 +583,34 @@ class WADLHandler(xml.sax.ContentHandler):
                 status_code = '200'
             elif '201' in status_codes:
                 status_code = '201'
-            # TODO(arrsim) need to do something with the other status
-            # codes
+            elif '400' in status_codes:
+                status_code = '400'
+            elif '401' in status_codes:
+                status_code = '401'
+            elif '403' in status_codes:
+                status_code = '403'
+            elif '404' in status_codes:
+                status_code = '404'
+            elif '405' in status_codes:
+                status_code = '405'
+            elif '409' in status_codes:
+                status_code = '409'
+            elif '413' in status_codes:
+                status_code = '413'
+            elif '415' in status_codes:
+                status_code = '415'
+            elif '422' in status_codes:
+                status_code = '422'
+            elif '500' in status_codes:
+                status_code = '500'
+            elif '501' in status_codes:
+                status_code = '501'
+            elif '503' in status_codes:
+                status_code = '503'
+            else:
+                log.warning("Status code %s exists, but not accounted for",
+                            status_code)
+            # Q: does anything different need to happen for 400 or 500-errors?
         param = self.search_stack_for('param')
         style = STYLE_MAP[param['style']]
         name = param['name']
