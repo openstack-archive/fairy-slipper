@@ -6,8 +6,8 @@ A project to make OpenStack API's self documententing.
 
 * Free software: Apache license
 * Documentation: :(
-* Source: https://github.com/russell/fairy-slipper/
-* Bugs: https://github.com/russell/fairy-slipper/issues
+* Source: https://git.openstack.org/cgit/openstack/fairy-slipper
+* Bugs: https://bugs.launchpad.net/openstack-api-site
 
 Features
 --------
