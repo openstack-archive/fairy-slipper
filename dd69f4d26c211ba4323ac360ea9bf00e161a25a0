@@ -1,0 +1,10 @@
+Code-Review+2: Anne Gentle <annegentle@justwriteclick.com>
+Code-Review+1: Ghanshyam Mann <ghanshyam.mann@nectechnologies.in>
+Code-Review+2: Alex Xu <hejie.xu@intel.com>
+Workflow+1: Alex Xu <hejie.xu@intel.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Mon, 18 Jan 2016 09:35:00 +0000
+Reviewed-on: https://review.openstack.org/266769
+Project: openstack/fairy-slipper
+Branch: refs/heads/master
