@@ -5,14 +5,15 @@ fairy-slipper
 A project to make OpenStack API's self documententing.
 
 * Free software: Apache license
-* Documentation: :(
-* Source: https://github.com/russell/fairy-slipper/
-* Bugs: https://github.com/russell/fairy-slipper/issues
+* Documentation: doc/source directory
+* Source: https://git.openstack.org/openstack/fairy-slipper/
+* Bugs: https://bugs.launchpad.net/openstack-doc-tools
 
 Features
 --------
 
-* TODO
+* Migrates WADL source to Swagger files
+* Provides display of RST plus Swagger JSON files in a web browser
 
 Development
 -----------
@@ -42,7 +43,7 @@ enable auto reloading if you visit the port http://127.0.0.1:9000
 Directory Structure (Future)
 ----------------------------
 
-Current documentation layout::
+Current documentation output layout::
 
    api-doc/ -- the root of the documentation
    api-doc/index.json  -- the index file that lists all the files that are included in the API doc.
@@ -51,7 +52,7 @@ Current documentation layout::
    api-doc/<service>/<version>/<response_schema>_<status_code>.json
    api-doc/<service>/<version>/examples/<request>_req.json
    api-doc/<service>/<version>/examples/<response>_resp_<status_code>.json
-
+   conversion_files_valid/<service-version>.json -- valid Swagger files
 
 Other Swagger UIs
 -----------------
