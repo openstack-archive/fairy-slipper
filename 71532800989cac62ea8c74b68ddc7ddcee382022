@@ -1,0 +1,11 @@
+Code-Review+1: Michael McCune <msm@redhat.com>
+Code-Review+1: KATO Tomoyuki <kato.tomoyuki@jp.fujitsu.com>
+Code-Review+1: venkatamahesh <venkatamaheshkotha@gmail.com>
+Code-Review+2: Anne Gentle <annegentle@justwriteclick.com>
+Workflow+1: Anne Gentle <annegentle@justwriteclick.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Thu, 21 Jan 2016 14:27:42 +0000
+Reviewed-on: https://review.openstack.org/269304
+Project: openstack/fairy-slipper
+Branch: refs/heads/master
