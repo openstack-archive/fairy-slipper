@@ -30,21 +30,21 @@ from jinja2 import Environment
 log = logging.getLogger(__name__)
 
 TMPL_API = """
-{%- for path, requests in swagger['paths'].items() -%}
-{%- for request in requests -%}
+{%- for path, methods in swagger['paths'].items() -%}
+{%- for method_name, request in methods.items() -%}
 
-.. http:{{request.method}}:: {{path}}
-   :title: {{request.title}}
-   :synopsis: {{request.summary}}
+.. http:{{method_name}}:: {{path}}
+   :title: {{request['x-title']}}
+   :synopsis: {{request['summary']}}
 {%- if request.description != '' %}
 {% for line in request.description.split('\n') %}
    {{line}}
 {%- endfor %}
 {%- endif %}
-{% if request['examples']['application/json'] %}
+{% if request['x-examples']['application/json'] %}
    :requestexample: {{version}}/examples/{{request['operationId']}}_req.json
 {%- endif -%}
-{% if request['examples']['text/plain'] %}
+{% if request['x-examples']['text/plain'] %}
    :requestexample: {{version}}/examples/{{request['operationId']}}_req.txt
 {%- endif -%}
 {% for status_code, response in request.responses.items() %}
@@ -80,7 +80,7 @@ TMPL_API = """
 {{ parameter|format_param('reqheader') }}
 {%- endif %}
 {%- endfor -%}
-{% for status_code, response in request.responses.items() %}
+{% for status_code, response in request['responses'].items() %}
    :statuscode {{status_code}}: {{response.description}}
 {%- endfor %}
 
@@ -94,7 +94,7 @@ TMPL_TAG = """
 
 .. swagger:tag:: {{tag.name}}
    :synopsis: {{tag.description}}
-{% for line in tag.summary.split('\n') %}
+{% for line in tag['x-summary'].split('\n') %}
    {{line}}
 {%- endfor %}
 
@@ -136,8 +136,12 @@ def main1(filename, output_dir):
 
 def write_index(swagger, output_dir):
     info = swagger['info']
+    service = info['x-service']
+
+    # Web UI uses 'service' field for indexing
+    del info['x-service']
+    info['service'] = service
     version = info['version']
-    service = info['service']
     output_file = 'index.json'
     filepath = path.join(output_dir, output_file)
     log.info("Writing APIs %s", filepath)
@@ -160,7 +164,7 @@ def write_rst(swagger, output_dir):
 def write_apis(swagger, output_dir):
     info = swagger['info']
     version = info['version']
-    service = info['service']
+    service = info['x-service']
     service_path = path.join(output_dir, service)
     output_file = '%s.rst' % version
     if not path.exists(service_path):
@@ -178,7 +182,7 @@ def write_apis(swagger, output_dir):
 def write_tags(swagger, output_dir):
     info = swagger['info']
     version = info['version']
-    service = info['service']
+    service = info['x-service']
     service_path = path.join(output_dir, service)
     if not path.exists(service_path):
         os.makedirs(service_path)
@@ -196,7 +200,7 @@ def write_tags(swagger, output_dir):
 def write_jsonschema(swagger, output_dir):
     info = swagger['info']
     version = info['version']
-    service = info['service']
+    service = info['x-service']
     service_path = path.join(output_dir, service)
     full_path = path.join(service_path, version)
     if not path.exists(service_path):
@@ -215,7 +219,7 @@ def write_jsonschema(swagger, output_dir):
 def write_examples(swagger, output_dir):
     info = swagger['info']
     version = info['version']
-    service = info['service']
+    service = info['x-service']
     service_path = path.join(output_dir, service)
     versioned_path = path.join(service_path, version)
     full_path = path.join(versioned_path, 'examples')
@@ -226,10 +230,10 @@ def write_examples(swagger, output_dir):
     if not path.exists(full_path):
         os.makedirs(full_path)
 
-    for operations in swagger['paths'].values():
-        for operation in operations:
-            if 'examples' in operation:
-                for mime, example in operation['examples'].items():
+    for paths in swagger['paths'].values():
+        for operation in paths.values():
+            if 'x-examples' in operation:
+                for mime, example in operation['x-examples'].items():
                     filename = '%s' % '_'.join(
                         [operation['operationId'], 'req'])
                     if mime == 'application/json':
