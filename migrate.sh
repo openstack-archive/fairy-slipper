@@ -17,6 +17,7 @@ function usage {
     echo "  --wadl2swagger           Only perform wadl to swagger conversion"
     echo "  --wadl2swaggervalid      Only perform wadl to swagger valid conversion"
     echo "  --swagger2rst            Only perform swagger to rst conversion"
+    echo "  --swagger2rsthtml        Only perform swagger to rst conversion for publishing html"
 }
 
 venv=.venv
@@ -34,8 +35,9 @@ docbkx2json=
 wadl2swagger=
 wadl2swaggervalid=
 swagger2rst=
+swagger2rsthtml=
 
-if ! options=$(getopt -o VNnfuhd -l virtual-env,no-virtual-env,no-site-packages,force,update,help,debug,docs-only,verbose-docs,docbkx2json,wadl2swagger,wadl2swaggervalid,swagger2rst -- "$@")
+if ! options=$(getopt -o VNnfuhd -l virtual-env,no-virtual-env,no-site-packages,force,update,help,debug,docs-only,verbose-docs,docbkx2json,wadl2swagger,wadl2swaggervalid,swagger2rst,swagger2rsthtml -- "$@")
 then
   # parse error
   usage
@@ -58,6 +60,7 @@ while [ $# -gt 0 ]; do
         --wadl2swagger) wadl2swagger=1;;
         --wadl2swaggervalid) wadl2swaggervalid=1;;
         --swagger2rst) swagger2rst=1;;
+        --swagger2rsthtml) swagger2rsthtml=1;;
     esac
     shift
 done
@@ -138,6 +141,10 @@ function migrate_docbkx {
 
     if [[ -n $swagger2rst || -n $generate_all ]]; then
       ${wrapper} find conversion_files -name \*-swagger.json -type f -exec fairy-slipper-swagger-to-rst -o api_doc $verbose_docs {} \;
+    fi
+
+     if [[ -n $swagger2rsthtml || -n $generate_all ]]; then
+      ${wrapper} find conversion_files_valid -name \*-swagger.json -type f -exec fairy-slipper-swagger-to-rst-html -o api_doc $verbose_docs {} \;
     fi
 }
 
