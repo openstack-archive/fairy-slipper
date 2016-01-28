@@ -1,4 +1,4 @@
-# Copyright (c) 2015 Russell Sim <russell.sim@gmail.com>
+# Copyright (c) 2016
 #
 # All Rights Reserved.
 #
@@ -28,6 +28,87 @@ import textwrap
 from jinja2 import Environment
 
 log = logging.getLogger(__name__)
+
+TMPL_API_STATIC_HTML = """
+{% for key, path in swagger['paths'].items() %}
+{{ key|underline(key, '=') }}
+{{key}}
+{{ key|underline(key, '=') }}
+
+{% for method, method_val in path.items() %}
+{{method}}
+{{ method|underline(method, '_') }}
+
+
+:Title: {{method_val['x-title']}}
+
+:Synopsis: {{method_val['summary']}}
+
+{%- if method_val['description'] != '' %}
+{% for line in method_val['description'].split('\n') %}
+{{line}}
+{%- endfor %}
+{%- endif %}
+
+{% if method_val['x-examples']['application/json'] %}
+:requestexample: {{version}}/examples/{{method_val['operationId']}}_req.json
+{%- endif -%}
+{% if method_val['x-examples']['text/plain'] %}
+:requestexample: {{version}}/examples/{{method_val['operationId']}}_req.txt
+{%- endif -%}
+{% for status_code, response in method_val['responses'].items() %}
+{%- if response['examples']['application/json'] %}
+:responseexample {{status_code}}: {{version}}/examples/{{method_val['operationId']}}_resp_{{status_code}}.json
+{%- endif -%}
+{%- if response['examples']['text/plain'] %}
+:responseexample {{status_code}}: {{version}}/examples/{{method_val['operationId']}}_resp_{{status_code}}.txt
+{%- endif -%}
+{%- if response['schema']['$ref'] %}
+:responseschema {{status_code}}: {{version}}/{{response['schema']['$ref'].rsplit('/', 1)[1]}}.json
+{%- endif -%}
+{% endfor -%}
+{% for mime in method_val['consumes'] %}
+:accepts: {{mime}}
+{%- endfor -%}
+{% for mime in method_val['produces'] %}
+:produces: {{mime}}
+{%- endfor -%}
+{% for tag in method_val.tags %}
+:tag: {{tag}}
+{%- endfor -%}
+{% for parameter in method_val['parameters'] -%}
+{%- if parameter.in == 'body' -%}
+{% if parameter.schema %}
+:requestschema: {{version}}/{{method_val['operationId']}}.json
+{%- endif -%}
+{%- elif parameter.in == 'path' %}
+{{ parameter|format_param('parameter') }}
+{%- elif parameter.in == 'query' %}
+{{ parameter|format_param('query') }}
+{%- elif parameter.in == 'header' %}
+{{ parameter|format_param('reqheader') }}
+{%- endif %}
+{%- endfor -%}
+{% for status_code, response in method_val['responses'].items() %}
+:statuscode {{status_code}}: {{response.description}}
+{%- endfor %}
+
+
+{% endfor %}
+{%- endfor %}
+"""  # noqa
+
+TMPL_TAG = """
+{%- for tag in swagger.tags -%}
+
+.. swagger:tag:: {{tag.name}}
+   :synopsis: {{tag.description}}
+{% for line in tag['x-summary'].split('\n') %}
+   {{line}}
+{%- endfor %}
+
+{% endfor %}
+"""
 
 TMPL_API = """
 {%- for path, methods in swagger['paths'].items() -%}
@@ -89,17 +170,6 @@ TMPL_API = """
 {%- endfor %}
 """  # noqa
 
-TMPL_TAG = """
-{%- for tag in swagger.tags -%}
-
-.. swagger:tag:: {{tag.name}}
-   :synopsis: {{tag.description}}
-{% for line in tag['x-summary'].split('\n') %}
-   {{line}}
-{%- endfor %}
-
-{% endfor %}
-"""
 environment = Environment()
 
 
@@ -122,7 +192,15 @@ def format_param(obj, type='query'):
         return '\n'.join(new_text)
 
 
+def underline(obj, str='', type_underline='='):
+    line = ''
+    for i in range(len(str)):
+        line += type_underline
+    return line
+
+
 environment.filters['format_param'] = format_param
+environment.filters['underline'] = underline
 
 
 def main1(filename, output_dir):
@@ -157,11 +235,14 @@ def write_index(swagger, output_dir):
 
 def write_rst(swagger, output_dir):
     environment.extend(swagger_info=swagger['info'])
+    write_apis_ui(swagger, output_dir)
     write_apis(swagger, output_dir)
+
+    # TODO(karen) Sort out tags and descriptions
     write_tags(swagger, output_dir)
 
 
-def write_apis(swagger, output_dir):
+def write_apis_ui(swagger, output_dir):
     info = swagger['info']
     version = info['version']
     service = info['x-service']
@@ -170,6 +251,24 @@ def write_apis(swagger, output_dir):
     if not path.exists(service_path):
         os.makedirs(service_path)
     TMPL = environment.from_string(TMPL_API)
+    result = TMPL.render(swagger=swagger,
+                         version=swagger['info']['version'])
+    filepath = path.join(service_path, output_file)
+    log.info("Writing APIs %s", filepath)
+    with codecs.open(filepath,
+                     'w', "utf-8") as out_file:
+        out_file.write(result)
+
+
+def write_apis(swagger, output_dir):
+    info = swagger['info']
+    version = info['version']
+    service = info['x-service']
+    service_path = path.join(output_dir, service)
+    output_file = '%s_publishing.rst' % version
+    if not path.exists(service_path):
+        os.makedirs(service_path)
+    TMPL = environment.from_string(TMPL_API_STATIC_HTML)
     result = TMPL.render(swagger=swagger,
                          version=swagger['info']['version'])
     filepath = path.join(service_path, output_file)

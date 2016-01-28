@@ -120,7 +120,7 @@ function migrate_docbkx {
     fi
 
     generate_all=
-    if [[ -z $docbkx2json && -z $wadl2swagger && -z $swagger2rst ]]; then
+    if [[ -z $docbkx2json && -z $wadl2swagger && -z $wadl2swaggervalid && -z $swagger2rst ]]; then
       generate_all=1
     fi
 
@@ -140,7 +140,6 @@ function migrate_docbkx {
       ${wrapper} find conversion_files_valid -name \*-swagger.json -type f -exec fairy-slipper-swagger-to-rst -o api_doc $verbose_docs {} \;
     fi
 }
-
 
 if [ -z $docs_only ]; then
   install_fairy_slipper
