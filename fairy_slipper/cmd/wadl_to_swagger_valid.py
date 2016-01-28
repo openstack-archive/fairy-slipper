@@ -521,6 +521,7 @@ class WADLHandler(xml.sax.ContentHandler):
         self.apis = {}
         self.current_api = None
         self.schemas = {}
+        self.req_example_schemas = {}
 
         # Resource Mapping
         self.resource_map = {}
@@ -648,7 +649,6 @@ class WADLHandler(xml.sax.ContentHandler):
                     self.current_api = {
                         'produces': set(),
                         'consumes': set(),
-                        'x-examples': {},
                         'responses': {},
                         'parameters': {},
                     }
@@ -665,7 +665,6 @@ class WADLHandler(xml.sax.ContentHandler):
                     'method': name,
                     'produces': set(),
                     'consumes': set(),
-                    'x-examples': {},
                     'parameters': [{'in': "body",
                                     'name': "body",
                                     'description': "",
@@ -766,8 +765,12 @@ class WADLHandler(xml.sax.ContentHandler):
                 response = self.current_api['responses'][status_code]
                 response['examples'][media_type] = sample
             elif sample and type == 'request':
-                # Swagger: request examples added as extension
-                self.current_api['x-examples'][media_type] = sample
+                schema_name = self.current_api.get('operationId')
+                if schema_name and schema_name not in self.req_example_schemas:
+                    self.req_example_schemas[schema_name] \
+                        = {'example': {}}
+                    req_schema = self.req_example_schemas[schema_name]
+                    req_schema['example'][media_type] = sample
 
         if name == 'response':
             if 'status' not in attrs:
@@ -818,6 +821,11 @@ class WADLHandler(xml.sax.ContentHandler):
                     if name not in schema_required:
                         schema_required.append(name)
                 schema_properties[parameter['name']] = parameter
+
+                # Request example
+                if schema_name in self.req_example_schemas:
+                    schema = self.req_example_schemas[schema_name]
+                    self.schemas[schema_name]['example'] = schema['example']
                 del parameter['required']
                 del parameter['name']
                 del parameter['in']

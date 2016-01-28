@@ -29,6 +29,18 @@ from jinja2 import Environment
 
 log = logging.getLogger(__name__)
 
+TMPL_TAG = """
+{%- for tag in swagger.tags -%}
+
+.. swagger:tag:: {{tag.name}}
+   :synopsis: {{tag.description}}
+{% for line in tag['x-summary'].split('\n') %}
+   {{line}}
+{%- endfor %}
+
+{% endfor %}
+"""
+
 TMPL_API = """
 {%- for path, methods in swagger['paths'].items() -%}
 {%- for method_name, request in methods.items() -%}
@@ -41,12 +53,6 @@ TMPL_API = """
    {{line}}
 {%- endfor %}
 {%- endif %}
-{% if request['x-examples']['application/json'] %}
-   :requestexample: {{version}}/examples/{{request['operationId']}}_req.json
-{%- endif -%}
-{% if request['x-examples']['text/plain'] %}
-   :requestexample: {{version}}/examples/{{request['operationId']}}_req.txt
-{%- endif -%}
 {% for status_code, response in request.responses.items() %}
 {%- if response['examples']['application/json'] %}
    :responseexample {{status_code}}: {{version}}/examples/{{request['operationId']}}_resp_{{status_code}}.json
@@ -71,6 +77,18 @@ TMPL_API = """
 {% if parameter.in == 'body' -%}
 {% if parameter.schema %}
    :requestschema: {{version}}/{{request['operationId']}}.json
+{%- for id, schema in swagger['definitions'].items() -%}
+{%- if id == request['operationId'] -%}
+{%- if 'example' in schema -%}
+{%- if schema['example']['application/json'] %}
+   :requestexample: {{version}}/examples/{{request['operationId']}}_req.json
+{%- endif -%}
+{%- if schema['example']['text/plain'] %}
+   :requestexample: {{version}}/examples/{{request['operationId']}}_req.txt
+{%- endif -%}
+{%- endif -%}
+{%- endif -%}
+{%- endfor -%}
 {%- endif -%}
 {%- elif parameter.in == 'path' %}
 {{ parameter|format_param('parameter') }}
@@ -89,17 +107,6 @@ TMPL_API = """
 {%- endfor %}
 """  # noqa
 
-TMPL_TAG = """
-{%- for tag in swagger.tags -%}
-
-.. swagger:tag:: {{tag.name}}
-   :synopsis: {{tag.description}}
-{% for line in tag['x-summary'].split('\n') %}
-   {{line}}
-{%- endfor %}
-
-{% endfor %}
-"""
 environment = Environment()
 
 
@@ -232,22 +239,6 @@ def write_examples(swagger, output_dir):
 
     for paths in swagger['paths'].values():
         for operation in paths.values():
-            if 'x-examples' in operation:
-                for mime, example in operation['x-examples'].items():
-                    filename = '%s' % '_'.join(
-                        [operation['operationId'], 'req'])
-                    if mime == 'application/json':
-                        filepath = path.join(full_path, filename + '.json')
-                        log.info("Writing %s", filepath)
-                        file = open(filepath, 'w')
-                        json.dump(example, file, indent=2)
-                    if mime == 'text/plain':
-                        filepath = path.join(full_path, filename + '.txt')
-                        log.info("Writing %s", filepath)
-                        example = example.strip()
-                        example = example + '\n'
-                        file = open(filepath, 'w')
-                        file.write(example)
             for status_code, response in operation['responses'].items():
                 for mime, example in response['examples'].items():
                     filename = '%s' % '_'.join([operation['operationId'],
@@ -265,6 +256,24 @@ def write_examples(swagger, output_dir):
                         example = example + '\n'
                         file = open(filepath, 'w')
                         file.write(example)
+
+    for ids, schemas in swagger['definitions'].items():
+        if 'example' in schemas:
+            for mime, example in schemas['example'].items():
+                filename = '%s' % '_'.join(
+                    [ids, 'req'])
+                if mime == 'application/json':
+                    filepath = path.join(full_path, filename + '.json')
+                    log.info("Writing %s", filepath)
+                    file = open(filepath, 'w')
+                    json.dump(example, file, indent=2)
+                if mime == 'text/plain':
+                    filepath = path.join(full_path, filename + '.txt')
+                    log.info("Writing %s", filepath)
+                    example = example.strip()
+                    example = example + '\n'
+                    file = open(filepath, 'w')
+                    file.write(example)
 
 
 def main():
