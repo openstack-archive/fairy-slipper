@@ -137,7 +137,7 @@ function migrate_docbkx {
     fi
 
     if [[ -n $swagger2rst || -n $generate_all ]]; then
-      ${wrapper} find conversion_files -name \*-swagger.json -type f -exec fairy-slipper-swagger-to-rst -o api_doc $verbose_docs {} \;
+      ${wrapper} find conversion_files_valid -name \*-swagger.json -type f -exec fairy-slipper-swagger-to-rst -o api_doc $verbose_docs {} \;
     fi
 }
 
