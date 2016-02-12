@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Fairy-Slipper</title>
+    <title>OpenStack API Reference</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css">
@@ -29,6 +29,9 @@
     <script src="browser/url.js"></script>
     <script src="browser/browser.js"></script>
     <script src="browser/index.js"></script>
+    <script 
+src="http://www.openstack.org/themes/openstack/javascript/menu-widget.js"></script> 
+
   </head>
   <body ng-controller="MenuCtrl" >
     <div snap-drawer>
@@ -58,7 +61,6 @@
                     </a>
                   </li>
                 </ul>
-
               </li>
             </ul>
           </li>
@@ -70,6 +72,15 @@
         <!--[if lt IE 7]>
         <div class="alert alert-info browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
         <![endif]-->
+          <nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  <ul id="menu_widget_container" class="nav navbar-nav navbar-main 
+show"></ul>
+  </div>
+  </div>
+  </nav>
+
         <div ng-view></div>
       </div>
     </div>
