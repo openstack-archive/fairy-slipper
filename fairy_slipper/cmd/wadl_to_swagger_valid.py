@@ -654,7 +654,18 @@ class WADLHandler(xml.sax.ContentHandler):
                     }
                     return
                 tag = self.method_tag_map.get(id, '')
-                name = attrs['name'].lower()
+
+                if attrs['name'] not in ['GET',
+                                         'PUT',
+                                         'POST',
+                                         'DELETE',
+                                         'OPTIONS',
+                                         'HEAD',
+                                         'PATCH']:
+                    name = 'x-' + attrs['name'].lower()
+                else:
+                    name = attrs['name'].lower()
+
                 if url in self.apis:
                     root_api = self.apis[url]
                 else:
