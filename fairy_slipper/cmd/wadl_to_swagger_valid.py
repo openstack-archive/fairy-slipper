@@ -653,7 +653,18 @@ class WADLHandler(xml.sax.ContentHandler):
                     }
                     return
                 tag = self.method_tag_map.get(id, '')
-                name = attrs['name'].lower()
+
+                if attrs['name'] not in ['GET',
+                                         'PUT',
+                                         'POST',
+                                         'DELETE',
+                                         'OPTIONS',
+                                         'HEAD',
+                                         'PATCH']:
+                    name = 'x-' + attrs['name'].lower()
+                else:
+                    name = attrs['name'].lower()
+
                 if url in self.apis:
                     root_api = self.apis[url]
                 else:
@@ -981,6 +992,7 @@ def main1(source_file, output_dir):
         ],
         u"swagger": u"2.0",
     }
+
     for file in files:
         log.info('Parsing %s' % file)
         abs_filename = path.abspath(file)
@@ -988,13 +1000,52 @@ def main1(source_file, output_dir):
         xml.sax.parse(file, ch)
 
         # Swagger: Path Item objects
-        for urlpath, apis in ch.apis.items():
-            output['paths'][urlpath] = {}
-            for i in apis:
-                method_name = i['method']
-                output['paths'][urlpath][method_name] = {}
-                del i['method']
-                output['paths'][urlpath][method_name] = i
+        method_list = []
+        for paths, apis in ch.apis.items():
+            method_list.append({'path': paths,
+                                'get': 0,
+                                'post': 0,
+                                'put': 0,
+                                'delete': 0,
+                                'patch': 0,
+                                'head': 0,
+                                'options': 0})
+            for api in apis:
+                method_name = api['method']
+                if method_name in method_list[-1]:
+                    method_list[-1][method_name] += 1
+
+        for paths, apis in ch.apis.items():
+            for api in apis:
+                num_method_names = 0
+                method_name = api['method']
+                # prefix the method name if more than one
+                # method name per path url
+                for p in method_list:
+                    if p['path'] == paths and method_name in p:
+                        num_method_names = p[method_name]
+                if num_method_names > 1:
+                    method_name = 'x-' + method_name + '-' + api['operationId']
+                elif num_method_names is 1:
+                    # hacky post parse check for other files
+                    # that may contain a single, same method
+                    # for the same path url
+                    if paths in output['paths']:
+                        for methods in output['paths'][paths]:
+                            if methods == method_name:
+                                method_name = 'x-' + method_name + \
+                                              '-' + api['operationId']
+                            elif methods.startswith('x-' + method_name):
+                                method_name = 'x-' + method_name + \
+                                              '-' + api['operationId']
+
+                if 'method' in api:
+                    del api['method']
+                if paths in output['paths']:
+                    output['paths'][paths][method_name] = api
+                else:
+                    output['paths'][paths] = {}
+                    output['paths'][paths][method_name] = api
         output['definitions'].update(ch.schemas)
 
     for ex_request, ex_response in examples:
