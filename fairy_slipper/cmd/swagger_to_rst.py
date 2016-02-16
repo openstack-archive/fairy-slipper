@@ -45,7 +45,11 @@ TMPL_API = """
 {%- for path, methods in swagger['paths'].items() -%}
 {%- for method_name, request in methods.items() -%}
 
+{%- if method_name.startswith('x-') -%}
+.. http:{{ method_name|remove_prefix(request['operationId']) }}:: {{path}}
+{%- else %}
 .. http:{{method_name}}:: {{path}}
+{%- endif %}
    :title: {{request['x-title']}}
    :synopsis: {{request['summary']}}
 {%- if request.description != '' %}
@@ -129,7 +133,14 @@ def format_param(obj, type='query'):
         return '\n'.join(new_text)
 
 
+def remove_prefix(obj, op_name):
+    if obj[2:].endswith(op_name):
+        return obj[2:(len(obj) - len(op_name) - 1)]
+    else:
+        return obj[2:]
+
 environment.filters['format_param'] = format_param
+environment.filters['remove_prefix'] = remove_prefix
 
 
 def main1(filename, output_dir):
