@@ -578,14 +578,13 @@ class WADLHandler(xml.sax.ContentHandler):
 
     def response_schema_description(self, content, **kwargs):
         status_code = self.search_stack_for('response')['status']
-        if ' ' in status_code:
-            status_codes = status_code.split(' ')
-            if '200' in status_codes:
-                status_code = '200'
-            elif '201' in status_codes:
-                status_code = '201'
-            # TODO(arrsim) need to do something with the other status
-            # codes
+        recognized_codes = ['200', '201', '202', '204', '300', '400', '401',
+                            '403', '404', '405', '409', '413', '415',
+                            '422', '500', '501', '503']
+        if status_code not in recognized_codes:
+            log.warning("Found the status code %s in a WADL, " +
+                        "but it is not a valid HTTP status code.",
+                        status_code)
         param = self.search_stack_for('param')
         style = STYLE_MAP[param['style']]
         name = param['name']
@@ -731,12 +730,13 @@ class WADLHandler(xml.sax.ContentHandler):
             if self.search_stack_for('response') is not None:
                 type = 'response'
                 status_code = self.search_stack_for('response')['status']
-                if ' ' in status_code:
-                    status_codes = status_code.split(' ')
-                    if '200' in status_codes:
-                        status_code = '200'
-                    # TODO(arrsim) need to do something with the other
-                    # status codes
+                recognized_codes = ['200', '201', '202', '204', '300', '400',
+                                    '401', '403', '404', '405', '409', '413',
+                                    '415', '422', '500', '501', '503']
+                if status_code not in recognized_codes:
+                    log.warning("Found the status code %s in a WADL, " +
+                                "but it is not a valid HTTP status code.",
+                                status_code)
             elif self.search_stack_for('request') is not None:
                 type = 'request'
             else:
@@ -838,13 +838,13 @@ class WADLHandler(xml.sax.ContentHandler):
         if self.on_top_tag_stack('response', 'representation', 'param'):
             parameters = self.current_api['parameters']
             status_code = self.attr_stack[-3]['status']
-            if ' ' in status_code:
-                status_codes = status_code.split(' ')
-                if '200' in status_codes:
-                    status_code = '200'
-                elif '201' in status_codes:
-                    status_code = '201'
-                # TODO(arrsim) need to do something with the other status codes
+            recognized_codes = ['200', '201', '202', '204', '300', '400',
+                                '401', '403', '404', '405', '409', '413',
+                                '415', '422', '500', '501', '503']
+            if status_code not in recognized_codes:
+                log.warning("Found the status code %s in a WADL, " +
+                            "but it is not a valid HTTP status code.",
+                            status_code)
             name = attrs['name']
             parameter = create_parameter(
                 name=name,

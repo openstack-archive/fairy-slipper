@@ -13,9 +13,9 @@ function usage {
     echo "  -d, --debug              Run tests with testtools instead of testr. This allows you to use PDB"
     echo "  --docs-only              Only generate docs"
     echo "  --verbose-docs           Verbose logging of document generation"
-    echo "  --docbkx2json            Only perform docbookx to json conversion"
-    echo "  --wadl2swagger           Only perform wadl to swagger conversion"
-    echo "  --wadl2swaggervalid      Only perform wadl to swagger valid conversion"
+    echo "  --docbkx2json            Only perform docbook to json conversion"
+    echo "  --wadl2swagger           Only perform wadl to swagger-ish conversion"
+    echo "  --wadl2swaggervalid      Only perform wadl to valid swagger conversion"
     echo "  --swagger2rst            Only perform swagger to rst conversion"
 }
 
