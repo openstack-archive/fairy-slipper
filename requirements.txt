@@ -10,3 +10,4 @@ docutils
 pecan
 jinja2
 prettytable
+pypandoc
