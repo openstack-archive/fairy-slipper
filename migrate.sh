@@ -17,6 +17,7 @@ function usage {
     echo "  --wadl2swagger           Only perform wadl to swagger-ish conversion"
     echo "  --wadl2swaggervalid      Only perform wadl to valid swagger conversion"
     echo "  --swagger2rst            Only perform swagger to rst conversion"
+    echo "  --swaggerandmd           Only perform markdown update to swagger"
 }
 
 venv=.venv
@@ -34,8 +35,9 @@ docbkx2json=
 wadl2swagger=
 wadl2swaggervalid=
 swagger2rst=
+swaggerandmd=
 
-if ! options=$(getopt -o VNnfuhd -l virtual-env,no-virtual-env,no-site-packages,force,update,help,debug,docs-only,verbose-docs,docbkx2json,wadl2swagger,wadl2swaggervalid,swagger2rst -- "$@")
+if ! options=$(getopt -o VNnfuhd -l virtual-env,no-virtual-env,no-site-packages,force,update,help,debug,docs-only,verbose-docs,docbkx2json,wadl2swagger,wadl2swaggervalid,swagger2rst,swaggerandmd -- "$@")
 then
   # parse error
   usage
@@ -58,6 +60,7 @@ while [ $# -gt 0 ]; do
         --wadl2swagger) wadl2swagger=1;;
         --wadl2swaggervalid) wadl2swaggervalid=1;;
         --swagger2rst) swagger2rst=1;;
+        --swaggerandmd) swaggerandmd=1;;
     esac
     shift
 done
@@ -120,7 +123,7 @@ function migrate_docbkx {
     fi
 
     generate_all=
-    if [[ -z $docbkx2json && -z $wadl2swagger && -z $wadl2swaggervalid && -z $swagger2rst ]]; then
+    if [[ -z $docbkx2json && -z $wadl2swagger && -z $wadl2swaggervalid && -z $swagger2rst && -z $swaggerandmd ]]; then
       generate_all=1
     fi
 
@@ -138,6 +141,10 @@ function migrate_docbkx {
 
     if [[ -n $swagger2rst || -n $generate_all ]]; then
       ${wrapper} find conversion_files_valid -name \*-swagger.json -type f -exec fairy-slipper-swagger-to-rst -o api_doc $verbose_docs {} \;
+    fi
+
+    if [[ -n $swaggerandmd || -n $generate_all ]]; then
+      ${wrapper} find conversion_files_valid -name \*-swagger.json -type f -exec fairy-slipper-swagger-and-md -o conversion_files_valid $verbose_docs {} \;
     fi
 }
 
