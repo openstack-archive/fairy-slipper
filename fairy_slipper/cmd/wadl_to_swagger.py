@@ -762,9 +762,16 @@ class WADLHandler(xml.sax.ContentHandler):
             if sample and type == 'response':
                 response = self.current_api['responses'][status_code]
                 response['examples'][media_type] = sample
+
+                # Set response sample filename for rst publishing
+                self.current_api['responses'][status_code]['response_sample'] \
+                    = attrs['href']
             elif sample and type == 'request':
                 # Add request examples (Not swagger supported)
                 self.current_api['examples'][media_type] = sample
+
+                # Set request sample filename for rst publishing
+                self.current_api['request_sample'] = attrs['href']
 
         if name == 'response':
             if 'status' not in attrs:
