@@ -17,7 +17,7 @@ function usage {
     echo "  --wadl2swagger           Only perform wadl to swagger-ish conversion"
     echo "  --wadl2swaggervalid      Only perform wadl to valid swagger conversion"
     echo "  --swagger2rst            Only perform swagger to rst conversion"
-    echo "  --swaggerandmd           Only perform markdown update to swagger"
+    echo "  --create-yamls           Create yaml parameter files"
 }
 
 venv=.venv
@@ -35,9 +35,9 @@ docbkx2json=
 wadl2swagger=
 wadl2swaggervalid=
 swagger2rst=
-swaggerandmd=
+create_yamls=
 
-if ! options=$(getopt -o VNnfuhd -l virtual-env,no-virtual-env,no-site-packages,force,update,help,debug,docs-only,verbose-docs,docbkx2json,wadl2swagger,wadl2swaggervalid,swagger2rst,swaggerandmd -- "$@")
+if ! options=$(getopt -o VNnfuhd -l virtual-env,no-virtual-env,no-site-packages,force,update,help,debug,docs-only,verbose-docs,docbkx2json,wadl2swagger,wadl2swaggervalid,swagger2rst,create-yamls -- "$@")
 then
   # parse error
   usage
@@ -60,7 +60,7 @@ while [ $# -gt 0 ]; do
         --wadl2swagger) wadl2swagger=1;;
         --wadl2swaggervalid) wadl2swaggervalid=1;;
         --swagger2rst) swagger2rst=1;;
-        --swaggerandmd) swaggerandmd=1;;
+        --create-yamls) create_yamls=1;;
     esac
     shift
 done
@@ -123,7 +123,7 @@ function migrate_docbkx {
     fi
 
     generate_all=
-    if [[ -z $docbkx2json && -z $wadl2swagger && -z $wadl2swaggervalid && -z $swagger2rst && -z $swaggerandmd ]]; then
+    if [[ -z $docbkx2json && -z $wadl2swagger && -z $wadl2swaggervalid && -z $swagger2rst && -z $create_yamls ]]; then
       generate_all=1
     fi
 
@@ -143,8 +143,9 @@ function migrate_docbkx {
       ${wrapper} find conversion_files_valid -name \*-swagger.json -type f -exec fairy-slipper-swagger-to-rst -o api_doc $verbose_docs {} \;
     fi
 
-    if [[ -n $swaggerandmd || -n $generate_all ]]; then
-      ${wrapper} find conversion_files_valid -name \*-swagger.json -type f -exec fairy-slipper-swagger-and-md -o conversion_files_valid $verbose_docs {} \;
+    # Clean out sub dirs under api_doc as create-yamls appends to file
+    if [[ -n $create_yamls || -n $generate_all ]]; then
+      ${wrapper} find conversion_files -name \*-swagger.json -type f -exec fairy-slipper-create-yamls -o api_doc $verbose_docs {} \;
     fi
 }
 
