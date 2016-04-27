@@ -1,0 +1,7 @@
+{
+  "qos_specs": {
+    "numberOfFailures": "0", 
+    "availability": "100", 
+    "name": "reliability-spec"
+  }
+}

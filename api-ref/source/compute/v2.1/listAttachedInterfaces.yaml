@@ -1,0 +1,57 @@
+fixed_ips:
+  in: body
+  required: true
+  type: array
+  description: |
+    Fixed IP addresses with subnet IDs.
+
+port_state:
+  in: body
+  required: true
+  type: string
+  description: |
+    The port state.
+
+mac_addr:
+  in: body
+  required: true
+  type: string
+  description: |
+    The MAC address.
+
+interfaceAttachment:
+  in: body
+  required: true
+  type: string
+  description: |
+    Specify the ``interfaceAttachment`` action in the
+    response body.
+
+port_id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The port ID.
+
+net_id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The network ID.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+server_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the server.
+

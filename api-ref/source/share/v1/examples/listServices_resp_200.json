@@ -1,0 +1,22 @@
+{
+  "services": [
+    {
+      "status": "enabled", 
+      "binary": "manila-share", 
+      "zone": "nova", 
+      "state": "up", 
+      "updated_at": "2015-09-07T13:03:57.000000", 
+      "host": "manila2@generic1", 
+      "id": 1
+    }, 
+    {
+      "status": "enabled", 
+      "binary": "manila-scheduler", 
+      "zone": "nova", 
+      "state": "up", 
+      "updated_at": "2015-09-07T13:03:57.000000", 
+      "host": "manila2", 
+      "id": 2
+    }
+  ]
+}

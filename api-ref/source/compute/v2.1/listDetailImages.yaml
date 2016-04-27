@@ -1,0 +1,136 @@
+x-openstack-request-id:
+  in: header
+  required: false
+  type: string
+  description: |
+    A unique ID for tracking the request. The request
+    ID associated with the request appears in the log lines for that
+    request. By default, the middleware configuration ensures that the
+    request ID appears in the log files.
+
+previous:
+  format: uri
+  in: body
+  required: false
+  type: string
+  description: |
+    Moves to the previous metadata item.
+
+next:
+  format: uri
+  in: body
+  required: false
+  type: string
+  description: |
+    Moves to the next metadata item.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+changes-since:
+  in: query
+  required: false
+  type: string
+  description: |
+    Filters the response by a date and time when the image last changed
+    status.
+
+    Use this query parameter to check for changes since a previous
+    request rather than re-downloading and re-parsing the full status
+    at each polling interval. If data has changed, the call returns
+    only the items changed since the ``changes-since`` time. If data
+    has not changed since the ``changes-since`` time, the call returns
+    an empty list.
+
+    To enable you to keep track of changes, this filter also displays
+    images that were deleted if the ``changes-since`` value specifies a
+    date in the last 30 days. Items deleted more than 30 days ago might
+    be returned, but it is not guaranteed.
+
+    The date and time stamp format is `ISO 8601
+    <https://en.wikipedia.org/wiki/ISO_8601>`_:
+
+    ::
+
+       CCYY-MM-DDThh:mm:ss±hh:mm
+
+    The ``±hh:mm`` value, if included, returns the time zone as an
+    offset from UTC.
+
+    For example, ``2015-08-27T09:49:58-05:00``.
+
+    If you omit the time zone, the UTC time zone is assumed.
+
+server:
+  format: uri
+  in: query
+  required: false
+  type: string
+  description: |
+    Filters the response by a server, as a URL.
+
+name:
+  in: query
+  required: false
+  type: string
+  description: |
+    Filters the response by an image name, as a
+    string.
+
+status:
+  in: query
+  required: false
+  type: string
+  description: |
+    Filters the response by an image status, as a
+    string. For example, ``ACTIVE``.
+
+minDisk:
+  in: query
+  required: false
+  type: integer
+  description: |
+    Filters the response by a minimum disk size. For
+    example, ``100``.
+
+minRam:
+  in: query
+  required: false
+  type: integer
+  description: |
+    Filters the response by a minimum RAM size. For
+    example, ``512``.
+
+type:
+  in: query
+  required: false
+  type: string
+  description: |
+    Filters the response by an image type. For
+    example, ``snapshot`` or ``backup``.
+
+limit:
+  in: query
+  required: false
+  type: integer
+  description: |
+    Requests a page size of items. Returns a number
+    of items up to a limit value. Use the ``limit`` parameter to make
+    an initial limited request and use the ID of the last-seen item
+    from the response as the ``marker`` parameter value in a
+    subsequent limited request.
+
+marker:
+  in: query
+  required: false
+  type: string
+  description: |
+    The ID of the last-seen item. Use the ``limit``
+    parameter to make an initial limited request and use the ID of the
+    last-seen item from the response as the ``marker`` parameter value
+    in a subsequent limited request.
+

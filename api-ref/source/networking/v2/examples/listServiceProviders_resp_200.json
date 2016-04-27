@@ -1,0 +1,9 @@
+{
+  "service_providers": [
+    {
+      "default": true, 
+      "service_type": "LOADBALANCER", 
+      "name": "haproxy"
+    }
+  ]
+}

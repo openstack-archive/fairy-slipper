@@ -1,0 +1,38 @@
+
+Show metadata definition namespace resource type associations schema
+====================================================================
+
+.. rest_method::  GET /v2/schemas/metadefs/resource_types
+
+(Since API v2.1) Shows a JSON schema document that represents a metadata definition namespace resource type associations entity.
+
+A resource type associations entity is a container for resource
+type association entities.
+
+The following schema document is an example. The authoritative
+response is the actual response to the API call.
+
+
+Normal response codes: 200
+Error response codes:
+
+
+Request Parameters
+------------------
+
+.. rest_parameters:: parameters.yaml
+
+
+
+
+
+
+
+Response Example
+----------------
+
+.. literalinclude:: ../samples/schema-metadef-resource-type-associations-list-response.json
+   :language: javascript
+
+
+

@@ -1,0 +1,8 @@
+{
+  "user": {
+    "username": "nova", 
+    "enabled": false, 
+    "email": null, 
+    "name": "nova"
+  }
+}

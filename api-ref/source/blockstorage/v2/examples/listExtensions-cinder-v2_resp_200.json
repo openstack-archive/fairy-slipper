@@ -1,0 +1,212 @@
+{
+  "extensions": [
+    {
+      "updated": "2013-04-18T00:00:00+00:00", 
+      "description": "Pass arbitrary key/value pairs to the scheduler.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/block-service/ext/scheduler-hints/api/v2", 
+      "alias": "OS-SCH-HNT", 
+      "name": "SchedulerHints"
+    }, 
+    {
+      "updated": "2011-06-29T00:00:00+00:00", 
+      "description": "Admin-only host administration.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/hosts/api/v1.1", 
+      "alias": "os-hosts", 
+      "name": "Hosts"
+    }, 
+    {
+      "updated": "2011-11-03T00:00:00+00:00", 
+      "description": "Expose the internal project_id as an attribute of a volume.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/volume_tenant_attribute/api/v1", 
+      "alias": "os-vol-tenant-attr", 
+      "name": "VolumeTenantAttribute"
+    }, 
+    {
+      "updated": "2011-08-08T00:00:00+00:00", 
+      "description": "Quota management support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/quotas-sets/api/v1.1", 
+      "alias": "os-quota-sets", 
+      "name": "Quotas"
+    }, 
+    {
+      "updated": "2011-08-24T00:00:00+00:00", 
+      "description": "Types manage support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/types-manage/api/v1", 
+      "alias": "os-types-manage", 
+      "name": "TypesManage"
+    }, 
+    {
+      "updated": "2013-07-10T00:00:00+00:00", 
+      "description": "Volume encryption metadata retrieval support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/os-volume-encryption-metadata/api/v1", 
+      "alias": "os-volume-encryption-metadata", 
+      "name": "VolumeEncryptionMetadata"
+    }, 
+    {
+      "updated": "2012-12-12T00:00:00+00:00", 
+      "description": "Backups support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/backups/api/v1", 
+      "alias": "backups", 
+      "name": "Backups"
+    }, 
+    {
+      "updated": "2013-07-16T00:00:00+00:00", 
+      "description": "Enable snapshot manager actions.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/snapshot-actions/api/v1.1", 
+      "alias": "os-snapshot-actions", 
+      "name": "SnapshotActions"
+    }, 
+    {
+      "updated": "2012-05-31T00:00:00+00:00", 
+      "description": "Enable volume actions\n    ", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/volume-actions/api/v1.1", 
+      "alias": "os-volume-actions", 
+      "name": "VolumeActions"
+    }, 
+    {
+      "updated": "2013-10-03T00:00:00+00:00", 
+      "description": "Provide data on limited resources that are being used.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/used-limits/api/v1.1", 
+      "alias": "os-used-limits", 
+      "name": "UsedLimits"
+    }, 
+    {
+      "updated": "2012-05-31T00:00:00+00:00", 
+      "description": "Enable volume unmanage operation.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/volume-unmanage/api/v1.1", 
+      "alias": "os-volume-unmanage", 
+      "name": "VolumeUnmanage"
+    }, 
+    {
+      "updated": "2011-11-03T00:00:00+00:00", 
+      "description": "Expose host as an attribute of a volume.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/volume_host_attribute/api/v1", 
+      "alias": "os-vol-host-attr", 
+      "name": "VolumeHostAttribute"
+    }, 
+    {
+      "updated": "2013-07-01T00:00:00+00:00", 
+      "description": "Encryption support for volume types.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/volume-type-encryption/api/v1", 
+      "alias": "encryption", 
+      "name": "VolumeTypeEncryption"
+    }, 
+    {
+      "updated": "2013-06-27T00:00:00+00:00", 
+      "description": "Describe Availability Zones.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/os-availability-zone/api/v1", 
+      "alias": "os-availability-zone", 
+      "name": "AvailabilityZones"
+    }, 
+    {
+      "updated": "2013-08-02T00:00:00+00:00", 
+      "description": "QoS specs support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/qos-specs/api/v1", 
+      "alias": "qos-specs", 
+      "name": "Qos_specs_manage"
+    }, 
+    {
+      "updated": "2011-08-24T00:00:00+00:00", 
+      "description": "Type extra specs support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/types-extra-specs/api/v1", 
+      "alias": "os-types-extra-specs", 
+      "name": "TypesExtraSpecs"
+    }, 
+    {
+      "updated": "2013-08-08T00:00:00+00:00", 
+      "description": "Expose migration_status as an attribute of a volume.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/volume_mig_status_attribute/api/v1", 
+      "alias": "os-vol-mig-status-attr", 
+      "name": "VolumeMigStatusAttribute"
+    }, 
+    {
+      "updated": "2012-08-13T00:00:00+00:00", 
+      "description": "Allow creating a volume from an image in the Create Volume v1 API.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/image-create/api/v1", 
+      "alias": "os-image-create", 
+      "name": "CreateVolumeExtension"
+    }, 
+    {
+      "updated": "2014-01-10T00:00:00-00:00", 
+      "description": "Extended services support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/extended_services/api/v2", 
+      "alias": "os-extended-services", 
+      "name": "ExtendedServices"
+    }, 
+    {
+      "updated": "2012-06-19T00:00:00+00:00", 
+      "description": "Extended SnapshotAttributes support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/extended_snapshot_attributes/api/v1", 
+      "alias": "os-extended-snapshot-attributes", 
+      "name": "ExtendedSnapshotAttributes"
+    }, 
+    {
+      "updated": "2012-12-07T00:00:00+00:00", 
+      "description": "Show image metadata associated with the volume.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/volume_image_metadata/api/v1", 
+      "alias": "os-vol-image-meta", 
+      "name": "VolumeImageMetadata"
+    }, 
+    {
+      "updated": "2012-03-12T00:00:00+00:00", 
+      "description": "Quota classes management support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/quota-classes-sets/api/v1.1", 
+      "alias": "os-quota-class-sets", 
+      "name": "QuotaClasses"
+    }, 
+    {
+      "updated": "2013-05-29T00:00:00+00:00", 
+      "description": "Volume transfer management support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/volume-transfer/api/v1.1", 
+      "alias": "os-volume-transfer", 
+      "name": "VolumeTransfer"
+    }, 
+    {
+      "updated": "2014-02-10T00:00:00+00:00", 
+      "description": "Allows existing backend storage to be 'managed' by Cinder.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/os-volume-manage/api/v1", 
+      "alias": "os-volume-manage", 
+      "name": "VolumeManage"
+    }, 
+    {
+      "updated": "2012-08-25T00:00:00+00:00", 
+      "description": "Enable admin actions.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/admin-actions/api/v1.1", 
+      "alias": "os-admin-actions", 
+      "name": "AdminActions"
+    }, 
+    {
+      "updated": "2012-10-28T00:00:00-00:00", 
+      "description": "Services support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/volume/ext/services/api/v2", 
+      "alias": "os-services", 
+      "name": "Services"
+    }
+  ]
+}

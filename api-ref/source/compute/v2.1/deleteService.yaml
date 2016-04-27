@@ -1,0 +1,28 @@
+binary:
+  in: body
+  required: true
+  type: string
+  description: |
+    The service binary name.
+
+host:
+  in: body
+  required: true
+  type: string
+  description: |
+    The host name.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+service_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the service.
+

@@ -1,0 +1,11 @@
+{
+  "endpoint": {
+    "internalURL": "https://compute.north.internal.com/v1", 
+    "adminURL": "https://compute.north.internal.com/v1", 
+    "region": "North", 
+    "tenantId": 1, 
+    "type": "compute", 
+    "id": 1, 
+    "publicURL": "https://compute.north.public.com/v1"
+  }
+}

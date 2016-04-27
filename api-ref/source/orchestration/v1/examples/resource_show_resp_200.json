@@ -1,0 +1,27 @@
+{
+  "resource": {
+    "resource_name": "random_key_name", 
+    "description": "", 
+    "links": [
+      {
+        "href": "http://hostname/v1/1234/stacks/mystack/629a32d0-ac4f-4f63-b58d-f0d047b1ba4c/resources/random_key_name", 
+        "rel": "self"
+      }, 
+      {
+        "href": "http://hostname/v1/1234/stacks/mystack/629a32d0-ac4f-4f63-b58d-f0d047b1ba4c", 
+        "rel": "stack"
+      }
+    ], 
+    "logical_resource_id": "random_key_name", 
+    "creation_time": "2015-06-25T14:59:53", 
+    "resource_status": "CREATE_COMPLETE", 
+    "updated_time": "2015-06-25T14:59:53", 
+    "required_by": [], 
+    "resource_status_reason": "state changed", 
+    "physical_resource_id": "mystack-random_key_name-pmjmy5pks735", 
+    "attributes": {
+      "value": "I9S20uIp"
+    }, 
+    "resource_type": "OS::Heat::RandomString"
+  }
+}

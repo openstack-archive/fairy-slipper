@@ -1,0 +1,64 @@
+display_name:
+  in: body
+  required: false
+  type: string
+  description: |
+    The volume name.
+
+availability_zone:
+  in: body
+  required: false
+  type: string
+  description: |
+    The availability zone.
+
+display_description:
+  in: body
+  required: false
+  type: string
+  description: |
+    The volume description.
+
+volume:
+  in: body
+  required: false
+  type: object
+  description: |
+    The ``volume`` object.
+
+volume_type:
+  in: body
+  required: false
+  type: string
+  description: |
+    The unique identifier for a volume type.
+
+snapshot_id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The unique identifier for a snapshot.
+
+metadata:
+  in: body
+  required: false
+  type: object
+  description: |
+    One or more metadata key and value pairs to
+    associate with the volume.
+
+size:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The size of the volume, in gigabytes (GB).
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

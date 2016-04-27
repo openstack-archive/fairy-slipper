@@ -1,0 +1,11 @@
+{
+  "security_groups": [
+    {
+      "rules": [], 
+      "tenant_id": "openstack", 
+      "description": "default", 
+      "name": "default", 
+      "id": 1
+    }
+  ]
+}

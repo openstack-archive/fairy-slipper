@@ -1,0 +1,82 @@
+x-openstack-request-id:
+  in: header
+  required: false
+  type: string
+  description: |
+    A unique request ID that provides tracking for
+    the request. Provider must configure middleware to return a
+    request ID header in a response.
+
+updated:
+  in: body
+  required: true
+  type: string
+  description: |
+    The date and time when the resource was updated.
+
+    The date and time stamp format is `ISO 8601
+    <https://en.wikipedia.org/wiki/ISO_8601>`_:
+
+    ::
+
+       CCYY-MM-DDThh:mm:ss±hh:mm
+
+    The ``±hh:mm`` value, if included, is the time zone as an offset
+    from UTC.
+
+    For example, ``2015-08-27T09:49:58-05:00``.
+
+    The UTC time zone is assumed.
+
+description:
+  in: body
+  required: true
+  type: string
+  description: |
+    Text describing this extension’s purpose.
+
+links:
+  in: body
+  required: true
+  type: array
+  description: |
+    Links pertaining to this extension. This is a
+    list of dictionaries, each including keys ``href`` and ``rel``.
+
+namespace:
+  in: body
+  required: true
+  type: string
+  description: |
+    A URL pointing to the namespace for this
+    extension.
+
+alias:
+  in: body
+  required: true
+  type: string
+  description: |
+    A short name by which this extension is also
+    known.
+
+extensions:
+  in: body
+  required: true
+  type: array
+  description: |
+    List of ``extension`` objects.
+
+name:
+  in: body
+  required: true
+  type: string
+  description: |
+    Name of the extension.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

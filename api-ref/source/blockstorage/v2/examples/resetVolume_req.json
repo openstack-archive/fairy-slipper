@@ -1,0 +1,7 @@
+{
+  "os-reset_status": {
+    "status": "available", 
+    "migration_status": "migrating", 
+    "attach_status": "detached"
+  }
+}

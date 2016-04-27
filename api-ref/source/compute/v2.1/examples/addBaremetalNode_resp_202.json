@@ -1,0 +1,25 @@
+{
+  "node": {
+    "instance_uuid": null, 
+    "pm_address": "10.1.2.3", 
+    "pxe_config_path": null, 
+    "uuid": "0a130464-bccc-4e36-b9d3-9a8c98e636ae", 
+    "interfaces": [
+      {
+        "datapath_id": null, 
+        "id": 1, 
+        "port_no": null, 
+        "address": "12:34:56:78:90:ab"
+      }
+    ], 
+    "cpus": 8, 
+    "updated_at": null, 
+    "memory_mb": 8192, 
+    "service_host": "host", 
+    "task_state": null, 
+    "local_gb": 128, 
+    "id": 1, 
+    "pm_user": "pm_user", 
+    "terminal_port": 8000
+  }
+}

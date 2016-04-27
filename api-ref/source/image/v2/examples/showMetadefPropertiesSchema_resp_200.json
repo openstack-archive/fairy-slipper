@@ -1,0 +1,145 @@
+{
+  "definitions": {
+    "positiveIntegerDefault0": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/positiveInteger"
+        }, 
+        {
+          "default": 0
+        }
+      ]
+    }, 
+    "stringArray": {
+      "minItems": 1, 
+      "items": {
+        "type": "string"
+      }, 
+      "uniqueItems": true, 
+      "type": "array"
+    }, 
+    "positiveInteger": {
+      "minimum": 0, 
+      "type": "integer"
+    }
+  }, 
+  "name": "properties", 
+  "links": [
+    {
+      "href": "{first}", 
+      "rel": "first"
+    }, 
+    {
+      "href": "{next}", 
+      "rel": "next"
+    }, 
+    {
+      "href": "{schema}", 
+      "rel": "describedby"
+    }
+  ], 
+  "properties": {
+    "schema": {
+      "type": "string"
+    }, 
+    "next": {
+      "type": "string"
+    }, 
+    "properties": {
+      "additionalProperties": {
+        "additionalProperties": false, 
+        "required": [
+          "type", 
+          "title"
+        ], 
+        "name": "property", 
+        "properties": {
+          "additionalItems": {
+            "type": "boolean"
+          }, 
+          "required": {
+            "$ref": "#/definitions/stringArray"
+          }, 
+          "description": {
+            "type": "string"
+          }, 
+          "title": {
+            "type": "string"
+          }, 
+          "default": {}, 
+          "items": {
+            "type": "object", 
+            "properties": {
+              "enum": {
+                "type": "array"
+              }, 
+              "type": {
+                "enum": [
+                  "array", 
+                  "boolean", 
+                  "integer", 
+                  "number", 
+                  "object", 
+                  "string", 
+                  null
+                ], 
+                "type": "string"
+              }
+            }
+          }, 
+          "enum": {
+            "type": "array"
+          }, 
+          "maximum": {
+            "type": "number"
+          }, 
+          "minItems": {
+            "$ref": "#/definitions/positiveIntegerDefault0"
+          }, 
+          "readonly": {
+            "type": "boolean"
+          }, 
+          "minimum": {
+            "type": "number"
+          }, 
+          "maxItems": {
+            "$ref": "#/definitions/positiveInteger"
+          }, 
+          "maxLength": {
+            "$ref": "#/definitions/positiveInteger"
+          }, 
+          "uniqueItems": {
+            "default": false, 
+            "type": "boolean"
+          }, 
+          "pattern": {
+            "type": "string", 
+            "format": "regex"
+          }, 
+          "type": {
+            "enum": [
+              "array", 
+              "boolean", 
+              "integer", 
+              "number", 
+              "object", 
+              "string", 
+              null
+            ], 
+            "type": "string"
+          }, 
+          "minLength": {
+            "$ref": "#/definitions/positiveIntegerDefault0"
+          }, 
+          "name": {
+            "type": "string"
+          }
+        }
+      }, 
+      "type": "object"
+    }, 
+    "first": {
+      "type": "string"
+    }
+  }
+}

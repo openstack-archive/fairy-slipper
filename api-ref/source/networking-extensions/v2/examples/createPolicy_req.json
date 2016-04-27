@@ -1,0 +1,7 @@
+{
+  "policy": {
+    "shared": false, 
+    "description": "This policy limits the ports to 10Mbit max.", 
+    "name": "10Mbit"
+  }
+}

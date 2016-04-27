@@ -1,0 +1,50 @@
+status:
+  in: body
+  required: true
+  type: string
+  description: |
+    The service status, which is ``enabled`` or
+    ``disabled``.
+
+binary:
+  in: body
+  required: true
+  type: string
+  description: |
+    The service binary name.
+
+host:
+  in: body
+  required: true
+  type: string
+  description: |
+    The host name.
+
+service:
+  in: body
+  required: true
+  type: object
+  description: |
+    A ``service`` object.
+
+binary:
+  in: body
+  required: true
+  type: string
+  description: |
+    The service binary name.
+
+host:
+  in: body
+  required: true
+  type: string
+  description: |
+    The host name.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

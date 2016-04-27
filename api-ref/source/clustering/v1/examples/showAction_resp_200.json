@@ -1,0 +1,21 @@
+{
+  "status": "FAILED", 
+  "inputs": {}, 
+  "start_time": 1423570000.0, 
+  "name": "cluster_delete_fcc9b635", 
+  "depends_on": [], 
+  "created_at": "2015-06-27T05:09:43", 
+  "interval": -1, 
+  "depended_by": [], 
+  "timeout": 3600, 
+  "updated_at": null, 
+  "owner": null, 
+  "end_time": 1423570000.0, 
+  "context": {}, 
+  "outputs": {}, 
+  "action": "CLUSTER_DELETE", 
+  "status_reason": "Cluster action FAILED", 
+  "cause": "RPC Request", 
+  "id": "ffbb9175-d510-4bc1-b676-c6aba2a4ca81", 
+  "target": "fcc9b635-52e3-490b-99f2-87b1640e4e89"
+}

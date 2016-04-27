@@ -1,0 +1,42 @@
+{
+  "policy_type": {
+    "name": "senlin.policy.deletion", 
+    "schema": {
+      "destroy_after_deletion": {
+        "default": true, 
+        "required": false, 
+        "type": "Boolean", 
+        "description": "Whether a node should be completely destroyed after deletion. Default to true"
+      }, 
+      "grace_period": {
+        "default": 0, 
+        "required": false, 
+        "type": "Integer", 
+        "description": "Number of seconds before real deletion happens."
+      }, 
+      "reduce_desired_capacity": {
+        "default": false, 
+        "required": false, 
+        "type": "Boolean", 
+        "description": "Whether the desired capacity of the cluster should be reduced along the deletion. Default to false."
+      }, 
+      "criteria": {
+        "default": "RANDOM", 
+        "required": false, 
+        "type": "String", 
+        "description": "Criteria used in selecting candidates for deletion", 
+        "constraints": [
+          {
+            "type": "AllowedValues", 
+            "constraint": [
+              "OLDEST_FIRST", 
+              "OLDEST_PROFILE_FRIST", 
+              "YOUNGEST_FIRST", 
+              "RANDOM"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

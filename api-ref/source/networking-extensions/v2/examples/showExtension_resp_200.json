@@ -1,0 +1,9 @@
+{
+  "extension": {
+    "alias": "agent", 
+    "updated": "2013-02-03T10:00:00-00:00", 
+    "description": "The agent management extension.", 
+    "links": [], 
+    "name": "agent"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "pools": [
+    {
+      "pool": "LONDON", 
+      "host": "nosb-devstack", 
+      "name": "nosb-devstack@london#LONDON", 
+      "capabilities": {
+        "vendor_name": "Open Source", 
+        "qos": false, 
+        "consistency_group_support": "pool", 
+        "share_backend_name": "LONDON", 
+        "reserved_percentage": 0, 
+        "total_capacity_gb": "unknown", 
+        "free_capacity_gb": "unknown", 
+        "driver_version": "1.0", 
+        "server_pools_mapping": {
+          "1320689d-80f4-49f6-8a70-0e2c1ed8ad90": [], 
+          "3a4caac5-0880-4629-a334-6cdda88a0c0e": []
+        }, 
+        "timestamp": "2015-09-21T08:58:56.190856", 
+        "pools": null, 
+        "driver_handles_share_servers": true, 
+        "snapshot_support": true, 
+        "storage_protocol": "NFS_CIFS"
+      }, 
+      "backend": "london"
+    }
+  ]
+}

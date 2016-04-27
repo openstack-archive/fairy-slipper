@@ -1,0 +1,18 @@
+{
+  "volume": {
+    "description": "Volume imported from existingLV", 
+    "availability_zone": "az2", 
+    "bootable": true, 
+    "volume_type": null, 
+    "name": "New Volume", 
+    "host": "geraint-VirtualBox", 
+    "ref": {
+      "source-volume-id": "1234", 
+      "source-volume-name": "existingLV"
+    }, 
+    "metadata": {
+      "key2": "value2", 
+      "key1": "value1"
+    }
+  }
+}

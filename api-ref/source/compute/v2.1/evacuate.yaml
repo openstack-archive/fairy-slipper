@@ -1,0 +1,42 @@
+host:
+  in: body
+  required: false
+  type: string
+  description: |
+    The name or ID of the host to which the server is
+    evacuated.
+
+evacuate:
+  in: body
+  required: true
+  type: string
+  description: |
+    Specify the ``evacuate`` action in the request
+    body.
+
+adminPass:
+  in: body
+  required: false
+  type: string
+  description: |
+    An administrative password to access the
+    evacuated instance.  To set the administrative password, set the
+    ``enable_instance_password`` configuration option to ``true``. If
+    you set this option to ``false`` and you try to set the
+    administrative password, the API does not set the password and the
+    response shows a ``null`` value for the ``adminPass`` parameter.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+server_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the server.
+

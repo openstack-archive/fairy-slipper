@@ -1,0 +1,8 @@
+{
+  "meta": {
+    "auto_disk_config": true, 
+    "kernel_id": "nokernel", 
+    "ramdisk_id": "nokernel", 
+    "architecture": "x86_64"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "tenant_usage": {
+    "total_memory_mb_usage": 512.0, 
+    "total_vcpus_usage": 1.0, 
+    "total_hours": 1.0, 
+    "tenant_id": "openstack", 
+    "stop": "2012-10-08T21:10:44.587336", 
+    "server_usages": [
+      {
+        "instance_id": "1f1deceb-17b5-4c04-84c7-e0d4499c8fe0", 
+        "uptime": 3600, 
+        "started_at": "2012-10-08T20:10:44.541277", 
+        "ended_at": null, 
+        "memory_mb": 512, 
+        "tenant_id": "openstack", 
+        "vcpus": 1, 
+        "hours": 1.0, 
+        "state": "active", 
+        "flavor": "m1.tiny", 
+        "local_gb": 1, 
+        "name": "new-server-test"
+      }
+    ], 
+    "start": "2012-10-08T20:10:44.587336", 
+    "total_local_gb_usage": 1.0
+  }
+}

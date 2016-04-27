@@ -1,0 +1,11 @@
+{
+  "domain": {
+    "name": "myDomain", 
+    "enabled": true, 
+    "description": "Domain description", 
+    "links": {
+      "self": "http://identity:35357/v3/domains/161718"
+    }, 
+    "id": "161718"
+  }
+}

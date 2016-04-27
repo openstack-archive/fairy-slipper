@@ -1,0 +1,42 @@
+device:
+  in: body
+  required: false
+  type: string
+  description: |
+    Name of the device such as, ``/dev/vdb``. Omit or
+    set this parameter to null for auto-assignment, if supported. If
+    you specify this parameter, the device must not exist in the guest
+    operating system. Note that as of the 12.0.0 Liberty release, the
+    Nova libvirt driver no longer honors a user-supplied device name.
+    This is the same behavior as if the device name parameter is not
+    supplied on the request.
+
+volumeAttachment:
+  in: body
+  required: false
+  type: object
+  description: |
+    A dictionary representation of a volume
+    attachment.
+
+volumeId:
+  in: body
+  required: false
+  type: string
+  description: |
+    The UUID of the volume to attach.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+server_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the server.
+

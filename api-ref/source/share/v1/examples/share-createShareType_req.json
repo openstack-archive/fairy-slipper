@@ -1,0 +1,10 @@
+{
+  "volume_type": {
+    "os-share-type-access:is_public": true, 
+    "extra_specs": {
+      "snapshot_support": true, 
+      "driver_handles_share_servers": true
+    }, 
+    "name": "my_new_volume_type"
+  }
+}

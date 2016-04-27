@@ -1,0 +1,64 @@
+{
+  "nodes": [
+    {
+      "target_power_state": null, 
+      "links": [
+        {
+          "href": "http://localhost:6385/v1/nodes/277c9fe9-a385-4e45-9399-660f3287e48c", 
+          "rel": "self"
+        }, 
+        {
+          "href": "http://localhost:6385/nodes/277c9fe9-a385-4e45-9399-660f3287e48c", 
+          "rel": "bookmark"
+        }
+      ], 
+      "extra": {}, 
+      "last_error": null, 
+      "updated_at": "2016-04-23T10:53:37+00:00", 
+      "maintenance_reason": null, 
+      "provision_state": "available", 
+      "clean_step": {}, 
+      "uuid": "277c9fe9-a385-4e45-9399-660f3287e48c", 
+      "console_enabled": false, 
+      "target_provision_state": null, 
+      "provision_updated_at": null, 
+      "maintenance": false, 
+      "inspection_started_at": null, 
+      "inspection_finished_at": null, 
+      "power_state": "power off", 
+      "driver": "pxe_ssh", 
+      "reservation": null, 
+      "properties": {
+        "memory_mb": 1024, 
+        "cpu_arch": "x86_64", 
+        "local_gb": 10, 
+        "cpus": 1
+      }, 
+      "instance_uuid": null, 
+      "name": "node-0", 
+      "driver_info": {
+        "ssh_port": 22, 
+        "ssh_username": "ubuntu", 
+        "deploy_kernel": "aadebece-ce44-4cf6-a9e8-545f0e8ac9f3", 
+        "deploy_ramdisk": "cfe6f9ce-b2e6-4a7a-9246-0cc7eeb89a71", 
+        "ssh_key_filename": "/opt/stack/data/ironic/ssh_keys/ironic_key", 
+        "ssh_address": "localhost", 
+        "ssh_virt_type": "virsh"
+      }, 
+      "created_at": "2016-04-23T10:52:43+00:00", 
+      "ports": [
+        {
+          "href": "http://localhost:6385/v1/nodes/277c9fe9-a385-4e45-9399-660f3287e48c/ports", 
+          "rel": "self"
+        }, 
+        {
+          "href": "http://localhost:6385/nodes/277c9fe9-a385-4e45-9399-660f3287e48c/ports", 
+          "rel": "bookmark"
+        }
+      ], 
+      "driver_internal_info": {}, 
+      "chassis_uuid": "633f9f21-5bd5-4166-b811-1eb01490c4ab", 
+      "instance_info": {}
+    }
+  ]
+}

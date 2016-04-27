@@ -1,0 +1,26 @@
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+snapshot_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the snapshot.
+
+delete_info:
+  in: query
+  required: true
+  type: string
+  description: |
+    Information for snapshot deletion. Include the ID of the associated
+    volume. For example:
+
+    .. code-block:: json
+
+       DELETE /os-assisted-volume-snapshots?delete_info='{"volume_id": "521752a6-acf6-4b2d-bc7a-119f9148cd8c"}'
+

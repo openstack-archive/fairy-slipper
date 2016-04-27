@@ -1,0 +1,9 @@
+{
+  "project": {
+    "is_domain": true, 
+    "enabled": true, 
+    "description": "My new project", 
+    "name": "myNewProject", 
+    "domain_id": "default"
+  }
+}

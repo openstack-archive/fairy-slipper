@@ -1,0 +1,31 @@
+{
+  "projects": [
+    {
+      "name": "a project name", 
+      "links": {
+        "self": "http://identity:35357/v3/projects/456788"
+      }, 
+      "enabled": true, 
+      "domain_id": "161718", 
+      "parent_id": "212223", 
+      "id": "456788", 
+      "description": "description of this project"
+    }, 
+    {
+      "name": "another domain", 
+      "links": {
+        "self": "http://identity:35357/v3/projects/456789"
+      }, 
+      "enabled": true, 
+      "domain_id": "161718", 
+      "parent_id": "212223", 
+      "id": "456789", 
+      "description": "description of this project"
+    }
+  ], 
+  "links": {
+    "self": "http://identity:35357/v3/users/313233/projects", 
+    "previous": null, 
+    "next": null
+  }
+}

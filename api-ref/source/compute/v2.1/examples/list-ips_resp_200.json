@@ -1,0 +1,10 @@
+{
+  "addresses": {
+    "private": [
+      {
+        "version": 4, 
+        "addr": "192.168.0.3"
+      }
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+x-openstack-request-id:
+  in: header
+  required: false
+  type: string
+  description: |
+    A unique request ID that provides tracking for
+    the request. Provider must configure middleware to return a
+    request ID header in a response.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+before_timestamp:
+  in: query
+  required: true
+  type: string
+  description: |
+    Filters the response by the date and time before which to list
+    usage audits.
+
+    The date and time stamp format is `ISO 8601
+    <https://en.wikipedia.org/wiki/ISO_8601>`_:
+
+    ::
+
+       CCYY-MM-DDThh:mm:ss±hh:mm
+
+    The ``±hh:mm`` value, if included, returns the time zone as an
+    offset from UTC.
+
+    For example, ``2015-08-27T09:49:58-05:00``.
+
+    If you omit the time zone, the UTC time zone is assumed.
+

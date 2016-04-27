@@ -1,0 +1,19 @@
+{
+  "policies": [
+    {
+      "bandwidth_limit_rules": [
+        {
+          "max_kbps": "10000", 
+          "id": "5f126d84-551a-4dcf-bb01-0e9c0df0c793", 
+          "max_burst_kbps": "0", 
+          "policy_id": "46ebaec0-0570-43ac-82f6-60d2b03168c4"
+        }
+      ], 
+      "description": "This policy limits the ports to 10Mbit max.", 
+      "tenant_id": "8d4c70a21fed4aeba121a1a429ba0d04", 
+      "shared": false, 
+      "id": "46ebaec0-0570-43ac-82f6-60d2b03168c4", 
+      "name": "10Mbit"
+    }
+  ]
+}

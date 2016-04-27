@@ -1,0 +1,27 @@
+{
+  "links": {
+    "self": "http://identity:35357/v3/users/9fe1d3/groups", 
+    "previous": null, 
+    "next": null
+  }, 
+  "groups": [
+    {
+      "id": "ea167b", 
+      "name": "Developers", 
+      "description": "Developers cleared for work on all general projects", 
+      "links": {
+        "self": "https://identity:35357/v3/groups/ea167b"
+      }, 
+      "domain_id": "1789d1"
+    }, 
+    {
+      "id": "a62db1", 
+      "name": "Secure Developers", 
+      "description": "Developers cleared for work on secret projects", 
+      "links": {
+        "self": "https://identity:35357/v3/groups/a62db1"
+      }, 
+      "domain_id": "1789d1"
+    }
+  ]
+}

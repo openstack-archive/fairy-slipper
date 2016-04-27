@@ -1,0 +1,96 @@
+fixed_ips:
+  in: body
+  required: true
+  type: array
+  description: |
+    Fixed IP addresses with subnet IDs.
+
+port_state:
+  in: body
+  required: true
+  type: string
+  description: |
+    The port state.
+
+mac_addr:
+  in: body
+  required: true
+  type: string
+  description: |
+    The MAC address.
+
+interfaceAttachment:
+  in: body
+  required: true
+  type: string
+  description: |
+    Specify the ``interfaceAttachment`` action in the
+    response body.
+
+port_id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The port ID.
+
+net_id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The network ID.
+
+interfaceAttachment:
+  in: body
+  required: true
+  type: string
+  description: |
+    Specify the ``interfaceAttachment`` action in the
+    request body.
+
+port_id:
+  in: body
+  required: false
+  type: string
+  description: |
+    The ID of the port for which you want to create
+    an interface.  The ``net_id`` and ``port_id`` parameters are
+    mutually exclusive.  If you do not specify the ``port_id``
+    parameter, the OpenStack Networking API v2.0 allocates a port and
+    creates an interface for it on the network.
+
+fixed_ips:
+  in: body
+  required: false
+  type: array
+  description: |
+    Fixed IP addresses with subnet IDs.  If you
+    request a specific fixed IP address without a ``net_id``, the
+    request returns a ``Bad Request (400)`` response code.
+
+net_id:
+  in: body
+  required: false
+  type: string
+  description: |
+    The ID of the network for which you want to
+    create a port interface.  The ``net_id`` and ``port_id``
+    parameters are mutually exclusive.  If you do not specify the
+    ``net_id`` parameter, the OpenStack Networking API v2.0 uses the
+    network information cache that is associated with the instance.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+server_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the server.
+

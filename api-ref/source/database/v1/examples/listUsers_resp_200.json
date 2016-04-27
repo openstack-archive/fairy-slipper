@@ -1,0 +1,23 @@
+{
+  "users": [
+    {
+      "name": "dbuser3", 
+      "databases": [
+        {
+          "name": "databaseA"
+        }
+      ]
+    }, 
+    {
+      "name": "dbuser4", 
+      "databases": [
+        {
+          "name": "databaseB"
+        }, 
+        {
+          "name": "databaseC"
+        }
+      ]
+    }
+  ]
+}

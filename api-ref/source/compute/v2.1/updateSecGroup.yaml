@@ -1,0 +1,70 @@
+description:
+  in: body
+  required: true
+  type: string
+  description: |
+    The security group description.
+
+rules:
+  in: body
+  required: true
+  type: array
+  description: |
+    A security group rules object.
+
+tenant_id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The tenant ID.
+
+security_group:
+  in: body
+  required: true
+  type: string
+  description: |
+    Security group object.
+
+id:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The ID of the security group.
+
+name:
+  in: body
+  required: true
+  type: string
+  description: |
+    The security group name.
+
+description:
+  in: body
+  required: true
+  type: string
+  description: |
+    Security group description.
+
+name:
+  in: body
+  required: true
+  type: string
+  description: |
+    The security group name.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+security_group_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The ID of the security group.
+

@@ -1,0 +1,54 @@
+{
+  "volume_types": [
+    {
+      "os-share-type-access:is_public": true, 
+      "required_extra_specs": {
+        "driver_handles_share_servers": "True"
+      }, 
+      "extra_specs": {
+        "snapshot_support": "True", 
+        "driver_handles_share_servers": "True"
+      }, 
+      "id": "be27425c-f807-4500-a056-d00721db45cf", 
+      "name": "default"
+    }, 
+    {
+      "os-share-type-access:is_public": true, 
+      "required_extra_specs": {
+        "driver_handles_share_servers": "false"
+      }, 
+      "extra_specs": {
+        "snapshot_support": "True", 
+        "driver_handles_share_servers": "false"
+      }, 
+      "id": "f015bebe-c38b-4c49-8832-00143b10253b", 
+      "name": "d"
+    }
+  ], 
+  "share_types": [
+    {
+      "os-share-type-access:is_public": true, 
+      "required_extra_specs": {
+        "driver_handles_share_servers": "True"
+      }, 
+      "extra_specs": {
+        "snapshot_support": "True", 
+        "driver_handles_share_servers": "True"
+      }, 
+      "id": "be27425c-f807-4500-a056-d00721db45cf", 
+      "name": "default"
+    }, 
+    {
+      "os-share-type-access:is_public": true, 
+      "required_extra_specs": {
+        "driver_handles_share_servers": "false"
+      }, 
+      "extra_specs": {
+        "snapshot_support": "True", 
+        "driver_handles_share_servers": "false"
+      }, 
+      "id": "f015bebe-c38b-4c49-8832-00143b10253b", 
+      "name": "d"
+    }
+  ]
+}

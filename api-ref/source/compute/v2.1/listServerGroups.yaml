@@ -1,0 +1,81 @@
+server_groups:
+  in: body
+  required: true
+  type: object
+  description: |
+    A ``server_groups`` object.
+
+user_id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The ID of the user.
+
+name:
+  in: body
+  required: true
+  type: string
+  description: |
+    The name of the server group.
+
+members:
+  in: body
+  required: true
+  type: array
+  description: |
+    A list of members in the server group.
+
+policies:
+  in: body
+  required: true
+  type: array
+  description: |
+    A list of policies for the server group.
+
+project_id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The ID of the project.
+
+id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The UUID of the server group.
+
+metadata:
+  in: body
+  required: true
+  type: object
+  description: |
+    A dictionary of metadata key-and-value pairs,
+    which is maintained for backward compatibility. The API always
+    returns an empty metadata dictionary.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+all_projects:
+  in: query
+  required: false
+  type: boolean
+  description: |
+    Administrator only. Lists server groups for all projects. For
+    example:
+
+    .. code-block:: json
+
+       GET /v2.1/​{admin_tenant_id}​/os-server-groups?all_projects=true
+
+    If you specify a tenant ID for a non-administrative user with this
+    query parameter, the call lists all server groups for the tenant,
+    or project, rather than for all projects.
+

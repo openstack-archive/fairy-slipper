@@ -1,0 +1,17 @@
+{
+  "regions": [
+    {
+      "parent_region_id": null, 
+      "description": "", 
+      "links": {
+        "self": "http://localhost:5000/v3/regions/RegionOne"
+      }, 
+      "id": "RegionOne"
+    }
+  ], 
+  "links": {
+    "self": "http://localhost:5000/v3/regions", 
+    "previous": null, 
+    "next": null
+  }
+}

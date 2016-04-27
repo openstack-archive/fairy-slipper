@@ -1,0 +1,67 @@
+{
+  "deleted": [
+    {
+      "resource_name": "", 
+      "stack_identity": "{stack_id}", 
+      "stack_name": "{stack_name}", 
+      "resource_action": "CREATE", 
+      "resource_status": "COMPLETE", 
+      "updated_time": "datetime", 
+      "resource_status_reason": "", 
+      "physical_resource_id": "{resource id or ''}", 
+      "resource_type": "restype"
+    }
+  ], 
+  "unchanged": [
+    {
+      "resource_name": "", 
+      "stack_identity": "{stack_id}", 
+      "stack_name": "{stack_name}", 
+      "resource_action": "CREATE", 
+      "resource_status": "COMPLETE", 
+      "updated_time": "datetime", 
+      "resource_status_reason": "", 
+      "physical_resource_id": "{resource id or ''}", 
+      "resource_type": "restype"
+    }
+  ], 
+  "added": [
+    {
+      "resource_name": "", 
+      "stack_identity": "{stack_id}", 
+      "stack_name": "{stack_name}", 
+      "resource_action": "CREATE", 
+      "resource_status": "COMPLETE", 
+      "updated_time": "datetime", 
+      "resource_status_reason": "", 
+      "physical_resource_id": "{resource id or ''}", 
+      "resource_type": "restype"
+    }
+  ], 
+  "replaced": [
+    {
+      "resource_name": "", 
+      "stack_identity": "{stack_id}", 
+      "stack_name": "{stack_name}", 
+      "resource_action": "CREATE", 
+      "resource_status": "COMPLETE", 
+      "updated_time": "datetime", 
+      "resource_status_reason": "", 
+      "physical_resource_id": "{resource id or ''}", 
+      "resource_type": "restype"
+    }
+  ], 
+  "updated": [
+    {
+      "resource_name": "", 
+      "stack_identity": "{stack_id}", 
+      "stack_name": "{stack_name}", 
+      "resource_action": "CREATE", 
+      "resource_status": "COMPLETE", 
+      "updated_time": "datetime", 
+      "resource_status_reason": "", 
+      "physical_resource_id": "{resource id or ''}", 
+      "resource_type": "restype"
+    }
+  ]
+}

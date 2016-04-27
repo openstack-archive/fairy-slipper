@@ -1,0 +1,26 @@
+{
+  "images": [
+    {
+      "status": "active", 
+      "name": "Ubuntu 10.04 Plain 5GB", 
+      "checksum": "c2e5db72bd7fd153f53ede5da5a06de3", 
+      "created_at": "2010-02-03 09:34:01", 
+      "uri": "http://glance.example.com/images/71c675ab-d94f-49cd-a114-e12490b328d9", 
+      "disk_format": "vhd", 
+      "updated_at": "2010-02-03 09:34:01", 
+      "properties": {
+        "distro": "Ubuntu 10.04 LTS"
+      }, 
+      "owner": null, 
+      "container_format": "ovf", 
+      "min_disk": 5, 
+      "is_public": true, 
+      "deleted_at": "", 
+      "min_ram": 256, 
+      "size": "5368709120"
+    }, 
+    {
+      "...": "..."
+    }
+  ]
+}

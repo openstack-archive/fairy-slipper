@@ -1,0 +1,12 @@
+{
+  "policy": {
+    "user_id": "616263", 
+    "project_id": "456789", 
+    "type": "application/json", 
+    "blob": {
+      "foobar_user": [
+        "role:compute-user"
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+previous:
+  format: uri
+  in: body
+  required: false
+  type: string
+  description: |
+    Moves to the previous metadata item.
+
+next:
+  format: uri
+  in: body
+  required: false
+  type: string
+  description: |
+    Moves to the next metadata item.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+image_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the image.
+

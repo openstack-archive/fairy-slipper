@@ -1,0 +1,139 @@
+{
+  "users": [
+    {
+      "name": "glance", 
+      "links": {
+        "self": "http://localhost:5000/v3/users/2844b2a08be147a08ef58317d6471f1f"
+      }, 
+      "enabled": true, 
+      "domain_id": "default", 
+      "email": null, 
+      "id": "2844b2a08be147a08ef58317d6471f1f"
+    }, 
+    {
+      "name": "swiftusertest1", 
+      "links": {
+        "self": "http://localhost:5000/v3/users/4ab84ab39de54f4d96eaff8f2145a7cd"
+      }, 
+      "enabled": true, 
+      "domain_id": "default", 
+      "email": "test@example.com", 
+      "id": "4ab84ab39de54f4d96eaff8f2145a7cd"
+    }, 
+    {
+      "name": "swift", 
+      "links": {
+        "self": "http://localhost:5000/v3/users/56696a9a04864d63877a3d06a6f0b24b"
+      }, 
+      "enabled": true, 
+      "domain_id": "default", 
+      "email": null, 
+      "id": "56696a9a04864d63877a3d06a6f0b24b"
+    }, 
+    {
+      "name": "alt_demo", 
+      "links": {
+        "self": "http://localhost:5000/v3/users/5acb638d15da44fc8de41b9a4bd41875"
+      }, 
+      "enabled": true, 
+      "domain_id": "default", 
+      "email": "alt_demo@example.com", 
+      "id": "5acb638d15da44fc8de41b9a4bd41875"
+    }, 
+    {
+      "name": "demo", 
+      "links": {
+        "self": "http://localhost:5000/v3/users/7596e862b1af473c8ed6ae99d35b51e3"
+      }, 
+      "enabled": true, 
+      "domain_id": "default", 
+      "email": "demo@example.com", 
+      "id": "7596e862b1af473c8ed6ae99d35b51e3"
+    }, 
+    {
+      "name": "nova", 
+      "links": {
+        "self": "http://localhost:5000/v3/users/802edb2141b44e77bbde241417450749"
+      }, 
+      "enabled": true, 
+      "domain_id": "default", 
+      "email": null, 
+      "id": "802edb2141b44e77bbde241417450749"
+    }, 
+    {
+      "name": "swiftusertest4", 
+      "links": {
+        "self": "http://localhost:5000/v3/users/9aca3883784647fe9aff3a50d922489a"
+      }, 
+      "enabled": true, 
+      "domain_id": "592ab0800d3745baaf45c610fa41950a", 
+      "email": "test4@example.com", 
+      "id": "9aca3883784647fe9aff3a50d922489a"
+    }, 
+    {
+      "name": "swiftusertest3", 
+      "links": {
+        "self": "http://localhost:5000/v3/users/a1251b011f9345e68c2458b841152034"
+      }, 
+      "enabled": true, 
+      "domain_id": "default", 
+      "email": "test3@example.com", 
+      "id": "a1251b011f9345e68c2458b841152034"
+    }, 
+    {
+      "name": "neutron", 
+      "links": {
+        "self": "http://localhost:5000/v3/users/a43f46eb318041f6b712143862e3ad70"
+      }, 
+      "enabled": true, 
+      "domain_id": "default", 
+      "email": null, 
+      "id": "a43f46eb318041f6b712143862e3ad70"
+    }, 
+    {
+      "name": "admin", 
+      "links": {
+        "self": "http://localhost:5000/v3/users/b964a9e51c0046a4a84d3f83a135a97c"
+      }, 
+      "enabled": true, 
+      "domain_id": "default", 
+      "email": null, 
+      "id": "b964a9e51c0046a4a84d3f83a135a97c"
+    }, 
+    {
+      "name": "cinder", 
+      "links": {
+        "self": "http://localhost:5000/v3/users/dc87e591c0d247d5ac04e873bd8a1646"
+      }, 
+      "enabled": true, 
+      "domain_id": "default", 
+      "email": null, 
+      "id": "dc87e591c0d247d5ac04e873bd8a1646"
+    }, 
+    {
+      "name": "glance-swift", 
+      "links": {
+        "self": "http://localhost:5000/v3/users/ed214dc1c2c6468b926c96eca6c8aee9"
+      }, 
+      "enabled": true, 
+      "domain_id": "default", 
+      "email": "glance-swift@example.com", 
+      "id": "ed214dc1c2c6468b926c96eca6c8aee9"
+    }, 
+    {
+      "name": "swiftusertest2", 
+      "links": {
+        "self": "http://localhost:5000/v3/users/f4f6587b058a4f46a00242549b430d37"
+      }, 
+      "enabled": true, 
+      "domain_id": "default", 
+      "email": "test2@example.com", 
+      "id": "f4f6587b058a4f46a00242549b430d37"
+    }
+  ], 
+  "links": {
+    "self": "http://localhost:5000/v3/users", 
+    "previous": null, 
+    "next": null
+  }
+}

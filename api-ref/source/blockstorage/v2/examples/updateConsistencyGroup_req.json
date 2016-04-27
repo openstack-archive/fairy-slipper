@@ -1,0 +1,8 @@
+{
+  "consistencygroup": {
+    "remove_volumes": "volume-uuid-8,volume-uuid-9", 
+    "description": "My consistency group", 
+    "add_volumes": "volume-uuid-1,volume-uuid-2", 
+    "name": "my_cg"
+  }
+}

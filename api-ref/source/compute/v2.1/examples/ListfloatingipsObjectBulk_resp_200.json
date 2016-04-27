@@ -1,0 +1,28 @@
+{
+  "floating_ip_info": [
+    {
+      "instance_uuid": null, 
+      "fixed_ip": null, 
+      "address": "10.10.10.1", 
+      "interface": "eth0", 
+      "project_id": null, 
+      "pool": "nova"
+    }, 
+    {
+      "instance_uuid": null, 
+      "fixed_ip": null, 
+      "address": "10.10.10.2", 
+      "interface": "eth0", 
+      "project_id": null, 
+      "pool": "nova"
+    }, 
+    {
+      "instance_uuid": null, 
+      "fixed_ip": null, 
+      "address": "10.10.10.3", 
+      "interface": "eth0", 
+      "project_id": null, 
+      "pool": "nova"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+pool:
+  in: body
+  required: false
+  type: string
+  description: |
+    Pool from which to allocate the IP address. If
+    you omit this parameter, the call allocates the floating IP
+    address from the public pool.  If no floating IP addresses are
+    available, the call returns the ``400`` response code with an
+    informational message.  Policy defaults enable only users with the
+    administrative role or the owner of the server to perform this
+    operation. Cloud providers can change these permissions through
+    the ``policy.json`` file.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

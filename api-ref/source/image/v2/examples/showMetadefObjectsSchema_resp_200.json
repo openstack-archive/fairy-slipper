@@ -1,0 +1,183 @@
+{
+  "definitions": {
+    "property": {
+      "additionalProperties": {
+        "required": [
+          "title", 
+          "type"
+        ], 
+        "type": "object", 
+        "properties": {
+          "additionalItems": {
+            "type": "boolean"
+          }, 
+          "required": {
+            "$ref": "#/definitions/stringArray"
+          }, 
+          "description": {
+            "type": "string"
+          }, 
+          "title": {
+            "type": "string"
+          }, 
+          "default": {}, 
+          "items": {
+            "type": "object", 
+            "properties": {
+              "enum": {
+                "type": "array"
+              }, 
+              "type": {
+                "enum": [
+                  "array", 
+                  "boolean", 
+                  "integer", 
+                  "number", 
+                  "object", 
+                  "string", 
+                  null
+                ], 
+                "type": "string"
+              }
+            }
+          }, 
+          "enum": {
+            "type": "array"
+          }, 
+          "maximum": {
+            "type": "number"
+          }, 
+          "minItems": {
+            "$ref": "#/definitions/positiveIntegerDefault0"
+          }, 
+          "readonly": {
+            "type": "boolean"
+          }, 
+          "minimum": {
+            "type": "number"
+          }, 
+          "maxItems": {
+            "$ref": "#/definitions/positiveInteger"
+          }, 
+          "maxLength": {
+            "$ref": "#/definitions/positiveInteger"
+          }, 
+          "uniqueItems": {
+            "default": false, 
+            "type": "boolean"
+          }, 
+          "pattern": {
+            "type": "string", 
+            "format": "regex"
+          }, 
+          "type": {
+            "enum": [
+              "array", 
+              "boolean", 
+              "integer", 
+              "number", 
+              "object", 
+              "string", 
+              null
+            ], 
+            "type": "string"
+          }, 
+          "minLength": {
+            "$ref": "#/definitions/positiveIntegerDefault0"
+          }, 
+          "name": {
+            "type": "string"
+          }
+        }
+      }, 
+      "type": "object"
+    }, 
+    "positiveIntegerDefault0": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/positiveInteger"
+        }, 
+        {
+          "default": 0
+        }
+      ]
+    }, 
+    "stringArray": {
+      "uniqueItems": true, 
+      "items": {
+        "type": "string"
+      }, 
+      "type": "array"
+    }, 
+    "positiveInteger": {
+      "minimum": 0, 
+      "type": "integer"
+    }
+  }, 
+  "name": "objects", 
+  "links": [
+    {
+      "href": "{first}", 
+      "rel": "first"
+    }, 
+    {
+      "href": "{next}", 
+      "rel": "next"
+    }, 
+    {
+      "href": "{schema}", 
+      "rel": "describedby"
+    }
+  ], 
+  "properties": {
+    "schema": {
+      "type": "string"
+    }, 
+    "next": {
+      "type": "string"
+    }, 
+    "objects": {
+      "items": {
+        "additionalProperties": false, 
+        "required": [
+          "name"
+        ], 
+        "name": "object", 
+        "properties": {
+          "description": {
+            "type": "string"
+          }, 
+          "created_at": {
+            "type": "string", 
+            "description": "Date and time of object creation (READ-ONLY)", 
+            "format": "date-time"
+          }, 
+          "required": {
+            "$ref": "#/definitions/stringArray"
+          }, 
+          "updated_at": {
+            "type": "string", 
+            "description": "Date and time of the last object modification (READ-ONLY)", 
+            "format": "date-time"
+          }, 
+          "name": {
+            "type": "string"
+          }, 
+          "self": {
+            "type": "string"
+          }, 
+          "properties": {
+            "$ref": "#/definitions/property"
+          }, 
+          "schema": {
+            "type": "string"
+          }
+        }
+      }, 
+      "type": "array"
+    }, 
+    "first": {
+      "type": "string"
+    }
+  }
+}

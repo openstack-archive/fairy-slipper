@@ -1,0 +1,10 @@
+{
+  "hypervisors": [
+    {
+      "status": "enabled", 
+      "state": "up", 
+      "id": 1, 
+      "hypervisor_hostname": "fake-mini"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "policy": {
+    "name": "sp001", 
+    "spec": {
+      "version": "1.0", 
+      "type": "senlin.policy.scaling", 
+      "properties": {
+        "adjustment": {
+          "min_step": 1, 
+          "type": "CHANGE_IN_CAPACITY", 
+          "number": 1
+        }, 
+        "event": "CLUSTER_SCALE_IN"
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+x-openstack-request-id:
+  in: header
+  required: false
+  type: string
+  description: |
+    A unique request ID that provides tracking for
+    the request. Provider must configure middleware to return a
+    request ID header in a response.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+flavor_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The ID of the flavor.
+
+flavor_extra_spec_key:
+  in: path
+  required: false
+  type: string
+  description: |
+    The extra spec key for the flavor.
+

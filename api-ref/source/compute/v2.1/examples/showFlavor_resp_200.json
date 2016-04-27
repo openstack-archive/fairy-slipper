@@ -1,0 +1,23 @@
+{
+  "flavor": {
+    "name": "m1.tiny", 
+    "links": [
+      {
+        "href": "http://openstack.example.com/v2.1/openstack/flavors/1", 
+        "rel": "self"
+      }, 
+      {
+        "href": "http://openstack.example.com/openstack/flavors/1", 
+        "rel": "bookmark"
+      }
+    ], 
+    "ram": 512, 
+    "OS-FLV-DISABLED:disabled": false, 
+    "vcpus": 1, 
+    "swap": "", 
+    "os-flavor-access:is_public": true, 
+    "OS-FLV-EXT-DATA:ephemeral": 0, 
+    "disk": 1, 
+    "id": "1"
+  }
+}

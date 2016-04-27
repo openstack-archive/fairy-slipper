@@ -1,0 +1,39 @@
+{
+  "cells": [
+    {
+      "username": "username1", 
+      "rpc_host": null, 
+      "type": "child", 
+      "name": "cell1", 
+      "rpc_port": null
+    }, 
+    {
+      "username": "username3", 
+      "rpc_host": null, 
+      "type": "child", 
+      "name": "cell3", 
+      "rpc_port": null
+    }, 
+    {
+      "username": "username5", 
+      "rpc_host": null, 
+      "type": "child", 
+      "name": "cell5", 
+      "rpc_port": null
+    }, 
+    {
+      "username": "username2", 
+      "rpc_host": null, 
+      "type": "parent", 
+      "name": "cell2", 
+      "rpc_port": null
+    }, 
+    {
+      "username": "username4", 
+      "rpc_host": null, 
+      "type": "parent", 
+      "name": "cell4", 
+      "rpc_port": null
+    }
+  ]
+}

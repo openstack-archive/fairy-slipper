@@ -1,0 +1,46 @@
+adminPass:
+  in: body
+  required: true
+  type: string
+  description: |
+    The password that enables the administrator to
+    access the rescued instance.
+
+rescue_image_ref:
+  in: body
+  required: false
+  type: string
+  description: |
+    The image reference to use to rescue your server
+    instance. Specify the image reference by ID or full URL.  If you
+    omit an image reference, default is the base image reference.
+
+rescue:
+  in: body
+  required: true
+  type: string
+  description: |
+    The action.
+
+adminPass:
+  in: body
+  required: false
+  type: string
+  description: |
+    The password for the rescued instance. If you
+    omit this parameter, the operation generates a new password.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+server_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the server.
+

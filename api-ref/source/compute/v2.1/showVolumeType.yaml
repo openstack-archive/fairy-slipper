@@ -1,0 +1,14 @@
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+volume_type_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The unique ID for a volume type.
+

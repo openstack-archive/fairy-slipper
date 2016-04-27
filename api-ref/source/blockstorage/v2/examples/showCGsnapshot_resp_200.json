@@ -1,0 +1,10 @@
+{
+  "cgsnapshot": {
+    "status": "available", 
+    "description": "my first consistency group", 
+    "created_at": "2015-09-16T09:28:52.000000", 
+    "consistencygroup_id": "6f519a48-3183-46cf-a32f-41815f814444", 
+    "id": "6f519a48-3183-46cf-a32f-41815f813986", 
+    "name": "my-cg1"
+  }
+}

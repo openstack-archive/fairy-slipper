@@ -1,0 +1,30 @@
+{
+  "pools": [
+    {
+      "name": "pool1", 
+      "capabilities": {
+        "updated": "2014-10-28T00:00:00-00:00", 
+        "QoS_support": false, 
+        "total_capacity": 1024, 
+        "volume_backend_name": "pool1", 
+        "free_capacity": 100, 
+        "driver_version": "1.0.0", 
+        "reserved_percentage": 0, 
+        "storage_protocol": "iSCSI"
+      }
+    }, 
+    {
+      "name": "pool2", 
+      "capabilities": {
+        "updated": "2014-10-28T00:00:00-00:00", 
+        "QoS_support": true, 
+        "total_capacity": 512, 
+        "volume_backend_name": "pool2", 
+        "free_capacity": 200, 
+        "driver_version": "1.0.1", 
+        "reserved_percentage": 0, 
+        "storage_protocol": "iSER"
+      }
+    }
+  ]
+}

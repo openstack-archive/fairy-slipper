@@ -1,0 +1,17 @@
+{
+  "users_links": [], 
+  "users": [
+    {
+      "enabled": true, 
+      "email": "john.smith@example.org", 
+      "name": "jqsmith", 
+      "id": "u1000"
+    }, 
+    {
+      "enabled": true, 
+      "email": "john.smith@example.org", 
+      "name": "jqsmith", 
+      "id": "u1001"
+    }
+  ]
+}

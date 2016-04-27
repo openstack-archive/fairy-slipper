@@ -1,0 +1,13 @@
+{
+  "project": {
+    "name": "admin", 
+    "links": {
+      "self": "http://localhost:5000/v3/projects/0c4e939acacf4376bdcd1129f1a054ad"
+    }, 
+    "enabled": true, 
+    "domain_id": "default", 
+    "parent_id": null, 
+    "id": "0c4e939acacf4376bdcd1129f1a054ad", 
+    "description": null
+  }
+}
