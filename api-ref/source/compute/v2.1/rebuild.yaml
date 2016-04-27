@@ -1,0 +1,70 @@
+name:
+  in: body
+  required: true
+  type: string
+  description: |
+    The server name.
+
+imageRef:
+  in: body
+  required: false
+  type: string
+  description: |
+    The image reference, as an ID or full URL, for
+    the image for your server instance.  Required if you define a
+    block device mapping.
+
+adminPass:
+  in: body
+  required: true
+  type: string
+  description: |
+    The administrative password of the server.
+
+rebuild:
+  in: body
+  required: true
+  type: string
+  description: |
+    The action.
+
+preserve_ephemeral:
+  in: body
+  required: false
+  type: boolean
+  description: |
+    Indicates whether the server is rebuilt with the
+    preservation of the ephemeral partition (``true``).
+
+metadata:
+  in: body
+  required: false
+  type: string
+  description: |
+    Metadata key and value pairs. The maximum size
+    for each metadata key and value pair is 255 bytes.
+
+personality:
+  in: body
+  required: false
+  type: string
+  description: |
+    The file path and contents, text only, to inject
+    into the server at launch. The maximum size of the file path data
+    is 255 bytes. The maximum limit is the number of allowed bytes in
+    the decoded, rather than the encoded, data.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+server_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the server.
+

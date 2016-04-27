@@ -1,0 +1,306 @@
+links:
+  in: body
+  required: true
+  type: array
+  description: |
+    Server links.
+
+adminPass:
+  in: body
+  required: true
+  type: string
+  description: |
+    The administrative password of the server.
+
+OS-DCF:diskConfig:
+  in: body
+  required: true
+  type: string
+  description: |
+    Disk configuration. The value is either:  -
+    ``AUTO``. The API builds the server with a single partition the
+    size of the target flavor disk. The API automatically adjusts the
+    file system to fit the entire partition.  - ``MANUAL``. The API
+    builds the server by using the partition   scheme and file system
+    that is in the source image. If the target   flavor disk is
+    larger, The API does not partition the remaining   disk space.
+
+server:
+  in: body
+  required: true
+  type: object
+  description: |
+    A ``server`` object.
+
+id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The UUID of the server.
+
+security_groups:
+  in: body
+  required: true
+  type: array
+  description: |
+    Security groups object.
+
+guest_format:
+  in: body
+  required: true
+  type: string
+  description: |
+    Specifies the guest server disk file system
+    format, such as ``ephemeral`` or ``swap``.
+
+user_data:
+  in: body
+  required: false
+  type: string
+  description: |
+    Configuration information or scripts to use upon
+    launch. Must be Base64 encoded.
+
+device_name:
+  in: body
+  required: true
+  type: string
+  description: |
+    A path to the device for the volume that you want
+    to use to boot the server.
+
+port:
+  in: body
+  required: false
+  type: string
+  description: |
+    To provision the server instance with a NIC for
+    an already existing port, specify the port-id in the ``port``
+    attribute in a ``networks`` object. The port status must be
+    ``DOWN``. required if you omit the ``uuid`` attribute.
+
+security_groups:
+  in: body
+  required: false
+  type: string
+  description: |
+    One or more security groups. Specify the name of
+    the security group in the ``name`` attribute. If you omit this
+    attribute, the API creates the server in the ``default`` security
+    group.
+
+uuid:
+  in: body
+  required: false
+  type: string
+  description: |
+    To provision the server instance with a NIC for a
+    network, specify the UUID of the network in the ``uuid`` attribute
+    in a ``networks`` object. Required if you omit the ``port``
+    attribute.
+
+imageRef:
+  in: body
+  required: true
+  type: string
+  description: |
+    The image reference, as a UUID or full URL, for
+    the image to use for your server instance.
+
+fixed_ip:
+  in: body
+  required: false
+  type: string
+  description: |
+    A fixed IPv4 address for the NIC. Valid with a
+    ``neutron`` or ``nova-networks`` network.
+
+OS-DCF:diskConfig:
+  in: body
+  required: false
+  type: string
+  description: |
+    Controls how the API partitions the disk when you
+    create, rebuild, or resize servers. A server inherits the ``OS-
+    DCF:diskConfig`` value from the image from which it was created,
+    and an image inherits the ``OS-DCF:diskConfig`` value from the
+    server from which it was created. To override the inherited
+    setting, you can include this attribute in the request body of a
+    server create, rebuild, or resize request.  If the ``OS-
+    DCF:diskConfig`` value for an image is ``MANUAL``, you cannot
+    create a server from that image and set its ``OS- DCF:diskConfig``
+    value to ``AUTO``.  A valid value is:  - ``AUTO``. The API builds
+    the server with a single partition the   size of the target flavor
+    disk. The API automatically adjusts the   file system to fit the
+    entire partition.  - ``MANUAL``. The API builds the server by
+    using whatever partition   scheme and file system is in the source
+    image. If the target   flavor disk is larger, the API does not
+    partition the remaining   disk space.
+
+networks:
+  in: body
+  required: false
+  type: string
+  description: |
+    A ``networks`` object. Required parameter when
+    there are mulitple networks defined for the tenant. When you do
+    not specify the networks parameter, the server attaches to the
+    only network created for the current tenant.  Optionally, you can
+    create one or more NICs on the server.  To provision the server
+    instance with a NIC for a network, specify the UUID of the network
+    in the ``uuid`` attribute in a ``networks`` object.  To provision
+    the server instance with a NIC for an already existing port,
+    specify the port-id in the ``port`` attribute in a ``networks``
+    object.
+
+config_drive:
+  in: body
+  required: false
+  type: boolean
+  description: |
+    Indicates whether a configuration drive enables
+    metadata injection. The config_drive setting provides information
+    about a drive that the instance can mount at boot time. The
+    instance reads files from the drive to get information that is
+    normally available through the metadata service. This metadata is
+    different from the user data. Not all cloud providers enable the
+    ``config_drive``. Read more in the OpenStack End User Guide .
+
+destination_type:
+  in: body
+  required: false
+  type: string
+  description: |
+    Defines where the volume comes from. A valid
+    value is ``local`` or ``volume``.
+
+delete_on_termination:
+  in: body
+  required: true
+  type: string
+  description: |
+    To delete the boot volume when the server is
+    destroyed, specify ``true``. Otherwise, specify ``false``.
+
+personality:
+  in: body
+  required: false
+  type: string
+  description: |
+    The file path and contents, text only, to inject
+    into the server at launch. The maximum size of the file path data
+    is 255 bytes. The maximum limit is The number of allowed bytes in
+    the decoded, rather than encoded, data.
+
+os:scheduler_hints:
+  in: body
+  required: false
+  type: object
+  description: |
+    The dictionary of data to send to the scheduler.
+    Alternatively, you can specify ``OS-SCH-HNT:scheduler_hints`` as
+    the string.
+
+boot_index:
+  in: body
+  required: true
+  type: string
+  description: |
+    Defines the order in which a hypervisor tries
+    devices when it attempts to boot the guest from storage.  Give
+    each device a unique boot index starting from ``0``. To disable a
+    device from booting, set the boot index to a negative value or use
+    the default boot index value, which is ``None``.  The simplest
+    usage is, set the boot index of the boot device to ``0`` and use
+    the default boot index value, ``None``, for any other devices.
+    Some hypervisors might not support booting from multiple devices;
+    these hypervisors consider only the device with a boot index of
+    ``0``.  Some hypervisors support booting from multiple devices but
+    only if the devices are of different types. For example, a disk
+    and CD-ROM.
+
+key_name:
+  in: body
+  required: false
+  type: string
+  description: |
+    Key pair name.
+
+flavorRef:
+  in: body
+  required: true
+  type: string
+  description: |
+    The flavor reference, as a UUID or full URL, for
+    the flavor for your server instance.
+
+source_type:
+  in: body
+  required: true
+  type: string
+  description: |
+    The source type of the volume. A valid value is
+    ``blank``, ``snapshot``, ``volume``, or ``image``.
+
+os-availability-zone:availability_zone:
+  in: body
+  required: false
+  type: string
+  description: |
+    The availability zone from which to launch the
+    server. When you provision resources, you specify from which
+    availability zone you want your instance to be built.  Typically,
+    you use availability zones to arrange OpenStack compute hosts into
+    logical groups. An availability zone provides a form of physical
+    isolation and redundancy from other availability zones. For
+    instance, if some racks in your data center are on a separate
+    power source, you can put servers in those racks in their own
+    availability zone. Availability zones can also help separate
+    different classes of hardware.  By segregating resources into
+    availability zones, you can ensure that your application resources
+    are spread across disparate machines to achieve high availability
+    in the event of hardware or other failure.
+
+name:
+  in: body
+  required: true
+  type: string
+  description: |
+    The server name.
+
+block_device_mapping_v2:
+  in: body
+  required: false
+  type: object
+  description: |
+    Enables fine grained control of the block device
+    mapping for an instance. This is typically used for booting
+    servers from volumes.  An example format would look as follows:
+    ``"block_device_mapping_v2": { "boot_index": "0", "uuid":
+    "ac408821 -c95a-448f-9292-73986c790911", "source_type": "image",
+    "volume_size": "25", "destination_type": "volume",
+    "delete_on_termination": true }``
+
+server:
+  in: body
+  required: true
+  type: object
+  description: |
+    server.
+
+metadata:
+  in: body
+  required: false
+  type: object
+  description: |
+    Metadata key and value pairs. The maximum size of
+    the metadata key and value is 255 bytes each.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

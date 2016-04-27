@@ -1,0 +1,34 @@
+{
+  "image": {
+    "status": "ACTIVE", 
+    "updated": "2011-01-01T01:02:03Z", 
+    "OS-EXT-IMG-SIZE:size": "74185822", 
+    "links": [
+      {
+        "href": "http://openstack.example.com/v2.1/images/70a599e0-31e7-49b7-b260-868f441e862b", 
+        "rel": "self"
+      }, 
+      {
+        "href": "http://openstack.example.com/images/70a599e0-31e7-49b7-b260-868f441e862b", 
+        "rel": "bookmark"
+      }, 
+      {
+        "href": "http://glance.openstack.example.com/images/70a599e0-31e7-49b7-b260-868f441e862b", 
+        "type": "application/vnd.openstack.image", 
+        "rel": "alternate"
+      }
+    ], 
+    "created": "2011-01-01T01:02:03Z", 
+    "minDisk": 0, 
+    "name": "fakeimage7", 
+    "progress": 100, 
+    "minRam": 0, 
+    "id": "70a599e0-31e7-49b7-b260-868f441e862b", 
+    "metadata": {
+      "auto_disk_config": true, 
+      "kernel_id": "nokernel", 
+      "ramdisk_id": "nokernel", 
+      "architecture": "x86_64"
+    }
+  }
+}

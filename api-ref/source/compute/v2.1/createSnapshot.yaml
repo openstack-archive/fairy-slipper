@@ -1,0 +1,15 @@
+snapshot:
+  in: body
+  required: true
+  type: string
+  description: |
+    A partial representation of a snapshot that is
+    used to create a snapshot.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

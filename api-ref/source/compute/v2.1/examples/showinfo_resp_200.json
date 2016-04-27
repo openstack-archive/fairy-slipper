@@ -1,0 +1,31 @@
+{
+  "host": [
+    {
+      "resource": {
+        "memory_mb": 8192, 
+        "project": "(total)", 
+        "host": "c1a7de0ac9d94e4baceae031d05caae3", 
+        "cpu": 1, 
+        "disk_gb": 1028
+      }
+    }, 
+    {
+      "resource": {
+        "memory_mb": 512, 
+        "project": "(used_now)", 
+        "host": "c1a7de0ac9d94e4baceae031d05caae3", 
+        "cpu": 0, 
+        "disk_gb": 0
+      }
+    }, 
+    {
+      "resource": {
+        "memory_mb": 0, 
+        "project": "(used_max)", 
+        "host": "c1a7de0ac9d94e4baceae031d05caae3", 
+        "cpu": 0, 
+        "disk_gb": 0
+      }
+    }
+  ]
+}

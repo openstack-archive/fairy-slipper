@@ -1,0 +1,9 @@
+{
+  "servers": [
+    {
+      "project_id": "openstack", 
+      "id": "1d1aea35-472b-40cf-9337-8eb68480aaa1", 
+      "alive": false
+    }
+  ]
+}

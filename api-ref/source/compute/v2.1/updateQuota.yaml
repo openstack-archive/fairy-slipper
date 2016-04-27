@@ -1,0 +1,420 @@
+injected_file_content_bytes:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed bytes of content for each
+    injected file.
+
+metadata_items:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed metadata items for each
+    instance.
+
+server_group_members:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed members for each server
+    group.
+
+server_groups:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed server groups for each
+    tenant.
+
+ram:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The amount of allowed instance RAM, in MB, for
+    each tenant.
+
+floating_ips:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed floating IP addresses for
+    each tenant.
+
+key_pairs:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed key pairs for each user.
+
+id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The ID of the quota set.
+
+instances:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed instances for each tenant.
+
+security_group_rules:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed rules for each security
+    group.
+
+injected_files:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed injected files for each
+    tenant.
+
+quota_set:
+  in: body
+  required: true
+  type: object
+  description: |
+    A ``quota_set`` object.
+
+cores:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed instance cores for each
+    tenant.
+
+fixed_ips:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed fixed IP addresses for each
+    tenant. Must be equal to or greater than the number of allowed
+    instances.
+
+injected_file_path_bytes:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed bytes for each injected
+    file path.
+
+security_groups:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed security groups for each
+    tenant.
+
+injected_file_content_bytes:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed bytes of content for each
+    injected file.
+
+metadata_items:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed metadata items for each
+    instance.
+
+force:
+  in: body
+  required: false
+  type: boolean
+  description: |
+    You can force the update even if the quota has
+    already been used and the reserved quota exceeds the new quota. To
+    force the update, specify the ``"force": "true"``. Default is
+    ``false``.
+
+server_group_members:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed members for each server
+    group.
+
+server_groups:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed server groups for each
+    tenant.
+
+ram:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The amount of allowed instance RAM, in MB, for
+    each tenant.
+
+floating_ips:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed floating IP addresses for
+    each tenant.
+
+key_pairs:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed key pairs for each user.
+
+injected_file_path_bytes:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed bytes for each injected
+    file path.
+
+instances:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed instances for each tenant.
+
+security_group_rules:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed rules for each security
+    group.
+
+injected_files:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed injected files for each
+    tenant.
+
+quota_set:
+  in: body
+  required: true
+  type: object
+  description: |
+    A ``quota_set`` object.
+
+cores:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed instance cores for each
+    tenant.
+
+fixed_ips:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed fixed IP addresses for each
+    tenant. Must be equal to or greater than the number of allowed
+    instances.
+
+id:
+  in: body
+  required: false
+  type: string
+  description: |
+    The ID of the quota set.
+
+security_groups:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed security groups for each
+    tenant.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+admin_tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the administrative tenant.
+
+user_id:
+  in: query
+  required: false
+  type: string
+  description: |
+    Filters the response by a user, by ID.
+
+injected_file_content_bytes:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed bytes of content for each
+    injected file.
+
+metadata_items:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed metadata items for each
+    instance.
+
+server_group_members:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed members for each server
+    group.
+
+server_groups:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed server groups for each
+    tenant.
+
+ram:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The amount of allowed instance RAM, in MB, for
+    each tenant.
+
+floating_ips:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed floating IP addresses for
+    each tenant.
+
+key_pairs:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed key pairs for each user.
+
+id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The ID of the quota set.
+
+instances:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed instances for each tenant.
+
+security_group_rules:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed rules for each security
+    group.
+
+injected_files:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed injected files for each
+    tenant.
+
+quota_set:
+  in: body
+  required: true
+  type: object
+  description: |
+    A ``quota_set`` object.
+
+cores:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed instance cores for each
+    tenant.
+
+fixed_ips:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed fixed IP addresses for each
+    tenant. Must be equal to or greater than the number of allowed
+    instances.
+
+injected_file_path_bytes:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed bytes for each injected
+    file path.
+
+security_groups:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed security groups for each
+    tenant.
+
+class_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the quota class.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

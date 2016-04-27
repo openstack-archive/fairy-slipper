@@ -1,0 +1,37 @@
+volume_types:
+  in: body
+  required: false
+  type: array
+  description: |
+    The ``volume_types`` object.
+
+extra_specs:
+  in: body
+  required: false
+  type: object
+  description: |
+    The definition of a volume type. This is a group
+    of policies e.g. provision type. QoS that will be used to define a
+    volume at creation time.
+
+id:
+  in: body
+  required: false
+  type: string
+  description: |
+    The UUID of volume.
+
+name:
+  in: body
+  required: false
+  type: string
+  description: |
+    The name of volume.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

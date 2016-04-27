@@ -1,0 +1,11 @@
+{
+  "security_group_default_rule": {
+    "to_port": 80, 
+    "from_port": 80, 
+    "ip_range": {
+      "cidr": "10.10.10.0/24"
+    }, 
+    "id": 1, 
+    "ip_protocol": "TCP"
+  }
+}

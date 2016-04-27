@@ -1,0 +1,42 @@
+
+List versions
+=============
+
+.. rest_method::  GET /
+
+Lists information about all Database Service API versions.
+
+
+Normal response codes: 200
+Error response codes:413,405,404,403,401,400,422,503,500,501,
+
+
+Request Parameters
+------------------
+
+.. rest_parameters:: parameters.yaml
+
+
+
+
+
+
+
+Response Example
+----------------
+
+.. literalinclude:: samples/db-versions-response.json
+   :language: javascript
+
+
+
+
+
+
+
+
+
+
+
+
+

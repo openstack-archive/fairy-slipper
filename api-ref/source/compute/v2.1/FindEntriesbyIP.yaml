@@ -1,0 +1,22 @@
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+domain:
+  in: path
+  required: false
+  type: string
+  description: |
+    The registered DNS domain that the DNS drivers
+    publish.
+
+ip:
+  in: path
+  required: false
+  type: string
+  description: |
+    The IP address.
+

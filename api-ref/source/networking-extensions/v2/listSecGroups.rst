@@ -1,0 +1,56 @@
+
+List security groups
+====================
+
+.. rest_method::  GET /v2.0/security-groups
+
+Lists OpenStack Networking security groups to which the tenant has access.
+
+The list shows the UUID for and the rules that are associated with
+each security group.
+
+
+Normal response codes: 200
+Error response codes:401,
+
+
+Request Parameters
+------------------
+
+.. rest_parameters:: parameters.yaml
+
+
+
+
+Response Parameters
+-------------------
+
+.. rest_parameters:: parameters.yaml
+
+   - remote_group_id: remote_group_id
+   - direction: direction
+   - protocol: protocol
+   - description: description
+   - ethertype: ethertype
+   - port_range_max: port_range_max
+   - security_group_rules: security_group_rules
+   - security_group_id: security_group_id
+   - tenant_id: tenant_id
+   - port_range_min: port_range_min
+   - remote_ip_prefix: remote_ip_prefix
+   - id: id
+   - security_groups: security_groups
+   - name: name
+
+
+
+
+Response Example
+----------------
+
+.. literalinclude:: ../samples/security-groups/security-groups-list-response.json
+   :language: javascript
+
+
+
+

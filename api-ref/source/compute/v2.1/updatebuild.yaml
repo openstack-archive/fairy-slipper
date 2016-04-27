@@ -1,0 +1,63 @@
+url:
+  in: body
+  required: true
+  type: string
+  description: |
+    The URL associated with the agent.
+
+md5hash:
+  in: body
+  required: true
+  type: string
+  description: |
+    The MD5 hash.
+
+agent_id:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The agent ID.
+
+version:
+  in: body
+  required: true
+  type: string
+  description: |
+    The version.
+
+url:
+  in: body
+  required: true
+  type: string
+  description: |
+    The URL associated with the agent.
+
+md5hash:
+  in: body
+  required: true
+  type: string
+  description: |
+    The MD5 hash.
+
+version:
+  in: body
+  required: true
+  type: string
+  description: |
+    The version.
+
+agent_build_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the agent build.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

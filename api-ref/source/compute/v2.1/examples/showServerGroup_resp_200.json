@@ -1,0 +1,13 @@
+{
+  "server_group": {
+    "user_id": "test-user", 
+    "name": "test", 
+    "members": [], 
+    "policies": [
+      "anti-affinity"
+    ], 
+    "project_id": "test-project", 
+    "id": "5bbcc3c4-1da2-4437-a48a-66f15b1b13f9", 
+    "metadata": {}
+  }
+}

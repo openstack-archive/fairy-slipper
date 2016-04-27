@@ -1,0 +1,4 @@
+{
+  "binary": "nova-compute", 
+  "host": "host1"
+}
