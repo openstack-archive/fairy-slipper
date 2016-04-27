@@ -1,0 +1,10 @@
+{
+  "events": [
+    {
+      "status": "completed", 
+      "tag": "foo", 
+      "name": "test-event", 
+      "server_uuid": "3df201cf-2451-44f2-8d25-a4ca826fc1f3"
+    }
+  ]
+}

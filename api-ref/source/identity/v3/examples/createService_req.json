@@ -1,0 +1,7 @@
+{
+  "service": {
+    "type": "compute", 
+    "description": "Compute service 2", 
+    "name": "compute2"
+  }
+}

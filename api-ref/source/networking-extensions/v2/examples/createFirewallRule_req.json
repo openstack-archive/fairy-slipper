@@ -1,0 +1,9 @@
+{
+  "firewall_rule": {
+    "action": "allow", 
+    "protocol": "tcp", 
+    "destination_port": "80", 
+    "enabled": true, 
+    "name": "ALLOW_HTTP"
+  }
+}

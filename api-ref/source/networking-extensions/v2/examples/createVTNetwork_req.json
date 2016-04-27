@@ -1,0 +1,7 @@
+{
+  "network": {
+    "vlan_transparent": true, 
+    "name": "net1", 
+    "admin_state_up": true
+  }
+}

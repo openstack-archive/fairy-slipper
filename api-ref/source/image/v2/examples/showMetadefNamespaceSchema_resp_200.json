@@ -1,0 +1,212 @@
+{
+  "additionalProperties": false, 
+  "definitions": {
+    "property": {
+      "additionalProperties": {
+        "required": [
+          "title", 
+          "type"
+        ], 
+        "type": "object", 
+        "properties": {
+          "additionalItems": {
+            "type": "boolean"
+          }, 
+          "required": {
+            "$ref": "#/definitions/stringArray"
+          }, 
+          "description": {
+            "type": "string"
+          }, 
+          "title": {
+            "type": "string"
+          }, 
+          "default": {}, 
+          "items": {
+            "type": "object", 
+            "properties": {
+              "enum": {
+                "type": "array"
+              }, 
+              "type": {
+                "enum": [
+                  "array", 
+                  "boolean", 
+                  "integer", 
+                  "number", 
+                  "object", 
+                  "string", 
+                  null
+                ], 
+                "type": "string"
+              }
+            }
+          }, 
+          "enum": {
+            "type": "array"
+          }, 
+          "maximum": {
+            "type": "number"
+          }, 
+          "minItems": {
+            "$ref": "#/definitions/positiveIntegerDefault0"
+          }, 
+          "readonly": {
+            "type": "boolean"
+          }, 
+          "minimum": {
+            "type": "number"
+          }, 
+          "maxItems": {
+            "$ref": "#/definitions/positiveInteger"
+          }, 
+          "maxLength": {
+            "$ref": "#/definitions/positiveInteger"
+          }, 
+          "uniqueItems": {
+            "default": false, 
+            "type": "boolean"
+          }, 
+          "pattern": {
+            "type": "string", 
+            "format": "regex"
+          }, 
+          "type": {
+            "enum": [
+              "array", 
+              "boolean", 
+              "integer", 
+              "number", 
+              "object", 
+              "string", 
+              null
+            ], 
+            "type": "string"
+          }, 
+          "minLength": {
+            "$ref": "#/definitions/positiveIntegerDefault0"
+          }, 
+          "name": {
+            "type": "string"
+          }
+        }
+      }, 
+      "type": "object"
+    }, 
+    "positiveIntegerDefault0": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/positiveInteger"
+        }, 
+        {
+          "default": 0
+        }
+      ]
+    }, 
+    "stringArray": {
+      "uniqueItems": true, 
+      "items": {
+        "type": "string"
+      }, 
+      "type": "array"
+    }, 
+    "positiveInteger": {
+      "minimum": 0, 
+      "type": "integer"
+    }
+  }, 
+  "required": [
+    "namespace"
+  ], 
+  "name": "namespace", 
+  "properties": {
+    "display_name": {
+      "type": "string", 
+      "description": "The user friendly name for the namespace. Used by UI if available.", 
+      "maxLength": 80
+    }, 
+    "description": {
+      "type": "string", 
+      "description": "Provides a user friendly description of the namespace.", 
+      "maxLength": 500
+    }, 
+    "created_at": {
+      "type": "string", 
+      "description": "Date and time of namespace creation (READ-ONLY)", 
+      "format": "date-time"
+    }, 
+    "namespace": {
+      "type": "string", 
+      "description": "The unique namespace text.", 
+      "maxLength": 80
+    }, 
+    "updated_at": {
+      "type": "string", 
+      "description": "Date and time of the last namespace modification (READ-ONLY)", 
+      "format": "date-time"
+    }, 
+    "visibility": {
+      "enum": [
+        "public", 
+        "private"
+      ], 
+      "type": "string", 
+      "description": "Scope of namespace accessibility."
+    }, 
+    "self": {
+      "type": "string"
+    }, 
+    "objects": {
+      "items": {
+        "type": "object", 
+        "properties": {
+          "properties": {
+            "$ref": "#/definitions/property"
+          }, 
+          "required": {
+            "$ref": "#/definitions/stringArray"
+          }, 
+          "description": {
+            "type": "string"
+          }, 
+          "name": {
+            "type": "string"
+          }
+        }
+      }, 
+      "type": "array"
+    }, 
+    "owner": {
+      "type": "string", 
+      "description": "Owner of the namespace.", 
+      "maxLength": 255
+    }, 
+    "protected": {
+      "type": "boolean", 
+      "description": "If true, namespace will not be deletable."
+    }, 
+    "resource_type_associations": {
+      "items": {
+        "type": "object", 
+        "properties": {
+          "prefix": {
+            "type": "string"
+          }, 
+          "properties_target": {
+            "type": "string"
+          }, 
+          "name": {
+            "type": "string"
+          }
+        }
+      }, 
+      "type": "array"
+    }, 
+    "properties": {
+      "$ref": "#/definitions/property"
+    }, 
+    "schema": {
+      "type": "string"
+    }
+  }
+}

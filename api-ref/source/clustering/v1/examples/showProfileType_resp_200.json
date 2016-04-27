@@ -1,0 +1,47 @@
+{
+  "profile_type": {
+    "name": "os.heat.stack", 
+    "schema": {
+      "files": {
+        "default": {}, 
+        "required": false, 
+        "type": "Map", 
+        "description": "Contents of files referenced by the template, if any."
+      }, 
+      "disable_rollback": {
+        "default": true, 
+        "required": false, 
+        "type": "Boolean", 
+        "description": "A boolean specifying whether a stack operation can be rolled back."
+      }, 
+      "template": {
+        "required": true, 
+        "type": "Map", 
+        "description": "Heat stack template."
+      }, 
+      "parameters": {
+        "default": {}, 
+        "required": false, 
+        "type": "Map", 
+        "description": "Parameters to be passed to Heat for stack operations."
+      }, 
+      "timeout": {
+        "required": false, 
+        "type": "Integer", 
+        "description": "A integer that specifies the number of minutes that a stack operation times out."
+      }, 
+      "environment": {
+        "default": {}, 
+        "required": false, 
+        "type": "Map", 
+        "description": "A map that specifies the environment used for stack operations."
+      }, 
+      "context": {
+        "default": {}, 
+        "required": false, 
+        "type": "Map", 
+        "description": "A dictionary for specifying the customized context for stack operations"
+      }
+    }
+  }
+}

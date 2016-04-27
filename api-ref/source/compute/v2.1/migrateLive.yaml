@@ -1,0 +1,42 @@
+disk_over_commit:
+  in: body
+  required: true
+  type: boolean
+  description: |
+    Set to ``true`` to enable over commit when the
+    destination host is checked for available disk space.  Set to
+    ``false`` to disable over commit. This setting affects only the
+    libvirt virt driver.
+
+block_migration:
+  in: body
+  required: true
+  type: boolean
+  description: |
+    Set to ``true`` to migrate local disks by using
+    block migration. If the source or destination host uses shared
+    storage and you set this value to ``true``, the live migration
+    fails.
+
+host:
+  in: body
+  required: true
+  type: string
+  description: |
+    The host to which to migrate the server. If you
+    omit this parameter, the scheduler chooses a host.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+server_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the server.
+

@@ -1,0 +1,11 @@
+{
+  "cluster": {
+    "name": "test_cluster", 
+    "profile_id": "mystack", 
+    "min_size": 0, 
+    "desired_capacity": 0, 
+    "timeout": null, 
+    "max_size": -1, 
+    "metadata": {}
+  }
+}

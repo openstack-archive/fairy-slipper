@@ -1,0 +1,15 @@
+project_id:
+  in: body
+  required: false
+  type: string
+  description: |
+    Creates the cloudpipe for a project. If omitted,
+    the project ID defaults to the calling tenant.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

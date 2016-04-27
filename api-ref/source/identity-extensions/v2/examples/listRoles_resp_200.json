@@ -1,0 +1,10 @@
+{
+  "roles_links": [], 
+  "roles": [
+    {
+      "description": "Nova Administrator", 
+      "name": "compute:admin", 
+      "id": "123"
+    }
+  ]
+}

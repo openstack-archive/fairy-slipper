@@ -1,0 +1,14 @@
+{
+  "endpoint": {
+    "region_id": "RegionOne", 
+    "links": {
+      "self": "http://localhost:5000/v3/endpoints/01c3d5b92f7841ac83fb4b26173c12c7"
+    }, 
+    "url": "http://23.253.211.234:9696/", 
+    "region": "RegionOne", 
+    "enabled": true, 
+    "interface": "admin", 
+    "service_id": "3b2d6ad7e02c4cde8498a547601f1b8f", 
+    "id": "01c3d5b92f7841ac83fb4b26173c12c7"
+  }
+}

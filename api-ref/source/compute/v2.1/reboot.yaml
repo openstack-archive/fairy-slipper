@@ -1,0 +1,21 @@
+reboot:
+  in: body
+  required: true
+  type: string
+  description: |
+    The action.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+server_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the server.
+

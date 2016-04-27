@@ -1,0 +1,22 @@
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+key:
+  in: path
+  required: false
+  type: string
+  description: |
+    The metadata item key, as a string. Maximum
+    length is 255 characters.
+
+image_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the image.
+

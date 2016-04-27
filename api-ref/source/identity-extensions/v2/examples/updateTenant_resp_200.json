@@ -1,0 +1,8 @@
+{
+  "tenant": {
+    "enabled": true, 
+    "description": "A description ...", 
+    "name": "ACME corp", 
+    "id": "1234"
+  }
+}

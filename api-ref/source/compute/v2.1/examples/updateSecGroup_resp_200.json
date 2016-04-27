@@ -1,0 +1,9 @@
+{
+  "security_group": {
+    "rules": [], 
+    "tenant_id": "a52cdb9cc7854a39a23d3af73a40899e", 
+    "description": "my security group", 
+    "name": "mysecgroup", 
+    "id": 1
+  }
+}

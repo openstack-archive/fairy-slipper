@@ -1,0 +1,804 @@
+{
+  "extensions": [
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Multiple network support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "NMN", 
+      "name": "Multinic"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Disk Management Extension.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "OS-DCF", 
+      "name": "DiskConfig"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Extended Availability Zone support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "OS-EXT-AZ", 
+      "name": "ExtendedAvailabilityZone"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Adds image size to image listings.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "OS-EXT-IMG-SIZE", 
+      "name": "ImageSize"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "OS-EXT-IPS", 
+      "name": "ExtendedIps"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "OS-EXT-IPS-MAC", 
+      "name": "ExtendedIpsMac"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Extended Server Attributes support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "OS-EXT-SRV-ATTR", 
+      "name": "ExtendedServerAttributes"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "OS-EXT-STS", 
+      "name": "ExtendedStatus"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "OS-EXT-VIF-NET", 
+      "name": "ExtendedVIFNet"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "OS-FLV-DISABLED", 
+      "name": "FlavorDisabled"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "OS-FLV-EXT-DATA", 
+      "name": "FlavorExtraData"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Pass arbitrary key/value pairs to the scheduler.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "OS-SCH-HNT", 
+      "name": "SchedulerHints"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Adds launched_at and terminated_at on Servers.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "OS-SRV-USG", 
+      "name": "ServerUsage"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Access IPs support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-access-ips", 
+      "name": "AccessIPs"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Enable admin-only server actions\n\n    Actions include: resetNetwork, injectNetworkInfo, os-resetState\n    ", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-admin-actions", 
+      "name": "AdminActions"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Admin password management support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-admin-password", 
+      "name": "AdminPassword"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Agents support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-agents", 
+      "name": "Agents"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Admin-only aggregate administration.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-aggregates", 
+      "name": "Aggregates"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Assisted volume snapshots.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-assisted-volume-snapshots", 
+      "name": "AssistedVolumeSnapshots"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Attach interface support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-attach-interfaces", 
+      "name": "AttachInterfaces"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "1. Add availability_zone to the Create Server API.\n       2. Add availability zones describing.\n    ", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-availability-zone", 
+      "name": "AvailabilityZone"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-baremetal-ext-status", 
+      "name": "BareMetalExtStatus"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Admin-only bare-metal node administration.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-baremetal-nodes", 
+      "name": "BareMetalNodes"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Block device mapping boot support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-block-device-mapping", 
+      "name": "BlockDeviceMapping"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-block-device-mapping-v2-boot", 
+      "name": "BlockDeviceMappingV2Boot"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-cell-capacities", 
+      "name": "CellCapacities"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Enables cells-related functionality such as adding neighbor cells,\n    listing neighbor cells, and getting the capabilities of the local cell.\n    ", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-cells", 
+      "name": "Cells"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Certificates support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-certificates", 
+      "name": "Certificates"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Adds actions to create cloudpipe instances.\n\n    When running with the Vlan network mode, you need a mechanism to route\n    from the public Internet to your vlans.  This mechanism is known as a\n    cloudpipe.\n\n    At the time of creating this class, only OpenVPN is supported.  Support for\n    a SSH Bastion host is forthcoming.\n    ", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-cloudpipe", 
+      "name": "Cloudpipe"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-cloudpipe-update", 
+      "name": "CloudpipeUpdate"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Config Drive Extension.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-config-drive", 
+      "name": "ConfigDrive"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Console token authentication support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-console-auth-tokens", 
+      "name": "ConsoleAuthTokens"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Console log output support, with tailing ability.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-console-output", 
+      "name": "ConsoleOutput"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Interactive Console support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-consoles", 
+      "name": "Consoles"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Create a backup of a server.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-create-backup", 
+      "name": "CreateBackup"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-create-server-ext", 
+      "name": "Createserverext"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Instance deferred delete.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-deferred-delete", 
+      "name": "DeferredDelete"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Enables server evacuation.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-evacuate", 
+      "name": "Evacuate"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-extended-evacuate-find-host", 
+      "name": "ExtendedEvacuateFindHost"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-extended-floating-ips", 
+      "name": "ExtendedFloatingIps"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-extended-hypervisors", 
+      "name": "ExtendedHypervisors"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-extended-networks", 
+      "name": "ExtendedNetworks"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-extended-quotas", 
+      "name": "ExtendedQuotas"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-extended-rescue-with-image", 
+      "name": "ExtendedRescueWithImage"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-extended-services", 
+      "name": "ExtendedServices"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-extended-services-delete", 
+      "name": "ExtendedServicesDelete"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Extended Status support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-extended-status", 
+      "name": "ExtendedStatus"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Extended Volumes support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-extended-volumes", 
+      "name": "ExtendedVolumes"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Fixed IPs support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-fixed-ips", 
+      "name": "FixedIPs"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Flavor access support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-flavor-access", 
+      "name": "FlavorAccess"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Flavors extra specs support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-flavor-extra-specs", 
+      "name": "FlavorExtraSpecs"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Flavor create/delete API support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-flavor-manage", 
+      "name": "FlavorManage"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Support to show the rxtx status of a flavor.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-flavor-rxtx", 
+      "name": "FlavorRxtx"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-flavor-swap", 
+      "name": "FlavorSwap"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Floating IP DNS support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-floating-ip-dns", 
+      "name": "FloatingIpDns"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Floating IPs support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-floating-ip-pools", 
+      "name": "FloatingIpPools"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Floating IPs support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-floating-ips", 
+      "name": "FloatingIps"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Bulk handling of Floating IPs.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-floating-ips-bulk", 
+      "name": "FloatingIpsBulk"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Fping Management Extension.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-fping", 
+      "name": "Fping"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Support hiding server addresses in certain states.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-hide-server-addresses", 
+      "name": "HideServerAddresses"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Admin-only host administration.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-hosts", 
+      "name": "Hosts"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-hypervisor-status", 
+      "name": "HypervisorStatus"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Admin-only hypervisor administration.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-hypervisors", 
+      "name": "Hypervisors"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "View a log of actions and events taken on an instance.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-instance-actions", 
+      "name": "InstanceActions"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Admin-only Task Log Monitoring.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-instance_usage_audit_log", 
+      "name": "OSInstanceUsageAuditLog"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Keypair Support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-keypairs", 
+      "name": "Keypairs"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Enable lock/unlock server actions.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-lock-server", 
+      "name": "LockServer"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Enable migrate and live-migrate server actions.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-migrate-server", 
+      "name": "MigrateServer"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Provide data on migrations.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-migrations", 
+      "name": "Migrations"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Allow multiple create in the Create Server v2.1 API.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-multiple-create", 
+      "name": "MultipleCreate"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Admin-only Network Management Extension.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-networks", 
+      "name": "Networks"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Network association support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-networks-associate", 
+      "name": "NetworkAssociationSupport"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Enable pause/unpause server actions.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-pause-server", 
+      "name": "PauseServer"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Personality support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-personality", 
+      "name": "Personality"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Allow preservation of the ephemeral partition on rebuild.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-preserve-ephemeral-rebuild", 
+      "name": "PreserveEphemeralOnRebuild"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Quota classes management support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-quota-class-sets", 
+      "name": "QuotaClasses"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Quotas management support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-quota-sets", 
+      "name": "Quotas"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Instance rescue mode.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-rescue", 
+      "name": "Rescue"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Default rules for security group support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-security-group-default-rules", 
+      "name": "SecurityGroupDefaultRules"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Security group support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-security-groups", 
+      "name": "SecurityGroups"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Allow Admins to view server diagnostics through server action.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-server-diagnostics", 
+      "name": "ServerDiagnostics"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Server External Event Triggers.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-server-external-events", 
+      "name": "ServerExternalEvents"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-server-group-quotas", 
+      "name": "ServerGroupQuotas"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Server group support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-server-groups", 
+      "name": "ServerGroups"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-server-list-multi-status", 
+      "name": "ServerListMultiStatus"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Server password support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-server-password", 
+      "name": "ServerPassword"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-server-sort-keys", 
+      "name": "ServerSortKeys"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-server-start-stop", 
+      "name": "ServerStartStop"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Services support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-services", 
+      "name": "Services"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Instance shelve mode.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-shelve", 
+      "name": "Shelve"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Simple tenant usage extension.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-simple-tenant-usage", 
+      "name": "SimpleTenantUsage"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Enable suspend/resume server actions.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-suspend-server", 
+      "name": "SuspendServer"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Tenant-based Network Management Extension.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-tenant-networks", 
+      "name": "OSTenantNetworks"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Provide data on limited resources that are being used.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-used-limits", 
+      "name": "UsedLimits"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-used-limits-for-admin", 
+      "name": "UsedLimitsForAdmin"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Add user_data to the Create Server API.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-user-data", 
+      "name": "UserData"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-user-quotas", 
+      "name": "UserQuotas"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Virtual interface support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-virtual-interfaces", 
+      "name": "VirtualInterfaces"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-volume-attachment-update", 
+      "name": "VolumeAttachmentUpdate"
+    }, 
+    {
+      "updated": "2014-12-03T00:00:00Z", 
+      "description": "Volumes support.", 
+      "links": [], 
+      "namespace": "http://docs.openstack.org/compute/ext/fake_xml", 
+      "alias": "os-volumes", 
+      "name": "Volumes"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "domain": {
+    "name": "Default", 
+    "enabled": true, 
+    "description": "Owns users and projects on Identity API v2.", 
+    "links": {
+      "self": "http://localhost:5000/v3/domains/default"
+    }, 
+    "id": "default"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "snapshots": [
+    {
+      "status": "available", 
+      "displayDescription": "Default description", 
+      "displayName": "Default name", 
+      "volumeId": 12, 
+      "id": 100, 
+      "createdAt": "2013-02-25T16:27:54.684999", 
+      "size": 100
+    }, 
+    {
+      "status": "available", 
+      "displayDescription": "Default description", 
+      "displayName": "Default name", 
+      "volumeId": 12, 
+      "id": 101, 
+      "createdAt": "2013-02-25T16:27:54.685005", 
+      "size": 100
+    }, 
+    {
+      "status": "available", 
+      "displayDescription": "Default description", 
+      "displayName": "Default name", 
+      "volumeId": 12, 
+      "id": 102, 
+      "createdAt": "2013-02-25T16:27:54.685008", 
+      "size": 100
+    }
+  ]
+}

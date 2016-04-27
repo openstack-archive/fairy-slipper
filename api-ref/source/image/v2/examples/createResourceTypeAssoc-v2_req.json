@@ -1,0 +1,5 @@
+{
+  "prefix": "hw_", 
+  "properties_target": "image", 
+  "name": "OS::Cinder::Volume"
+}

@@ -1,0 +1,99 @@
+{
+  "services": [
+    {
+      "name": "nova", 
+      "links": {
+        "self": "http://localhost:5000/v3/services/1999c3a858c7408fb586817620695098"
+      }, 
+      "enabled": true, 
+      "type": "compute", 
+      "id": "1999c3a858c7408fb586817620695098", 
+      "description": "Nova Compute Service"
+    }, 
+    {
+      "name": "cinderv2", 
+      "links": {
+        "self": "http://localhost:5000/v3/services/39216610e75547f1883037e11976fc0f"
+      }, 
+      "enabled": true, 
+      "type": "volumev2", 
+      "id": "39216610e75547f1883037e11976fc0f", 
+      "description": "Cinder Volume Service V2"
+    }, 
+    {
+      "name": "neutron", 
+      "links": {
+        "self": "http://localhost:5000/v3/services/4fe41a27de3341af9100123f765eac0d"
+      }, 
+      "enabled": true, 
+      "type": "network", 
+      "id": "4fe41a27de3341af9100123f765eac0d", 
+      "description": "Neutron Service"
+    }, 
+    {
+      "name": "ec2", 
+      "links": {
+        "self": "http://localhost:5000/v3/services/61d3d05bdd1449f18923c83f52a4d762"
+      }, 
+      "enabled": true, 
+      "type": "ec2", 
+      "id": "61d3d05bdd1449f18923c83f52a4d762", 
+      "description": "EC2 Compatibility Layer"
+    }, 
+    {
+      "name": "glance", 
+      "links": {
+        "self": "http://localhost:5000/v3/services/69afa3d57d1948ea988beeb252bbaa5d"
+      }, 
+      "enabled": true, 
+      "type": "image", 
+      "id": "69afa3d57d1948ea988beeb252bbaa5d", 
+      "description": "Glance Image Service"
+    }, 
+    {
+      "name": "novav21", 
+      "links": {
+        "self": "http://localhost:5000/v3/services/79b691ee7be649d9bf8613efc0960206"
+      }, 
+      "enabled": true, 
+      "type": "computev21", 
+      "id": "79b691ee7be649d9bf8613efc0960206", 
+      "description": "Nova Compute Service V2.1"
+    }, 
+    {
+      "name": "swift", 
+      "links": {
+        "self": "http://localhost:5000/v3/services/92419b70ebe64c6c873bd20b14360e6b"
+      }, 
+      "enabled": true, 
+      "type": "object-store", 
+      "id": "92419b70ebe64c6c873bd20b14360e6b", 
+      "description": "Swift Service"
+    }, 
+    {
+      "name": "keystone", 
+      "links": {
+        "self": "http://localhost:5000/v3/services/b8f8454fc07b46b781204d2a436f9d1c"
+      }, 
+      "enabled": true, 
+      "type": "identity", 
+      "id": "b8f8454fc07b46b781204d2a436f9d1c", 
+      "description": "Keystone Identity Service"
+    }, 
+    {
+      "name": "cinder", 
+      "links": {
+        "self": "http://localhost:5000/v3/services/cdda3bea0742407f95e70f4758f46558"
+      }, 
+      "enabled": true, 
+      "type": "volume", 
+      "id": "cdda3bea0742407f95e70f4758f46558", 
+      "description": "Cinder Volume Service"
+    }
+  ], 
+  "links": {
+    "self": "http://localhost:5000/v3/services", 
+    "previous": null, 
+    "next": null
+  }
+}

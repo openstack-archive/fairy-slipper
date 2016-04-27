@@ -1,0 +1,14 @@
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+fixed_ip:
+  in: path
+  required: false
+  type: string
+  description: |
+    The fixed IP of interest to you.
+

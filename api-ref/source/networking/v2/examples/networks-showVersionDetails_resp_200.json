@@ -1,0 +1,34 @@
+{
+  "resources": [
+    {
+      "links": [
+        {
+          "href": "http://23.253.228.211:9696/v2.0/subnets", 
+          "rel": "self"
+        }
+      ], 
+      "collection": "subnets", 
+      "name": "subnet"
+    }, 
+    {
+      "links": [
+        {
+          "href": "http://23.253.228.211:9696/v2.0/networks", 
+          "rel": "self"
+        }
+      ], 
+      "collection": "networks", 
+      "name": "network"
+    }, 
+    {
+      "links": [
+        {
+          "href": "http://23.253.228.211:9696/v2.0/ports", 
+          "rel": "self"
+        }
+      ], 
+      "collection": "ports", 
+      "name": "port"
+    }
+  ]
+}

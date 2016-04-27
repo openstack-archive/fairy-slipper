@@ -1,0 +1,10 @@
+{
+  "volume_type": {
+    "os-volume-type-access:is_public": true, 
+    "extra_specs": {
+      "capabilities": "gpu"
+    }, 
+    "description": "volume type 0001", 
+    "name": "vol-type-001"
+  }
+}

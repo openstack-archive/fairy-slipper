@@ -1,0 +1,13 @@
+{
+  "subnetpool": {
+    "prefixes": [
+      "2001:db8::/64", 
+      "2001:db8:0:1::/64", 
+      "2001:db8:0:2::/64"
+    ], 
+    "min_prefixlen": 64, 
+    "default_prefixlen": 64, 
+    "name": "my-new-subnetpool-name", 
+    "max_prefixlen": 64
+  }
+}

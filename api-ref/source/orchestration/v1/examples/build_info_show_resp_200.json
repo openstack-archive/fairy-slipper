@@ -1,0 +1,8 @@
+{
+  "engine": {
+    "revision": "{engine_build_revision}"
+  }, 
+  "api": {
+    "revision": "{api_build_revision}"
+  }
+}

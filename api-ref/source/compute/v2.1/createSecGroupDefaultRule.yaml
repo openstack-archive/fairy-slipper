@@ -1,0 +1,86 @@
+from_port:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The port at start of range.
+
+ip_protocol:
+  in: body
+  required: true
+  type: string
+  description: |
+    The IP protocol. A valid value is ICMP, TCP, or
+    UDP.
+
+to_port:
+  in: body
+  required: true
+  type: integer
+  description: |
+    Port at end of range.
+
+ip_range:
+  in: body
+  required: true
+  type: object
+  description: |
+    An IP range object.
+
+cidr:
+  in: body
+  required: true
+  type: string
+  description: |
+    The CIDR for address range.
+
+id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The UUID for the security group.
+
+to_port:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The port at end of range.
+
+cidr:
+  in: body
+  required: true
+  type: string
+  description: |
+    The CIDR for address range.
+
+from_port:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The port at start of range.
+
+id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The security group name or UUID.
+
+ip_protocol:
+  in: body
+  required: true
+  type: string
+  description: |
+    The IP protocol. A valid value is ICMP, TCP, or
+    UDP.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

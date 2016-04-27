@@ -1,0 +1,16 @@
+{
+  "volume": {
+    "description": null, 
+    "imageRef": null, 
+    "availability_zone": null, 
+    "multiattach ": false, 
+    "source_volid": null, 
+    "name": null, 
+    "consistencygroup_id": null, 
+    "volume_type": null, 
+    "snapshot_id": null, 
+    "size": 10, 
+    "source_replica": null, 
+    "metadata": {}
+  }
+}

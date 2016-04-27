@@ -1,0 +1,7 @@
+{
+  "flavor": {
+    "enabled": false, 
+    "description": "New description", 
+    "name": "newname"
+  }
+}

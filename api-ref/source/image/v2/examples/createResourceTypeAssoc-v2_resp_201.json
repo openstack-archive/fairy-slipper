@@ -1,0 +1,7 @@
+{
+  "created_at": "2014-09-19T16:09:13Z", 
+  "prefix": "hw_", 
+  "properties_target": "image", 
+  "name": "OS::Cinder::Volume", 
+  "updated_at": "2014-09-19T16:09:13Z"
+}

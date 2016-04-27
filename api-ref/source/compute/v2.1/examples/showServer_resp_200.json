@@ -1,0 +1,75 @@
+{
+  "server": {
+    "OS-EXT-STS:task_state": null, 
+    "addresses": {
+      "private": [
+        {
+          "OS-EXT-IPS-MAC:mac_addr": "aa:bb:cc:dd:ee:ff", 
+          "version": 4, 
+          "addr": "192.168.0.3", 
+          "OS-EXT-IPS:type": "fixed"
+        }
+      ]
+    }, 
+    "links": [
+      {
+        "href": "http://openstack.example.com/v2/openstack/servers/f474386b-4fb6-4e1f-b1d5-d6bf4437f7d5", 
+        "rel": "self"
+      }, 
+      {
+        "href": "http://openstack.example.com/openstack/servers/f474386b-4fb6-4e1f-b1d5-d6bf4437f7d5", 
+        "rel": "bookmark"
+      }
+    ], 
+    "image": {
+      "id": "70a599e0-31e7-49b7-b260-868f441e862b", 
+      "links": [
+        {
+          "href": "http://openstack.example.com/openstack/images/70a599e0-31e7-49b7-b260-868f441e862b", 
+          "rel": "bookmark"
+        }
+      ]
+    }, 
+    "OS-EXT-STS:vm_state": "active", 
+    "OS-EXT-SRV-ATTR:instance_name": "instance-00000001", 
+    "OS-SRV-USG:launched_at": "2013-09-23T13:37:00.880302", 
+    "flavor": {
+      "id": "1", 
+      "links": [
+        {
+          "href": "http://openstack.example.com/openstack/flavors/1", 
+          "rel": "bookmark"
+        }
+      ]
+    }, 
+    "id": "f474386b-4fb6-4e1f-b1d5-d6bf4437f7d5", 
+    "security_groups": [
+      {
+        "name": "default"
+      }
+    ], 
+    "os-extended-volumes:volumes_attached": [], 
+    "user_id": "fake", 
+    "OS-DCF:diskConfig": "AUTO", 
+    "accessIPv4": "192.0.2.0", 
+    "accessIPv6": "2002:0:0:0:0:0:c000:20e", 
+    "progress": 0, 
+    "OS-EXT-STS:power_state": 1, 
+    "OS-EXT-AZ:availability_zone": "nova", 
+    "config_drive": "", 
+    "status": "ACTIVE", 
+    "updated": "2013-10-31T07:31:30Z", 
+    "hostId": "9cc36101a27c2a69c1a18241f6228454d9d7f466bd90c62db8e8b856", 
+    "OS-EXT-SRV-ATTR:host": "b8b357f7100d4391828f2177c922ef93", 
+    "OS-SRV-USG:terminated_at": null, 
+    "key_name": null, 
+    "OS-EXT-SRV-ATTR:hypervisor_hostname": "fake-mini", 
+    "name": "new-server-test", 
+    "created": "2013-09-23T13:37:00Z", 
+    "tenant_id": "openstack", 
+    "host_status": "UP", 
+    "metadata": {
+      "My Server Name": "Apache1"
+    }
+  }
+}

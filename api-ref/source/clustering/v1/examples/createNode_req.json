@@ -1,0 +1,9 @@
+{
+  "node": {
+    "role": "master", 
+    "profile_id": "mystack", 
+    "cluster_id": null, 
+    "name": "node009", 
+    "metadata": {}
+  }
+}

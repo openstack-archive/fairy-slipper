@@ -1,0 +1,12 @@
+{
+  "health_monitor": {
+    "admin_state_up": true, 
+    "delay": "1", 
+    "expected_codes": "200,201,202", 
+    "max_retries": 5, 
+    "http_method": "GET", 
+    "timeout": 1, 
+    "url_path": "/index.html", 
+    "type": "HTTP"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "volume": {
+    "size": 1, 
+    "status": "available", 
+    "os-volume-replication:extended_status": null, 
+    "description": "Super volume.", 
+    "links": [
+      {
+        "href": "http://localhost:8776/v2/0c2eba2c5af04d3f9e9d0d410b371fde/volumes/5aa119a8-d25b-45a7-8d1b-88e127885635", 
+        "rel": "self"
+      }, 
+      {
+        "href": "http://localhost:8776/0c2eba2c5af04d3f9e9d0d410b371fde/volumes/5aa119a8-d25b-45a7-8d1b-88e127885635", 
+        "rel": "bookmark"
+      }
+    ], 
+    "availability_zone": "nova", 
+    "bootable": "false", 
+    "created_at": "2013-02-25T02:40:21.000000", 
+    "snapshot_id": null, 
+    "os-volume-replication:driver_data": null, 
+    "name": "vol-002", 
+    "os-vol-host-attr:host": "ip-10-168-107-25", 
+    "volume_type": "None", 
+    "source_volid": null, 
+    "os-vol-tenant-attr:tenant_id": "0c2eba2c5af04d3f9e9d0d410b371fde", 
+    "metadata": {
+      "contents": "not junk"
+    }, 
+    "id": "5aa119a8-d25b-45a7-8d1b-88e127885635", 
+    "attachments": []
+  }
+}

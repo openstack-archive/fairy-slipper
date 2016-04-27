@@ -1,0 +1,24 @@
+x-openstack-request-id:
+  in: header
+  required: false
+  type: string
+  description: |
+    A unique ID for tracking the request. The request
+    ID associated with the request appears in the log lines for that
+    request. By default, the middleware configuration ensures that the
+    request ID appears in the log files.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+image_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the image.
+

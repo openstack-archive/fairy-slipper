@@ -1,0 +1,170 @@
+x-openstack-request-id:
+  in: header
+  required: false
+  type: string
+  description: |
+    A unique ID for tracking the request. The request
+    ID associated with the request appears in the log lines for that
+    request. By default, the middleware configuration ensures that the
+    request ID appears in the log files.
+
+injected_file_content_bytes:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed bytes of content for each
+    injected file.
+
+metadata_items:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed metadata items for each
+    instance.
+
+reserved:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The reserved quota value.
+
+server_group_members:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed members for each server
+    group.
+
+in_use:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The in-use quota value.
+
+ram:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The amount of allowed instance RAM, in MB, for
+    each tenant.
+
+floating_ips:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed floating IP addresses for
+    each tenant.
+
+key_pairs:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed key pairs for each user.
+
+injected_file_path_bytes:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed bytes for each injected
+    file path.
+
+server_groups:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed server groups for each
+    tenant.
+
+instances:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed instances for each tenant.
+
+limit:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The maximum limit for the quota.
+
+security_group_rules:
+  in: body
+  required: false
+  type: integer
+  description: |
+    The number of allowed rules for each security
+    group.
+
+injected_files:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed injected files for each
+    tenant.
+
+quota_set:
+  in: body
+  required: true
+  type: object
+  description: |
+    A ``quota_set`` object.
+
+cores:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed instance cores for each
+    tenant.
+
+fixed_ips:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed fixed IP addresses for each
+    tenant. Must be equal to or greater than the number of allowed
+    instances.
+
+id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The ID of the quota set.
+
+security_groups:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The number of allowed security groups for each
+    tenant.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+admin_tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the administrative tenant.
+

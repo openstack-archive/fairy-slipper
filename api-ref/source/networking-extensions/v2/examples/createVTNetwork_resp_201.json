@@ -1,0 +1,13 @@
+{
+  "network": {
+    "status": "ACTIVE", 
+    "router:external": false, 
+    "subnets": [], 
+    "name": "net1", 
+    "admin_state_up": true, 
+    "tenant_id": "5831268f-1f52-49a7-88d5-bc0d7a74d523", 
+    "vlan_transparent": true, 
+    "shared": false, 
+    "id": "3114f6e9-f9bc-4570-a941-7329b3b9759f"
+  }
+}

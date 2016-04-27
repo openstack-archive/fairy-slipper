@@ -1,0 +1,7 @@
+{
+  "createBackup": {
+    "backup_type": "daily", 
+    "rotation": 1, 
+    "name": "Backup 1"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "job": {
+    "description": "This is pig job example", 
+    "tenant_id": "9cd1314a0a31493282b6712b76a8fcda", 
+    "created_at": "2015-03-27 08:48:38.630827", 
+    "mains": [
+      {
+        "description": "", 
+        "url": "internal-db://872878f6-72ea-44db-8d1d-e6a6396d2df0", 
+        "tenant_id": "9cd1314a0a31493282b6712b76a8fcda", 
+        "created_at": "2015-02-03 10:47:51", 
+        "updated_at": null, 
+        "id": "90d9d5ec-11aa-48bd-bc8c-34936ce0db6e", 
+        "name": "pig"
+      }
+    ], 
+    "libs": [
+      {
+        "description": "", 
+        "url": "internal-db://c6a925fa-ac1d-4b2e-b88a-7054e1927521", 
+        "tenant_id": "9cd1314a0a31493282b6712b76a8fcda", 
+        "created_at": "2015-02-10 14:25:53", 
+        "updated_at": null, 
+        "id": "320a2ca7-25fd-4b48-9bc3-4fb1b6c4ff27", 
+        "name": "binary-job"
+      }
+    ], 
+    "is_protected": false, 
+    "interface": [], 
+    "is_public": false, 
+    "type": "Pig", 
+    "id": "71defc8f-d005-484f-9d86-1aedf644d1ef", 
+    "name": "pig-job-example"
+  }
+}

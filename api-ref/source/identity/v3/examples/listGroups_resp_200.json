@@ -1,0 +1,27 @@
+{
+  "links": {
+    "self": "http://localhost:5000/v3/groups", 
+    "previous": null, 
+    "next": null
+  }, 
+  "groups": [
+    {
+      "id": "96372bbb152f475aa37e9a76a25a029c", 
+      "name": "nonadmins", 
+      "description": "non-admin group", 
+      "links": {
+        "self": "http://localhost:5000/v3/groups/96372bbb152f475aa37e9a76a25a029c"
+      }, 
+      "domain_id": "default"
+    }, 
+    {
+      "id": "9ce0ad4e58a84d7a97b92f7955d10c92", 
+      "name": "admins", 
+      "description": "openstack admin group", 
+      "links": {
+        "self": "http://localhost:5000/v3/groups/9ce0ad4e58a84d7a97b92f7955d10c92"
+      }, 
+      "domain_id": "default"
+    }
+  ]
+}

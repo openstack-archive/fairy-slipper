@@ -1,0 +1,11 @@
+{
+  "receiver": {
+    "action": "CLUSTER_SCALE_OUT", 
+    "params": {
+      "count": "1"
+    }, 
+    "cluster_id": "cf99d754-3cdc-47f4-8a29-cd14f02f5436", 
+    "name": "cluster_inflate", 
+    "type": "webhook"
+  }
+}

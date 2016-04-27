@@ -1,0 +1,54 @@
+{
+  "availabilityZoneInfo": [
+    {
+      "zoneState": {
+        "available": true
+      }, 
+      "hosts": {
+        "test-host": {
+          "nova-conductor": {
+            "active": true, 
+            "available": true, 
+            "updated_at": "2015-04-16T08:58:55.000000"
+          }, 
+          "nova-consoleauth": {
+            "active": true, 
+            "available": true, 
+            "updated_at": "2015-04-16T08:58:55.000000"
+          }, 
+          "nova-cert": {
+            "active": true, 
+            "available": true, 
+            "updated_at": "2015-04-16T08:58:55.000000"
+          }, 
+          "nova-scheduler": {
+            "active": true, 
+            "available": true, 
+            "updated_at": "2015-04-16T08:58:55.000000"
+          }, 
+          "nova-network": {
+            "active": true, 
+            "available": true, 
+            "updated_at": "2015-04-16T08:58:54.000000"
+          }
+        }
+      }, 
+      "zoneName": "internal"
+    }, 
+    {
+      "zoneState": {
+        "available": true
+      }, 
+      "hosts": {
+        "test-host": {
+          "nova-compute": {
+            "active": true, 
+            "available": true, 
+            "updated_at": "2015-04-16T08:58:56.000000"
+          }
+        }
+      }, 
+      "zoneName": "nova"
+    }
+  ]
+}

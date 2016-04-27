@@ -1,0 +1,48 @@
+{
+  "images": [
+    {
+      "status": "ACTIVE", 
+      "username": "ubuntu", 
+      "updated": "2015-09-04T09:35:09Z", 
+      "description": null, 
+      "created": "2015-08-06T08:17:14Z", 
+      "tags": [
+        "vanilla", 
+        "2.7.1"
+      ], 
+      "minDisk": 0, 
+      "name": "ubuntu-vanilla-2.7.1", 
+      "progress": 100, 
+      "minRam": 0, 
+      "OS-EXT-IMG-SIZE:size": 998716928, 
+      "id": "4118a476-dfdc-4b0e-8d5c-463cba08e9ae", 
+      "metadata": {
+        "_sahara_username": "ubuntu", 
+        "_sahara_tag_vanilla": true, 
+        "_sahara_tag_2.7.1": true
+      }
+    }, 
+    {
+      "status": "ACTIVE", 
+      "username": "ubuntu", 
+      "updated": "2015-09-04T12:46:42Z", 
+      "description": null, 
+      "created": "2015-09-04T11:56:44Z", 
+      "tags": [
+        "5.4.0", 
+        "cdh"
+      ], 
+      "minDisk": 0, 
+      "name": "cdh-latest", 
+      "progress": 100, 
+      "minRam": 0, 
+      "OS-EXT-IMG-SIZE:size": 3281453056, 
+      "id": "ff74035b-9da7-4edf-981d-57f270ed337d", 
+      "metadata": {
+        "_sahara_username": "ubuntu", 
+        "_sahara_tag_5.4.0": true, 
+        "_sahara_tag_cdh": true
+      }
+    }
+  ]
+}

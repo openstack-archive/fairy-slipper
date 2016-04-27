@@ -1,0 +1,9 @@
+{
+  "user": {
+    "tenantId": "40429f980fac419bbfec372a5607c154", 
+    "password": null, 
+    "enabled": true, 
+    "email": "new-user@example.com", 
+    "name": "new-user"
+  }
+}

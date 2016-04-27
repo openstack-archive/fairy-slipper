@@ -1,0 +1,127 @@
+from_port:
+  in: body
+  required: true
+  type: integer
+  description: |
+    Port at start of range.
+
+group:
+  in: body
+  required: true
+  type: object
+  description: |
+    A ``group`` object. Includes the tenant ID and
+    the source security group name.
+
+ip_protocol:
+  in: body
+  required: true
+  type: string
+  description: |
+    The IP protocol: ICMP, TCP, or UDP.
+
+to_port:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The port at end of range.
+
+security_group_rule:
+  in: body
+  required: true
+  type: object
+  description: |
+    A ``security_group_rule`` object.
+
+parent_group_id:
+  in: body
+  required: true
+  type: string
+  description: |
+    Security group ID.
+
+ip_range:
+  in: body
+  required: true
+  type: object
+  description: |
+    An ``ip_range`` object.
+
+cidr:
+  in: body
+  required: true
+  type: string
+  description: |
+    The CIDR for address range.
+
+id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The security group ID.
+
+name:
+  in: body
+  required: true
+  type: string
+  description: |
+    The source security group name.
+
+from_port:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The port at start of range.
+
+ip_protocol:
+  in: body
+  required: true
+  type: string
+  description: |
+    The IP protocol: ICMP, TCP, or UDP.
+
+to_port:
+  in: body
+  required: true
+  type: integer
+  description: |
+    The port at end of range.
+
+security_group_rule:
+  in: body
+  required: true
+  type: object
+  description: |
+    A ``security_group_rule`` object.
+
+parent_group_id:
+  in: body
+  required: true
+  type: string
+  description: |
+    Security group ID.
+
+cidr:
+  in: body
+  required: true
+  type: string
+  description: |
+    The CIDR for address range.
+
+group_id:
+  in: body
+  required: false
+  type: string
+  description: |
+    The source security group ID.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

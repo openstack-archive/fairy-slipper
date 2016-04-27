@@ -1,0 +1,20 @@
+{
+  "cgsnapshots": [
+    {
+      "status": "available", 
+      "description": "my first consistency group", 
+      "created_at": "2015-09-16T09:28:52.000000", 
+      "consistencygroup_id": "6f519a48-3183-46cf-a32f-41815f814444", 
+      "id": "6f519a48-3183-46cf-a32f-41815f813986", 
+      "name": "my-cg1"
+    }, 
+    {
+      "status": "error", 
+      "description": "Edited description", 
+      "created_at": "2015-09-16T09:31:15.000000", 
+      "consistencygroup_id": "aed36625-a6d7-4681-ba59-c7ba3d18dddd", 
+      "id": "aed36625-a6d7-4681-ba59-c7ba3d18c148", 
+      "name": "my-cg2"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "security_group": {
+    "description": "my security group", 
+    "name": "mysecgroup"
+  }
+}

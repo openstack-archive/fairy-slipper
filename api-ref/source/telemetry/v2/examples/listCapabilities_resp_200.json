@@ -1,0 +1,40 @@
+{
+  "storage": {
+    "storage:production_ready": true
+  }, 
+  "api": {
+    "statistics:query:complex": false, 
+    "alarms:history:query:simple": true, 
+    "events:query:simple": true, 
+    "alarms:query:simple": true, 
+    "resources:query:simple": true, 
+    "statistics:aggregation:selectable:quartile": false, 
+    "statistics:query:simple": true, 
+    "statistics:aggregation:selectable:count": true, 
+    "statistics:aggregation:selectable:min": true, 
+    "statistics:aggregation:selectable:sum": true, 
+    "statistics:aggregation:selectable:avg": true, 
+    "meters:query:complex": false, 
+    "statistics:groupby": true, 
+    "alarms:history:query:complex": true, 
+    "meters:query:simple": true, 
+    "samples:query:metadata": true, 
+    "statistics:query:metadata": true, 
+    "samples:query:simple": true, 
+    "resources:query:metadata": true, 
+    "statistics:aggregation:selectable:max": true, 
+    "samples:query:complex": true, 
+    "statistics:aggregation:standard": true, 
+    "meters:query:metadata": true, 
+    "statistics:aggregation:selectable:stddev": true, 
+    "alarms:query:complex": true, 
+    "statistics:aggregation:selectable:cardinality": true, 
+    "resources:query:complex": false
+  }, 
+  "alarm_storage": {
+    "storage:production_ready": true
+  }, 
+  "event_storage": {
+    "storage:production_ready": true
+  }
+}

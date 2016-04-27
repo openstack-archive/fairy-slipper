@@ -1,0 +1,26 @@
+{
+  "version": {
+    "status": "SUPPORTED", 
+    "updated": "2011-01-21T11:33:21Z", 
+    "links": [
+      {
+        "href": "http://openstack.example.com/v2/", 
+        "rel": "self"
+      }, 
+      {
+        "href": "http://docs.openstack.org/", 
+        "type": "text/html", 
+        "rel": "describedby"
+      }
+    ], 
+    "min_version": "", 
+    "version": "", 
+    "media-types": [
+      {
+        "base": "application/json", 
+        "type": "application/vnd.openstack.compute+json;version=2"
+      }
+    ], 
+    "id": "v2.0"
+  }
+}

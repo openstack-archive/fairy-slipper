@@ -1,0 +1,14 @@
+{
+  "user": {
+    "description": "James Doe's user", 
+    "links": {
+      "self": "https://identity:35357/v3/users/ff4e51"
+    }, 
+    "enabled": true, 
+    "email": "jamesdoe@example.com", 
+    "default_project_id": "263fd9", 
+    "id": "ff4e51", 
+    "domain_id": "1789d1", 
+    "name": "jamesdoe"
+  }
+}

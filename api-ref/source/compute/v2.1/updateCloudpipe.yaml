@@ -1,0 +1,21 @@
+vpn_ip:
+  in: body
+  required: true
+  type: string
+  description: |
+    The VPN IP address.
+
+vpn_port:
+  in: body
+  required: true
+  type: string
+  description: |
+    The VPN port.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

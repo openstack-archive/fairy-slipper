@@ -1,0 +1,37 @@
+{
+  "instance": {
+    "status": "ACTIVE", 
+    "updated": "2012-03-28T21:34:25Z", 
+    "name": "xml_rack_instance", 
+    "links": [
+      {
+        "href": "https://openstack.example.com/v1.0/1234/instances/2450c73f-7805-4afe-a42c-4094ab42666b", 
+        "rel": "self"
+      }, 
+      {
+        "href": "https://openstack.example.com/instances/2450c73f-7805-4afe-a42c-4094ab42666b", 
+        "rel": "bookmark"
+      }
+    ], 
+    "created": "2012-03-28T21:31:02Z", 
+    "hostname": "e09ad9a3f73309469cf1f43d11e79549caf9acf2.rackspaceclouddb.com", 
+    "volume": {
+      "used": 0.124542236328125, 
+      "size": 2
+    }, 
+    "flavor": {
+      "id": "1", 
+      "links": [
+        {
+          "href": "https://openstack.example.com/v1.0/1234/flavors/1", 
+          "rel": "self"
+        }, 
+        {
+          "href": "https://openstack.example.com/flavors/1", 
+          "rel": "bookmark"
+        }
+      ]
+    }, 
+    "id": "2450c73f-7805-4afe-a42c-4094ab42666b"
+  }
+}

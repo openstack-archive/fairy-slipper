@@ -1,0 +1,8 @@
+{
+  "project": {
+    "enabled": true, 
+    "description": "My updated project", 
+    "name": "myUpdatedProject", 
+    "domain_id": "default"
+  }
+}

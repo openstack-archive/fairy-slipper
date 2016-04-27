@@ -1,0 +1,44 @@
+{
+  "OS-KSCATALOG:endpointsTemplates": [
+    {
+      "region": "North", 
+      "global": true, 
+      "enabled": true, 
+      "internalURL": "https://compute.north.internal.com/v1", 
+      "type": "compute", 
+      "id": 1, 
+      "publicURL": "https://compute.north.public.com/v1"
+    }, 
+    {
+      "region": "South", 
+      "enabled": false, 
+      "internalURL": "https://compute.south.internal.com/v1", 
+      "type": "compute", 
+      "id": 2, 
+      "publicURL": "https://compute.south.public.com/v1"
+    }, 
+    {
+      "region": "North", 
+      "global": true, 
+      "enabled": true, 
+      "type": "object-store", 
+      "id": 3, 
+      "publicURL": "https://object-store.north.public.com/v1.0"
+    }, 
+    {
+      "type": "object-store", 
+      "region": "South", 
+      "enabled": true, 
+      "id": 4, 
+      "publicURL": "https://object-store.south.public.com/v2"
+    }, 
+    {
+      "type": "OS-DNS:DNS", 
+      "global": true, 
+      "enabled": true, 
+      "id": 5, 
+      "publicURL": "https://dns.public.com/v3.2"
+    }
+  ], 
+  "OS-KSCATALOG:endpointsTemplates_links": []
+}

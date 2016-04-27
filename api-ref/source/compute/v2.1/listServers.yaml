@@ -1,0 +1,121 @@
+x-openstack-request-id:
+  in: header
+  required: false
+  type: string
+  description: |
+    A unique ID for tracking the request. The request
+    ID associated with the request appears in the log lines for that
+    request. By default, the middleware configuration ensures that the
+    request ID appears in the log files.
+
+servers:
+  in: body
+  required: true
+  type: array
+  description: |
+    A list of ``server`` objects.
+
+id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The UUID of the server.
+
+links:
+  in: body
+  required: true
+  type: array
+  description: |
+    Server links.
+
+name:
+  in: body
+  required: true
+  type: string
+  description: |
+    The server name. The user sets the server name.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+
+changes-since:
+  in: query
+  required: false
+  type: string
+  description: |
+    Filters the response by a date and time stamp
+    when the server last changed status.
+
+image:
+  in: query
+  required: false
+  type: string
+  description: |
+    Filters the response by an image, as a UUID.
+
+flavor:
+  in: query
+  required: false
+  type: string
+  description: |
+    Filters the response by a flavor, as a UUID. A
+    flavor is a combination of memory, disk size, and CPUs.
+
+name:
+  format: regexp
+  in: query
+  required: false
+  type: string
+  description: |
+    Filters the response by a server name, as a
+    string.  You can use regular expressions in the query. For
+    example, the ``?name=bob`` regular expression returns both bob and
+    bobb. If you must match on only bob, you can use a regular
+    expression that matches the syntax of the underlying database
+    server that is implemented for Compute, such as MySQL or
+    PostgreSQL.
+
+status:
+  in: query
+  required: false
+  type: string
+  description: |
+    Filters the response by a server status, as a
+    string. For example, ``ACTIVE``.
+
+host:
+  in: query
+  required: false
+  type: string
+  description: |
+    Filters the response by a host name, as a string.
+    This query parameter is typically available to only administrative
+    users. If you are a non-administrative user, the API ignores this
+    parameter.
+
+limit:
+  in: query
+  required: false
+  type: integer
+  description: |
+    Requests a page size of items. Returns a number
+    of items up to a limit value. Use the ``limit`` parameter to make
+    an initial limited request and use the ID of the last-seen item
+    from the response as the ``marker`` parameter value in a
+    subsequent limited request.
+
+marker:
+  in: query
+  required: false
+  type: string
+  description: |
+    The ID of the last-seen item. Use the ``limit``
+    parameter to make an initial limited request and use the ID of the
+    last-seen item from the response as the ``marker`` parameter value
+    in a subsequent limited request.
+

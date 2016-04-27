@@ -1,0 +1,30 @@
+{
+  "node_group_template": {
+    "volume_local_to_instance": false, 
+    "availability_zone": null, 
+    "use_autoconfig": true, 
+    "volumes_per_node": 0, 
+    "id": "0bb9f1a4-0c44-4dc5-9452-6741c62ed9ae", 
+    "security_groups": null, 
+    "node_configs": {}, 
+    "auto_security_group": false, 
+    "volumes_availability_zone": null, 
+    "volume_mount_prefix": "/volumes/disk", 
+    "plugin_name": "vanilla", 
+    "floating_ip_pool": "033debed-aeb8-488c-b7d0-adb74c61faa5", 
+    "is_default": false, 
+    "volumes_size": 0, 
+    "is_proxy_gateway": false, 
+    "is_public": false, 
+    "hadoop_version": "2.7.1", 
+    "name": "new", 
+    "tenant_id": "808d5032ea0446889097723bfc8e919d", 
+    "created_at": "2015-09-14T10:20:11", 
+    "volume_type": null, 
+    "is_protected": false, 
+    "node_processes": [
+      "datanode"
+    ], 
+    "flavor_id": "2"
+  }
+}

@@ -1,0 +1,21 @@
+name:
+  in: body
+  required: false
+  type: string
+  description: |
+    The name of floating IP pools.
+
+floating_ip_pools:
+  in: body
+  required: false
+  type: array
+  description: |
+    The ``floating_ip_pools`` object.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

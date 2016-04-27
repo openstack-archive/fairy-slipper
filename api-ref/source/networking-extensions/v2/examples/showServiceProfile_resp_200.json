@@ -1,0 +1,9 @@
+{
+  "service_profile": {
+    "enabled": true, 
+    "metainfo": "{'foo': 'bar'}", 
+    "driver": "neutron_lbaas.drivers.octavia.driver.OctaviaDriver", 
+    "description": "Dummy profile", 
+    "id": "7c793e5f-9b64-44e0-8b1f-902e59c85a01"
+  }
+}

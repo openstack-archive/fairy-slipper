@@ -1,0 +1,17 @@
+{
+  "tenants_links": [], 
+  "tenants": [
+    {
+      "enabled": true, 
+      "description": "A description ...", 
+      "name": "ACME Corp", 
+      "id": "1234"
+    }, 
+    {
+      "enabled": true, 
+      "description": "A description ...", 
+      "name": "Iron Works", 
+      "id": "3456"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+ip_range:
+  in: body
+  required: true
+  type: string
+  description: |
+    The range of IP addresses to use for creating
+    floating IPs.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

@@ -1,0 +1,14 @@
+{
+  "images": [
+    {
+      "container_format": "ovf", 
+      "uri": "http://glance.example.com/images/71c675ab-d94f-49cd-a114-e12490b328d9", 
+      "disk_format": "vhd", 
+      "name": "Ubuntu 10.04 Plain", 
+      "size": "5368709120"
+    }, 
+    {
+      "...": "..."
+    }
+  ]
+}

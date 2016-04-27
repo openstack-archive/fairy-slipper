@@ -1,0 +1,41 @@
+{
+  "display_name": "Hypervisor Selection", 
+  "description": "Choose capabilities that should be provided by the Compute Host. This provides the ability to fine tune the hardware specification required when a new vm is requested.", 
+  "self": "/v2/metadefs/namespaces/OS::Compute::Hypervisor", 
+  "namespace": "OS::Compute::Hypervisor", 
+  "visibility": "public", 
+  "protected": true, 
+  "resource_type_associations": [
+    {
+      "name": "OS::Glance::Image"
+    }
+  ], 
+  "properties": {
+    "vm_mode": {
+      "enum": [
+        "hvm", 
+        "xen", 
+        "uml", 
+        "exe"
+      ], 
+      "type": "string", 
+      "description": "The virtual machine mode.", 
+      "title": "VM Mode"
+    }, 
+    "hypervisor_type": {
+      "enum": [
+        "xen", 
+        "qemu", 
+        "kvm", 
+        "lxc", 
+        "uml", 
+        "vmware", 
+        "hyperv"
+      ], 
+      "type": "string", 
+      "description": "The hypervisor type.", 
+      "title": "Hypervisor Type"
+    }
+  }, 
+  "schema": "/v2/schemas/metadefs/namespace"
+}

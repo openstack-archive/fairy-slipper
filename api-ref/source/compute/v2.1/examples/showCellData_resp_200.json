@@ -1,0 +1,9 @@
+{
+  "cell": {
+    "username": "username3", 
+    "rpc_host": null, 
+    "type": "child", 
+    "name": "cell3", 
+    "rpc_port": null
+  }
+}

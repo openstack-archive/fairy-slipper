@@ -1,0 +1,26 @@
+{
+  "consistencygroups": [
+    {
+      "status": "available", 
+      "description": "my first consistency group", 
+      "availability_zone": "az1", 
+      "created_at": "2015-09-16T09:28:52.000000", 
+      "volume_types": [
+        "123456"
+      ], 
+      "id": "6f519a48-3183-46cf-a32f-41815f813986", 
+      "name": "my-cg1"
+    }, 
+    {
+      "status": "error", 
+      "description": "Edited description", 
+      "availability_zone": "az2", 
+      "created_at": "2015-09-16T09:31:15.000000", 
+      "volume_types": [
+        "234567"
+      ], 
+      "id": "aed36625-a6d7-4681-ba59-c7ba3d18c148", 
+      "name": "my-cg2"
+    }
+  ]
+}

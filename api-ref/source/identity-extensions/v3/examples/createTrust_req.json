@@ -1,0 +1,14 @@
+{
+  "trust": {
+    "impersonation": false, 
+    "trustor_user_id": "'$ADMIN_USER_ID'", 
+    "roles": [
+      {
+        "name": "admin"
+      }
+    ], 
+    "expires_at": "2014-12-30T23:59:59.999999Z", 
+    "trustee_user_id": "'$DEMO_USER_ID'", 
+    "project_id": "'$PROJECT_ID'"
+  }
+}

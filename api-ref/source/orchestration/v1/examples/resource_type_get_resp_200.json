@@ -1,0 +1,30 @@
+{
+  "support_status": {
+    "status": "SUPPORTED", 
+    "message": "A status message", 
+    "version": "2014.1"
+  }, 
+  "attributes": {
+    "an_attribute": {
+      "description": "A runtime value of the resource."
+    }
+  }, 
+  "properties": {
+    "a_property": {
+      "update_allowed": false, 
+      "required": true, 
+      "type": "string", 
+      "description": "A resource description.", 
+      "constraints": [
+        {
+          "length": {
+            "max": 255, 
+            "min": 1
+          }, 
+          "description": "Must be between 1 and 255 characters"
+        }
+      ]
+    }
+  }, 
+  "resource_type": "OS::Heat::AResourceName"
+}

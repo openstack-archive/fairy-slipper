@@ -1,0 +1,93 @@
+status:
+  in: body
+  required: true
+  type: string
+  description: |
+    The service status, which is ``enabled`` or
+    ``disabled``.
+
+binary:
+  in: body
+  required: true
+  type: string
+  description: |
+    The service binary name.
+
+zone:
+  in: body
+  required: true
+  type: string
+  description: |
+    The availability zone of the host.
+
+state:
+  in: body
+  required: true
+  type: string
+  description: |
+    The service state, which is ``up`` or ``down``.
+
+updated_at:
+  in: body
+  required: true
+  type: string
+  description: |
+    The date and time when the service was updated.
+
+    The date and time stamp format is `ISO 8601
+    <https://en.wikipedia.org/wiki/ISO_8601>`_:
+
+    ::
+
+       CCYY-MM-DDThh:mm:ss±hh:mm
+
+    For example, ``2015-08-27T09:49:58-05:00``.
+
+    The ``±hh:mm`` value, if included, is the time zone as an offset
+    from UTC. In the previous example, the offset value is ``-05:00``.
+
+    If the ``updated_at`` date and time stamp is not set, its value is
+    ``null``.
+
+host:
+  in: body
+  required: true
+  type: string
+  description: |
+    The host name.
+
+services:
+  in: body
+  required: true
+  type: array
+  description: |
+    A list of ``service`` objects.
+
+forced_down:
+  in: body
+  required: true
+  type: boolean
+  description: |
+    If ``true``, the service was forced down.
+
+disabled_reason:
+  in: body
+  required: true
+  type: string
+  description: |
+    The reason that the service was disabled.
+
+id:
+  in: body
+  required: true
+  type: string
+  description: |
+    The UUID of the service.
+
+tenant_id:
+  in: path
+  required: false
+  type: string
+  description: |
+    The UUID of the tenant in a multi-tenancy cloud.
+

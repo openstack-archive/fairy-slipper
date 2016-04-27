@@ -1,0 +1,17 @@
+{
+  "auth": {
+    "scope": {
+      "project": {
+        "id": "5b50efd009b540559104ee3c03bbb2b7"
+      }
+    }, 
+    "identity": {
+      "token": {
+        "id": "'$OS_TOKEN'"
+      }, 
+      "methods": [
+        "token"
+      ]
+    }
+  }
+}

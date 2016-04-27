@@ -1,0 +1,26 @@
+{
+  "job": {
+    "description": "This is public pig job example", 
+    "tenant_id": "9cd1314a0a31493282b6712b76a8fcda", 
+    "created_at": "2015-02-10 14:25:48", 
+    "mains": [], 
+    "updated_at": null, 
+    "libs": [
+      {
+        "description": "", 
+        "url": "swift://Edp-test-c71e6bce.sahara/binary-job.jar", 
+        "tenant_id": "9cd1314a0a31493282b6712b76a8fcda", 
+        "created_at": "2015-02-10 14:25:48", 
+        "updated_at": null, 
+        "id": "0ff4ac10-94a4-4e25-9ac9-603afe27b100", 
+        "name": "binary-job.jar"
+      }
+    ], 
+    "is_protected": false, 
+    "interface": [], 
+    "is_public": false, 
+    "type": "MapReduce", 
+    "id": "1a674c31-9aaa-4d07-b844-2bf200a1b836", 
+    "name": "public-pig-job-example"
+  }
+}

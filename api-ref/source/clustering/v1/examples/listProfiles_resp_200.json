@@ -1,0 +1,63 @@
+{
+  "profiles": [
+    {
+      "domain": null, 
+      "name": "mystack", 
+      "created_at": "2015-02-10T11:46:33.000000", 
+      "updated_at": null, 
+      "spec": {
+        "version": "1.0", 
+        "type": "os.heat.stack", 
+        "properties": {
+          "files": {
+            "file:///opt/stack/senlin/examples/profiles/test_script.sh": "#!/bin/bash\n\necho \"this is a test script file\"\n"
+          }, 
+          "disable_rollback": false, 
+          "rollback": false, 
+          "name": "random_string_stack", 
+          "parameters": {}, 
+          "timeout": 60, 
+          "environment": {
+            "resource_registry": {
+              "os.heat.server": "OS::Heat::Server"
+            }
+          }, 
+          "template": {
+            "outputs": {
+              "result": {
+                "value": {
+                  "get_attr": [
+                    "random", 
+                    "value"
+                  ]
+                }
+              }
+            }, 
+            "heat_template_version": "2014-10-16", 
+            "resources": {
+              "random": {
+                "type": "OS::Heat::RandomString", 
+                "properties": {
+                  "length": 64
+                }
+              }
+            }, 
+            "parameters": {
+              "file": {
+                "default": {
+                  "get_file": "file:///opt/stack/senlin/examples/profiles/test_script.sh"
+                }, 
+                "type": "string"
+              }
+            }
+          }
+        }
+      }, 
+      "project": "42d9e9663331431f97b75e25136307ff", 
+      "user": "5e5bf8027826429c96af157f68dc9072", 
+      "type": "os.heat.stack-1.0", 
+      "id": "edc63d0a-2ca4-48fa-9854-27926da76a4a", 
+      "metadata": {}
+    }
+  ]
+}

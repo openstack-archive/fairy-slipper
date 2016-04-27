@@ -1,0 +1,12 @@
+{
+  "auth": {
+    "identity": {
+      "token": {
+        "id": "'$OS_TOKEN'"
+      }, 
+      "methods": [
+        "token"
+      ]
+    }
+  }
+}

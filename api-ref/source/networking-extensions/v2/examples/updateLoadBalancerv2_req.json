@@ -1,0 +1,7 @@
+{
+  "loadbalancer": {
+    "description": "simple lb2", 
+    "name": "loadbalancer2", 
+    "admin_state_up": false
+  }
+}

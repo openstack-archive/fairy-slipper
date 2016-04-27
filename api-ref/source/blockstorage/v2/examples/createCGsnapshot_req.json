@@ -1,0 +1,10 @@
+{
+  "cgsnapshot": {
+    "status": "creating", 
+    "user_id": "6f519a48-3183-46cf-a32f-41815f814444", 
+    "description": "first consistency group", 
+    "consistencygroup_id": "6f519a48-3183-46cf-a32f-41815f814546", 
+    "project_id": "6f519a48-3183-46cf-a32f-41815f815555", 
+    "name": "firstcg"
+  }
+}
