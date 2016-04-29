@@ -164,15 +164,33 @@ def main1(filename, output_dir):
     if not path.exists(full_path):
         os.makedirs(full_path)
 
+    # Create .inc files for each tag
+    for tags in swagger['tags']:
+        filename_rst = ""
+        if 'name' in tags and tags['name'] is not "":
+            filename_rst = '%s.inc' % tags['name']
+        filepath_rst = path.join(full_path, filename_rst)
+
+        log.info("Writing RST inc file %s", filepath_rst)
+        with codecs.open(filepath_rst,
+                         'w', "utf-8") as out_file:
+            out_file.write(".. -*- rst -*-\n\n")
+            out_file.write('=' * len(tags['description']))
+            out_file.write("\n")
+            out_file.write(tags['description'])
+            out_file.write("\n")
+            out_file.write('=' * len(tags['description']))
+            out_file.write("\n\n")
+            out_file.write(tags['summary'])
+            out_file.write("\n\n")
+
     for key_path, paths in swagger['paths'].items():
         for p in paths:
             opId = p['operationId']
             method_req_params = p['parameters']
+            tag = p['tags'][0]
 
-            # list of request params
             request_params = []
-
-            # list of response params
             response_params = []
 
             filename = '%s.yaml' % opId
@@ -183,7 +201,6 @@ def main1(filename, output_dir):
             # get the response objects
             method_responses = p['responses']
             for r, rval in method_responses.items():
-                # get the response header parameters
                 if 'headers' in rval:
                     for h, val in rval['headers'].items():
                         new_param = create_parameter(h,
@@ -192,9 +209,7 @@ def main1(filename, output_dir):
                                                      val['required'],
                                                      val['type'])
 
-                        # add to response param list
                         response_params.append(h)
-
                         yaml.safe_dump(new_param,
                                        stream,
                                        allow_unicode=True,
@@ -269,8 +284,8 @@ def main1(filename, output_dir):
                     stream.write('\n\n')
 
             # write out a rst file
-            filename_rst = '%s.rst' % opId
-            filepath_rst = path.join(full_path, filename_rst)
+            # filename_rst = '%s.rst' % opId
+            # filepath_rst = path.join(full_path, filename_rst)
 
             # error responses
             error_codes = []
@@ -278,12 +293,30 @@ def main1(filename, output_dir):
                 if status_code > '200':
                     error_codes.append(status_code)
 
+            TMPL = environment.from_string(TMPL_API)
+            result = TMPL.render(method=p,
+                                 path=key_path,
+                                 request_params=request_params,
+                                 response_params=response_params,
+                                 error_codes=error_codes)
+
+            # Append method info to inc file
+            filename_rst = '%s.inc' % tag
+            filepath_rst = path.join(full_path, filename_rst)
+
+            log.info("Writing RST inc file %s", filepath_rst)
+            with codecs.open(filepath_rst,
+                             "a", "utf-8") as out_file:
+                out_file.write(result)
+
+"""
             write_rst(p,
                       key_path,
                       filepath_rst,
                       request_params,
                       response_params,
                       error_codes)
+"""
 
 
 def main():
