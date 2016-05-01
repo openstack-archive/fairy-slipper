@@ -1,0 +1,11 @@
+Code-Review+2: Anne Gentle <annegentle@justwriteclick.com>
+Code-Review+1: KATO Tomoyuki <kato.tomoyuki@jp.fujitsu.com>
+Code-Review+1: IanSun <sun.jun@99cloud.net>
+Code-Review+2: Karen Bradshaw <kbhawkey@gmail.com>
+Workflow+1: Karen Bradshaw <kbhawkey@gmail.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Sun, 01 May 2016 11:48:51 +0000
+Reviewed-on: https://review.openstack.org/311214
+Project: openstack/fairy-slipper
+Branch: refs/heads/master
