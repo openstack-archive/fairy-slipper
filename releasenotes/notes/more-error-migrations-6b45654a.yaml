@@ -1,4 +1,0 @@
----
-migration:
-  - Handle additional error and status codes to migrate all documented 300,
-    400, and 500 errors.
