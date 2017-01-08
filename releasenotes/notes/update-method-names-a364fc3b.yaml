@@ -1,5 +1,0 @@
----
-migration:
-  - Update method names with x- prefix as an extension to the Swagger standard
-    to accomodate OpenStack APIs such as COPY operations and POST operations
-    with an /actions resource.
